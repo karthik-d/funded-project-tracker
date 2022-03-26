@@ -1,5 +1,7 @@
 # Funded-Project-Tracker System
 
+![FP-Tracker-Logo](assets/logo.png?raw=true)
+
 A centralized online system, with a web-application interface, to manage internally and externally funded projects affiliated to the college.
 It handles the following key aspects:
 - Resource management and repurposing for internally funded projects
