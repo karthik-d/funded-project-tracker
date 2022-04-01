@@ -12,5 +12,5 @@ It handles the following key aspects:
 # References
 
 - [Team Google Drive Directory](https://drive.google.com/drive/folders/1q4Pmt54Smr6XTmxe8-WBDu5sHodzzcVc?usp=sharing)
-- [Problem Statement Specification](https://github.com/karthik-d/Funded-Project-Tracker/blob/main/ProblemStatement.md)
-- [Software Requirements Specification (SRS)](https://docs.google.com/document/d/1LRy-mQs0-3TrjFRSq99i2mNk00EqsrBV/edit?usp=sharing&ouid=105198317319684003042&rtpof=true&sd=true)
+- [Problem Statement Specification](https://drive.google.com/file/d/12lmrwYze91KfEdE4WlvUXiz-RDvtJo6p/view?usp=sharing)
+- [Software Requirements Specification (SRS)](https://drive.google.com/file/d/17_LVAnczzPp9dCqcMjCTuRk5oyWuHSey/view?usp=sharing)
