@@ -1,3 +1,7 @@
 .token
 */node_modules/*
 */.next/*
+myPythonEnv
+node_environ
+node_modules
+package*
