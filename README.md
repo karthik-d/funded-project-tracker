@@ -23,3 +23,10 @@ It handles the following key aspects:
 
 ## Compiled Document
 - [Aggregated Documentation - Upto Activity Diagrams](https://drive.google.com/file/d/1-ugSlGmEHbMfo-DBxR1wm4ZShB_HDwF-/view?usp=sharing)
+
+## Procedure to run the Website
+- Install nodejs 16.15.0 LTS
+- cd fptrack_front
+- npm install react react-dom next
+- npm run dev
+- npx next telemetry disable ,if you want to disable
