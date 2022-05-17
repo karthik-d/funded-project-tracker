@@ -6,3 +6,4 @@ node_environ
 node_modules
 package*
 !package.json
+*.env
