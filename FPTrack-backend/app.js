@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 // Connect DB and Seed
 var db = require('./db/connect');
-var _ = require('./init/seed_db');
+//var _ = require('./init/seed_db');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
