@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const { User } = require('../models')
 
 async function up() {
   await User.create(
@@ -9,26 +9,15 @@ async function up() {
       email: 'admin@admin.com',
       role: 'faculty',
       access: ['admin']
-    },
-    function (e) {
-      console.log("UP");
-      if (e) {
-        throw e;
-      }
     }
-  )
+  );
 }
 
 async function down() {
-  await User.deleteOne(
-    { email: 'admin@admin.com' },
-    function (e) {
-      console.log("DOWN");
-      if (e) {
-        throw e;
-      }
-    }
-  )
+  await User.deleteOne({ email: 'admin@admin.com' });
 }
 
-module.exports = { up, down };
+module.exports = {
+  down,
+  up
+}
