@@ -9,6 +9,21 @@ It handles the following key aspects:
 - Filterable and customized summary stats of faculty and student projects
 - Resource inventory and project deliverable/outcome report generation for all projects
 
+# Development References
+
+## Frontend
+
+## Backend
+
+### Global Installs
+
+Do `npm install -g [package-name]`
+
+- [migrate-mongoose](https://www.npmjs.com/package/migrate-mongoose)
+- [nodemon](https://www.npmjs.com/package/nodemon)
+- express (Obviously!)
+- express-generator
+
 # References
 
 ## Atomic UML Documents
