@@ -7,3 +7,4 @@ node_modules
 package*
 !package.json
 *.env
+migrate.json
