@@ -8,15 +8,16 @@ app.use(express.json());
 // parse URL encoded data
 app.use(express.urlencoded({ extended: true }));
 
-const users = [{
-	    id: 1,
-        name: "Jane Doe",
-        age: "22",
-    },
+const users = [
     {
-        id: 2,
-        name: "John Doe",
-        age: "31",
+        "email" : "jagadish19039@cse.ssn.edu.in",
+        "project_id" : "478",
+        "project_domain" : "IoT",
+        "project_name" : "IoT Driven Smart Bus Stops",
+        "team_members" : {
+            "email" : "karthikraja19048@cse.ssn.edu.in",
+            "name" : "Karthik Raja A"
+        }
     }
 ];
 
@@ -61,9 +62,10 @@ app.post('/create_application', (req, res) => {
         age : age
     })
 
-    console.log(users);
+    console.log("Storing collection...\n", req.body);
 
-    res.json(users);
+    // res.json(users);
+    res.status(201).json(req.body);
 
     
 });

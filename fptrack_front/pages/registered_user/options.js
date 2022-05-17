@@ -9,8 +9,9 @@ function Opt_button({props}){
 }
 
 export default function Options() {
-    const options =[ {"url":"/registered_user/proposal",
-                      "name":"Submit proposal"}
+    const options =[ {"name":"Submit proposal",
+                      "url":"/registered_user/proposal",
+                      }
                       ,
                       {"name":"Guest Search",
                         "url":"nothing"

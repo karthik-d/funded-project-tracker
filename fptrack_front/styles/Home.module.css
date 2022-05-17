@@ -5,7 +5,7 @@
 .onProposal box{
   float: left;
   width: 50%;
-  display:block; //change
+  display:block;
 }
 .onProposal label{
     display: block;
