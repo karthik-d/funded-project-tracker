@@ -13,6 +13,12 @@ It handles the following key aspects:
 
 ## Frontend
 
+### Notes
+- Send the PDF proposal as a single Base64 encoded string
+
+### Validations to handle
+- PDF Proposal Upload must be under 8MB (soft limit)
+
 ## Backend
 
 ### Global Installs
