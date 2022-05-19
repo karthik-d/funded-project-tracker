@@ -55,13 +55,24 @@ function create(req, res, next) {
                 });
             }
             else {
-                res.status(200).send({
-                    arr1: supervisors,
-                    arr2: members,
-                    arr3: leader
-                });
+                req.body.supervisors = supervisors;
+                req.body.members = members;
+                req.body.leader = leader;
+                const proposal = new ProposalModel(req.body);
+                proposal.save()
+                    .then((resource) => {
+                        res.status(201).send({
+                            id: resource._id,
+                            message: "Proposal created"
+                        })
+                    })
             }
         })
+        .catch((error) => {
+            res.status(400).send(
+                ErrorHelper.construct_json_response(error)
+            );
+        });
 
 
     /*

@@ -50,11 +50,12 @@ def get(id=None, debug=True):
     print(resp.text)
     print(resp.status_code)
     if not debug:
-        print(resp.json())
+        print(resp.json()[0]['_id'])
 
 
-post()
-# get()
+# post()
+# get(debug=False)
+get(id='62869d17060d20b1dbcb56ee')
 
 
 
