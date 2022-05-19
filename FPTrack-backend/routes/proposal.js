@@ -10,6 +10,13 @@ router.get(
     }
 )
 
+router.get(
+    '/:proposalId',
+    function (req, res, next) {
+        ProposalController.getById(req.params.proposalId, req, res, next);
+    }
+)
+
 router.post(
     '/',
     function (req, res, next) {

@@ -82,18 +82,31 @@ ProposalSchema
     };
 
 ProposalSchema
-    .methods
+    .query
     .onlyExisting = function () {
-        return this.find().onlyExisting();
+        return this.find({
+            deleted_at: null
+        });
     };
+
+// --
 
 ProposalSchema
     .query
-    .onlyExisting = function () {
-        return Promise.resolve(this.find({
-            deleted_at: null
-        }));
-    };
+    .getById = function (id) {
+        return this.find().getById();
+    }
+
+ProposalSchema
+    .query
+    .getById = function (id) {
+        return this.find({
+            _id: id
+        });
+    }
+
+// --
+
 
 // virtual for executive members
 ProposalSchema

@@ -135,5 +135,21 @@ function getAll(req, res, next) {
         });
 };
 
+
+function getById(id, req, res, next) {
+    ProposalModel
+        .onlyExisting()
+        .getById(id)
+        .then((resources) => {
+            res.status(200).send(resources)
+        })
+        .catch((error) => {
+            res.status(400).send(
+                ErrorHelper.construct_json_response(error)
+            );
+        });
+};
+
 exports.create = create;
 exports.getAll = getAll;
+exports.getById = getById;
