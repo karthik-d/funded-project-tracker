@@ -12,20 +12,13 @@ var ErrorHelper = require('../../helpers/error');
 //      - members must NOT contain the leader - if so, remove it
 //      - (add on...)
 function create(req, res, next) {
-    // email --> user conversion function
+
     function getUsersFromEmails(emailArr) {
-        destnArr = [];
-        emailArr.forEach(
-            function (email, idx) {
-                destnArr.push(
-                    UserModel
-                        .onlyExisting()
-                        .getByEmail(email)
-                );
-            }
-        );
-        return Promise.all(destnArr);
+        return UserModel
+            .onlyExisting()
+            .getByEmails(emailArr);
     }
+
     // change the document format to Buffer from Base64
     try {
         var document_b64 = req.body.pdf_document;
@@ -39,6 +32,7 @@ function create(req, res, next) {
     }
     // decode emails into user objects - supervisor, leader, members
     // syntactic convenience in leader array - only ONE leader
+
     Promise.all([
         getUsersFromEmails(req.body.supervisors),
         getUsersFromEmails(req.body.members),
@@ -70,6 +64,22 @@ function create(req, res, next) {
         })
 
 
+    /*
+    function getUsersFromEmails(emailArr) {
+        destnArr = [];
+        emailArr.forEach(
+            function (email, idx) {
+                destnArr.push(
+                    UserModel
+                        .onlyExisting()
+                        .getByEmail(email)
+                );
+            }
+        );
+        return Promise.all(destnArr);
+    }
+    */
+
     // req.body.members.forEach(
     //     get_converter_callbk(member_ids)
     // );
@@ -97,7 +107,7 @@ function create(req, res, next) {
                 ErrorHelper.construct_json_response(error)
             );
         });
-        */
+    */
 };
 
 
