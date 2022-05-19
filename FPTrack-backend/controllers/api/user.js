@@ -39,6 +39,7 @@ function getAll(req, res, next) {
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
         UserModel
+            .onlyExisting()
             .findById(id)
             .then((resource) => {
                 res.status(200).send(resource);

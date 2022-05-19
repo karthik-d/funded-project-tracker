@@ -36,9 +36,9 @@ UserSchema
 UserSchema
     .query
     .onlyExisting = function () {
-        return this.find({
+        return Promise.resolve(this.find({
             deleted_at: null
-        });
+        }));
     };
 
 // virtual for user fullname

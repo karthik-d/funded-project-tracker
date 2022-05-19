@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Promise = require('promise');
 
 var Schema = mongoose.Schema;
 
@@ -83,9 +84,9 @@ ProposalSchema
 ProposalSchema
     .query
     .onlyExisting = function () {
-        return this.find({
+        return Promise.resolve(this.find({
             deleted_at: null
-        });
+        }));
     };
 
 // virtual for executive members
