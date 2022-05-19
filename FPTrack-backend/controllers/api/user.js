@@ -3,7 +3,7 @@ const { default: mongoose } = require('mongoose');
 var mongoos = require('mongoose');
 
 var UserModel = require('../../models/user');
-
+var ErrorHelper = require('../../helpers/error');
 
 // TODO: Add validation
 function create(req, res, next) {
@@ -17,26 +17,22 @@ function create(req, res, next) {
             })
         })
         .catch((error) => {
-            res.status(400).send({
-                error: error.name,
-                message: error.message,
-                code: error.code
-            })
+            res.status(400).send(
+                ErrorHelper.construct_json_response(error)
+            );
         });
 };
 
 function getAll(req, res, next) {
     UserModel.onlyExisting()
         .then((resources) => {
-            console.log(resources)
+            console.log(resources);
             res.status(200).send(resources);
         })
         .catch((error) => {
-            res.status(400).send({
-                error: error.name,
-                message: error.message,
-                code: error.code
-            })
+            res.status(400).send(
+                ErrorHelper.construct_json_response(error)
+            );
         });
 };
 
@@ -48,11 +44,9 @@ function getById(id, req, res, next) {
                 res.status(200).send(resource);
             })
             .catch((error) => {
-                res.status(400).send({
-                    error: error.name,
-                    message: error.message,
-                    code: error.code
-                })
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                );
             });
     }
     else {
