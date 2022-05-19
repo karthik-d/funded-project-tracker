@@ -59,7 +59,7 @@ var ProposalSchema = new Schema(
             type: Number,
             required: true
         },
-        is_deleted: {
+        deleted_at: {
             type: Date,
             default: null
         }
@@ -77,8 +77,14 @@ var ProposalSchema = new Schema(
 ProposalSchema
     .statics
     .onlyExisting = function () {
+        return this.find().onlyExisting();
+    };
+
+ProposalSchema
+    .query
+    .onlyExisting = function () {
         return this.find({
-            is_deleted: null
+            deleted_at: null
         });
     };
 

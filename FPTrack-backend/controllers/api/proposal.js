@@ -17,3 +17,15 @@ function create(req, res, next) {
             })
         }));
 };
+
+
+function getAll(req, res, next) {
+    ProposalModel
+        .onlyExisting()
+        .then((resources) => {
+            res.status(200).send(resources)
+        });
+};
+
+exports.create = create;
+exports.getAll = getAll;
