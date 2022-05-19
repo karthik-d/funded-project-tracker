@@ -26,12 +26,12 @@ def post(debug=True):
 
     resp = requests.post(
         'http://localhost:3000/api/user',
-        json = json.dumps(req_body)
+        json = req_body
     )
 
     print(resp.text)    
     print(resp.status_code)
-    # print(resp.request.body)
+    print("Request:", resp.request.body.decode('utf-8')[:100])
     # print(type(resp.request.body))
     # print(len(resp.request.body)/(2**20))
     if not debug:

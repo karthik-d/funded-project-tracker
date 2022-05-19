@@ -11,6 +11,7 @@ var ErrorHelper = require('../../helpers/error');
 function create(req, res, next) {
     // change the document format to Buffer from Base64
     try {
+        // console.log(typeof req.body);
         var document_b64 = req.body.pdf_document;
         req.body.pdf_document = Buffer.from(document_b64, 'base64');
         // console.log(document_b64);
