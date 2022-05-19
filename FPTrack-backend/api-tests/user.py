@@ -10,10 +10,10 @@ req_body = dict(
 )
 
 resp = requests.post(
-    'http://localhost:8080/api/user',
+    'http://localhost:3000/api/user',
     json = req_body
 )
 
 print(resp.text)    
 print(resp.status_code)
-print(resp.json())
+# print(resp.json())

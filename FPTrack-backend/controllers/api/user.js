@@ -1,6 +1,6 @@
 var express = require('express');
 
-var UserModel = require('../models/user');
+var UserModel = require('../../models/user');
 
 
 // TODO: Add validation
@@ -15,3 +15,5 @@ function create(req, res, next) {
             })
         });
 };
+
+exports.create = create;
