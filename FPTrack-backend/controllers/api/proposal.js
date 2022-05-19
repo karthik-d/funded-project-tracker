@@ -15,7 +15,14 @@ function create(req, res, next) {
                 id: resource._id,
                 message: "Proposal created"
             })
-        }));
+        }))
+        .catch((error) => {
+            res.status(400).send({
+                error: error.name,
+                message: error.message,
+                code: error.code
+            })
+        });
 };
 
 
@@ -24,6 +31,13 @@ function getAll(req, res, next) {
         .onlyExisting()
         .then((resources) => {
             res.status(200).send(resources)
+        })
+        .catch((error) => {
+            res.status(400).send({
+                error: error.name,
+                message: error.message,
+                code: error.code
+            })
         });
 };
 

@@ -30,6 +30,13 @@ function getAll(req, res, next) {
         .then((resources) => {
             console.log(resources)
             res.status(200).send(resources);
+        })
+        .catch((error) => {
+            res.status(400).send({
+                error: error.name,
+                message: error.message,
+                code: error.code
+            })
         });
 };
 
@@ -40,6 +47,13 @@ function getById(id, req, res, next) {
             .then((resource) => {
                 res.status(200).send(resource);
             })
+            .catch((error) => {
+                res.status(400).send({
+                    error: error.name,
+                    message: error.message,
+                    code: error.code
+                })
+            });
     }
     else {
         res.status(404).send({
