@@ -6,7 +6,16 @@ var ErrorHelper = require('../../helpers/error');
 // TODO: Add file conversion to bit-string
 // TODO: Add validation
 function create(req, res, next) {
-    console.log(req.body);
+    // change the document format to Buffer from Base64
+    try {
+        var document_b64 = req.body.pdf_document;
+        req.body.pdf_document = Buffer.from(document_b64, 'base64');
+    }
+    catch (error) {
+        return void res.status(400).send(
+            ErrorHelper.construct_json_response(error)
+        );
+    }
     const proposal = new ProposalModel(req.body);
     proposal
         .save()
