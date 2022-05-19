@@ -1,7 +1,14 @@
 import requests
+import base64
+import os
 
+sample_pdf_path = os.path.join(os.getcwd(), *((os.path.pardir,)*1), 'check_files', 'agg_doc.pdf')
 
 def post(debug=True):
+
+    pdf_doc_b64 = base64.b64encode(open(sample_pdf_path, 'rb').read())
+    print(pdf_doc_b64)
+
     req_body = dict(
         first_name = "Adam",
         last_name = "Levy",
@@ -38,6 +45,7 @@ def get(id=None, debug=True):
         print(resp.json())
 
 
+post()
 get()
 
 

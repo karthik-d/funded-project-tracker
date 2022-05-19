@@ -10,6 +10,7 @@ function create(req, res, next) {
     try {
         var document_b64 = req.body.pdf_document;
         req.body.pdf_document = Buffer.from(document_b64, 'base64');
+        // console.log(document_b64);
     }
     catch (error) {
         return void res.status(400).send(
