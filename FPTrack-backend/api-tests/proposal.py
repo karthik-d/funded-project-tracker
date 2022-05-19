@@ -10,8 +10,14 @@ def encode_pdf(filepath):
     pdf_doc_b64_string = pdf_doc_b64_bytes.decode('utf-8')
     return pdf_doc_b64_string
 
-def decode_pdf(byte_list):
+def save_pdf(filedata):
     pass
+
+def decode_pdf(byte_list):
+    print(max(byte_list))
+    print(min(byte_list))
+    base64.b64decode(''.join([chr(ascii) for ascii in byte_list]))
+    return None
 
 def post(debug=True):
 
@@ -57,12 +63,13 @@ def get(id=None, debug=True):
     print(resp.text)
     print(resp.status_code)
     if not debug:
-        print(resp.json()[0]['_id'])
+        print(resp.json()['_id'])
+        save_pdf(decode_pdf(resp.json()[0]['pdf_document']['data']))
 
 
 # post()
 # get(debug=False)
-get(id='62869d17060d20b1dbcb56ee')
+get(id='62869d17060d20b1dbcb56ee', debug=False)
 
 
 

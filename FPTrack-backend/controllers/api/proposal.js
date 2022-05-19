@@ -128,11 +128,11 @@ function getAll(req, res, next) {
     ProposalModel
         .onlyExisting()
         .then((resources) => {
-            resources.forEach(
-                function (rsrc, idx) {
-                    rsrc.pdf_document = rsrc.document_b64;
-                }
-            );
+            // resources.forEach(
+            //     function (rsrc, idx) {
+            //         rsrc.pdf_document = rsrc.document_b64;
+            //     }
+            // );
             res.status(200).send(resources)
         })
         .catch((error) => {
@@ -147,8 +147,13 @@ function getById(id, req, res, next) {
     ProposalModel
         .onlyExisting()
         .getById(id)
-        .then((resource) => {
-            resource.pdf_document = resource.document_b64;
+        .populate('leader')
+        // .populate('members')
+        // .populate('supervisors')
+        .then(([resource]) => {
+            // console.log("HERE" + resource._doc.toObject({ virtuals: true }));
+            // resource._doc.pdf_document = resource._doc.document_b64;
+            // console.log(resource._doc.document_b64);
             res.status(200).send(resource);
         })
         .catch((error) => {

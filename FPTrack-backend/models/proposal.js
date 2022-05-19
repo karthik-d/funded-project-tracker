@@ -129,7 +129,7 @@ ProposalSchema
 ProposalSchema
     .virtual('document_base64')
     .get(function () {
-        return this.pdf_document.toString('base64');
+        return Buffer.from(this.pdf_document).toString('base64');
     })
 
 // virtual for user URL
@@ -140,4 +140,4 @@ ProposalSchema
     });
 
 //Export model
-module.exports = mongoose.model('Proposal', ProposalSchema);
+module.exports = mongoose.model('proposal', ProposalSchema);
