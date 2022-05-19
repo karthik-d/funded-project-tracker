@@ -82,6 +82,12 @@ ProposalSchema
     };
 
 ProposalSchema
+    .methods
+    .onlyExisting = function () {
+        return this.find().onlyExisting();
+    };
+
+ProposalSchema
     .query
     .onlyExisting = function () {
         return Promise.resolve(this.find({

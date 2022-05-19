@@ -24,7 +24,7 @@ def post(debug=True):
     )
 
     resp = requests.post(
-        'http://localhost:3000/api/user',
+        'http://localhost:3000/api/proposal',
         json = req_body
     )
 

@@ -25,6 +25,7 @@ var UserSchema = new Schema(
 );
 
 // Chain <ModelName>.onlyExisting before any query to list only "non-deleted" records
+// Be sure to use either find() or self-defined wrappers (Convention used: get...() ), in these chains
 
 // Brute Wrapper (Not proud of it!)
 UserSchema
@@ -36,10 +37,60 @@ UserSchema
 UserSchema
     .query
     .onlyExisting = function () {
-        return Promise.resolve(this.find({
+        return this.find({
             deleted_at: null
-        }));
+        });
     };
+
+// --
+
+UserSchema
+    .statics
+    .getById = function (id) {
+        return this.find().getById();
+    }
+
+UserSchema
+    .query
+    .getById = function (id) {
+        return this.find({
+            _id: id
+        });
+    };
+
+// --
+
+UserSchema
+    .statics
+    .getByEmail = function (email) {
+        return this.find().findByEmail(email);
+    };
+
+UserSchema
+    .query
+    .getByEmail = function (email) {
+        return this.findOne({
+            email: email
+        });
+    };
+
+// --
+
+UserSchema
+    .statics
+    .getByEmails = function (emails) {
+        return this.find().getByEmails(emails);
+    };
+
+UserSchema
+    .query
+    .getByEmails = function (emails) {
+        return this.find({
+            email: { $in: emails }
+        });
+    };
+
+// --
 
 // virtual for user fullname
 UserSchema

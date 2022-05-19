@@ -26,7 +26,6 @@ function create(req, res, next) {
 function getAll(req, res, next) {
     UserModel.onlyExisting()
         .then((resources) => {
-            console.log(resources);
             res.status(200).send(resources);
         })
         .catch((error) => {
@@ -40,7 +39,7 @@ function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
         UserModel
             .onlyExisting()
-            .findById(id)
+            .getById(id)
             .then((resource) => {
                 res.status(200).send(resource);
             })

@@ -1,15 +1,30 @@
 var express = require('express');
 
 var ProposalModel = require('../../models/proposal');
+var UserModel = require('../../models/user');
 var ErrorHelper = require('../../helpers/error');
 
 // TODO: Add file conversion to bit-string
-// TODO: Add validation for all basic cases such as lenght, sanity, etc.
+// TODO: Add validation for all basic cases such as length, existence, sanity, etc.
 // TODO: Add validation for semantic integrity:
 //      - supervisors MUST be faculty
 //      - members must NOT contain the leader - if so, remove it
 //      - (add on...)
 function create(req, res, next) {
+    // email --> user conversion function
+    function get_converter_callbk(destn_arr) {
+        return function (email, idx) {
+            var user = UserModel
+                .onlyExisting()
+                .findByEmail(email);
+            if (user == null) {
+                return void res.status(400).send(
+                    { message: "Unknown email address" }
+                )
+            }
+            destn_arr.push(user._id);
+        }
+    }
     // change the document format to Buffer from Base64
     try {
         var document_b64 = req.body.pdf_document;
@@ -23,9 +38,23 @@ function create(req, res, next) {
     }
     // decode emails into user objects - supervisor, leader, members
     let supervisor_ids = [];
-    // console.log(req.body.supervisors);
+    let member_ids = [];
+    let leader_ids = []; // Syntactic convenience - only ONE leader
+    req.body.supervisors.forEach(
+        get_converter_callbk(supervisor_ids)
+    );
+    req.body.supervisors.forEach(
+        get_converter_callbk(member_ids)
+    );
+    [req.body.leader].forEach(
+        get_converter_callbk(leader_ids)
+    );
+    console.log(supervisor_ids);
+    console.log(leader_ids);
+    console.log(member_ids);
     //console.trace();
-    return void res.status(402).send({ id: "test" });
+    // return void res.status(402).send({ id: "test" });
+    /*
     const proposal = new ProposalModel(req.body);
     proposal
         .save()
@@ -40,6 +69,7 @@ function create(req, res, next) {
                 ErrorHelper.construct_json_response(error)
             );
         });
+        */
 };
 
 
