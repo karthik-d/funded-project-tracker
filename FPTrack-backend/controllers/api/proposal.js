@@ -126,6 +126,11 @@ function getAll(req, res, next) {
     ProposalModel
         .onlyExisting()
         .then((resources) => {
+            resources.forEach(
+                function (rsrc, idx) {
+                    rsrc.pdf_document = rsrc.document_b64;
+                }
+            );
             res.status(200).send(resources)
         })
         .catch((error) => {
@@ -140,8 +145,9 @@ function getById(id, req, res, next) {
     ProposalModel
         .onlyExisting()
         .getById(id)
-        .then((resources) => {
-            res.status(200).send(resources)
+        .then((resource) => {
+            resource.pdf_document = resource.document_b64;
+            res.status(200).send(resource);
         })
         .catch((error) => {
             res.status(400).send(

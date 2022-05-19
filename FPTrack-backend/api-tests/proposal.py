@@ -5,10 +5,17 @@ import json
 
 sample_pdf_path = os.path.join(os.getcwd(), *((os.path.pardir,)*1), 'check_files', 'agg_doc.pdf')
 
+def encode_pdf(filepath):
+    pdf_doc_b64_bytes = base64.b64encode(open(filepath, 'rb').read())
+    pdf_doc_b64_string = pdf_doc_b64_bytes.decode('utf-8')
+    return pdf_doc_b64_string
+
+def decode_pdf(byte_list):
+    pass
+
 def post(debug=True):
 
-    pdf_doc_b64_bytes = base64.b64encode(open(sample_pdf_path, 'rb').read())
-    pdf_doc_b64_string = pdf_doc_b64_bytes.decode('utf-8')
+    pdf_doc_b64_string = encode_pdf(sample_pdf_path)
 
     req_body = dict(
         title = "IoT Driven Smart Trains",

@@ -126,6 +126,12 @@ ProposalSchema
         return all_members;
     });
 
+ProposalSchema
+    .virtual('document_base64')
+    .get(function () {
+        return this.pdf_document.toString('base64');
+    })
+
 // virtual for user URL
 ProposalSchema
     .virtual('url')
