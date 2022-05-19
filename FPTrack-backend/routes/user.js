@@ -8,6 +8,13 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get(
+  '/:userId',
+  function (req, res, next) {
+    UserController.getById(req.params.userId, req, res, next);
+  }
+)
+
 router.post(
   '/',
   function (req, res, next) {

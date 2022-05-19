@@ -1,4 +1,6 @@
 var express = require('express');
+const { default: mongoose } = require('mongoose');
+var mongoos = require('mongoose');
 
 var UserModel = require('../../models/user');
 
@@ -16,4 +18,20 @@ function create(req, res, next) {
         });
 };
 
+function getById(id, req, res, next) {
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        UserModel
+            .findById(id)
+            .then((resource) => {
+                res.status(200).send(resource);
+            })
+    }
+    else {
+        res.status(404).send({
+            message: "User not found"
+        });
+    }
+};
+
 exports.create = create;
+exports.getById = getById;
