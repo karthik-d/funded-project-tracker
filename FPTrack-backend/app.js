@@ -14,6 +14,9 @@ var proposalRouter = require('./routes/proposal');
 
 var app = express();
 
+// set request limit
+app.use(express.json({ limit: '20mb' }));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

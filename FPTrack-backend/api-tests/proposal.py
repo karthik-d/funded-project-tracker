@@ -1,71 +1,39 @@
 import requests
 import base64
 import os
+import json
 
 sample_pdf_path = os.path.join(os.getcwd(), *((os.path.pardir,)*1), 'check_files', 'agg_doc.pdf')
 
 def post(debug=True):
 
-    pdf_doc_b64 = base64.b64encode(open(sample_pdf_path, 'rb').read())
-    print(pdf_doc_b64)
+    pdf_doc_b64_bytes = base64.b64encode(open(sample_pdf_path, 'rb').read())
+    pdf_doc_b64_string = pdf_doc_b64_bytes.decode('utf-8')
+    print(pdf_doc_b64_string)
 
     req_body = dict(
         title = "IoT Driven Smart Trains",
         decription = "blah blah blah...",
-        domains: ['iot', 'machine_learning'],
-        supervisors: {
-            type: [{
-                type: Schema.Types.ObjectId,
-                ref: 'user'
-            }],
-            required: true
-        },
-        // the user type of leader determines if project is Student project or Faculty project
-        leader: {
-            type: Schema.Types.ObjectId,
-            ref: 'user',
-            required: true
-        },
-        members: {
-            type: [{
-                type: Schema.Types.ObjectId,
-                ref: 'user'
-            }],
-            required: true
-        },
-        funding_type: {
-            type: String,
-            enum: ['internal', 'external'],
-            required: true
-        },
-        // TODO: Convert this to an enum type with possibility of adding new fuding agencies??
-        funding_agency: {
-            type: String,
-            required: true
-        },
-        // Accepts file sizes upto 16MB -- Indicate limit as 8MB on Frontend 
-        // Transit as Base64 string on JSON 
-        pdf_document: {
-            type: Buffer,
-            required: true
-        },
-        budget: {
-            type: Number,
-            required: true
-        },
-        deleted_at: {
-            type: Date,
-            default: null
-        }
+        domains = ['iot', 'machine_learning'],
+        supervisors = ['admin@admin.com', 'adam@gmail.com'],
+        leader = 'ben@gmail.com',
+        members = ['claire@gmail.com', 'derek@gmail.com'],
+        funding_type = 'internal',
+        funding_agency = 'SSN Trust',
+        pdf_document = pdf_doc_b64_string,
+        budget = 10000
     )
 
     resp = requests.post(
         'http://localhost:3000/api/user',
-        json = req_body
+        json = json.dumps(req_body)
     )
 
     print(resp.text)    
     print(resp.status_code)
+    # print(resp.request.body)
+    # print(type(resp.request.body))
+    # print(len(resp.request.body)/(2**20))
     if not debug:
         print(resp.json())
 
