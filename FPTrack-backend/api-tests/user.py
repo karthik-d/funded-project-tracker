@@ -3,10 +3,10 @@ import requests
 
 def post(debug=True):
     req_body = dict(
-        first_name = "Adam",
-        last_name = "Levy",
+        first_name = "Greg",
+        last_name = "Timothy",
         date_of_birth = '1999-09-09',
-        email = 'test@admin.com',
+        email = 'greg@gmail.com',
         role = 'faculty',
         access = ['user']
     )

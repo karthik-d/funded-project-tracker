@@ -13,6 +13,7 @@ function create(req, res, next) {
         .then((resource) => {
             res.status(201).send({
                 id: resource._id,
+                url: resource.url,
                 message: "User created"
             })
         })

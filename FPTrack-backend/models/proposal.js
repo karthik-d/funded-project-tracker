@@ -136,7 +136,7 @@ ProposalSchema
 ProposalSchema
     .virtual('url')
     .get(function () {
-        return '/proposal' + this._id;
+        return '/api/proposal/' + this._id;
     });
 
 //Export model

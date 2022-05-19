@@ -61,8 +61,10 @@ function create(req, res, next) {
                 const proposal = new ProposalModel(req.body);
                 proposal.save()
                     .then((resource) => {
+                        resource.pdf_document = resource.document_b64;
                         res.status(201).send({
                             id: resource._id,
+                            url: resource.url,
                             message: "Proposal created"
                         })
                     })
