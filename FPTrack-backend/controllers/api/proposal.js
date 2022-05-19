@@ -166,3 +166,7 @@ function getById(id, req, res, next) {
 exports.create = create;
 exports.getAll = getAll;
 exports.getById = getById;
+
+
+// TODO: Return PDF Document in Base64
+// TODO: Verify PDF by re-rendering at client
