@@ -9,7 +9,6 @@ def post(debug=True):
 
     pdf_doc_b64_bytes = base64.b64encode(open(sample_pdf_path, 'rb').read())
     pdf_doc_b64_string = pdf_doc_b64_bytes.decode('utf-8')
-    print(pdf_doc_b64_string)
 
     req_body = dict(
         title = "IoT Driven Smart Trains",
@@ -31,7 +30,7 @@ def post(debug=True):
 
     print(resp.text)    
     print(resp.status_code)
-    print("Request:", resp.request.body.decode('utf-8')[:100])
+    # print("Request:", resp.request.body.decode('utf-8')[:100])
     # print(type(resp.request.body))
     # print(len(resp.request.body)/(2**20))
     if not debug:
@@ -55,7 +54,7 @@ def get(id=None, debug=True):
 
 
 post()
-get()
+# get()
 
 
 
