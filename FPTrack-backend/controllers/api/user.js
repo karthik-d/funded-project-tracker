@@ -15,6 +15,13 @@ function create(req, res, next) {
                 id: resource._id,
                 message: "User created"
             })
+        })
+        .catch((error) => {
+            res.status(400).send({
+                error: error.name,
+                message: error.message,
+                code: error.code
+            })
         });
 };
 

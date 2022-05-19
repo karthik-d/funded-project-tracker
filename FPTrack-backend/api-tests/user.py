@@ -37,7 +37,7 @@ def get(id=None, debug=True):
     if not debug:
         print(resp.json())
 
-
+post()
 get()
 
 
