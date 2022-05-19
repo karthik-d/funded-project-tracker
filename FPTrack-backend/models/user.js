@@ -7,7 +7,7 @@ var UserSchema = new Schema(
         first_name: { type: String, required: true, maxLength: 100 },
         last_name: { type: String, required: true, maxLength: 100 },
         date_of_birth: { type: Date },
-        email: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
         role: { type: String, required: true, enum: ['student', 'faculty'], default: 'Maintenance' },
         access: {
             type: [{ type: String, enum: ['admin', 'resource_mgr', 'user'] }],
