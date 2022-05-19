@@ -68,9 +68,9 @@ UserSchema
 
 UserSchema
     .query
-    .getByEmail = function (email) {
+    .getByEmail = function (_email) {
         return this.findOne({
-            email: email
+            email: _email
         });
     };
 
