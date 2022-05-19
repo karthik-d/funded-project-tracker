@@ -4,7 +4,10 @@ var ProposalModel = require('../../models/proposal');
 var ErrorHelper = require('../../helpers/error');
 
 // TODO: Add file conversion to bit-string
-// TODO: Add validation
+// TODO: Add validation for all basic cases such as lenght, sanity, etc.
+// TODO: Add validation for semantic integrity:
+//      - supervisors MUST be faculty
+//      - (add on...)
 function create(req, res, next) {
     // change the document format to Buffer from Base64
     try {

@@ -10,12 +10,53 @@ def post(debug=True):
     print(pdf_doc_b64)
 
     req_body = dict(
-        first_name = "Adam",
-        last_name = "Levy",
-        date_of_birth = '1999-09-09',
-        email = 'test@admin.com',
-        role = 'faculty',
-        access = ['user']
+        title = "IoT Driven Smart Trains",
+        decription = "blah blah blah...",
+        domains: ['iot', 'machine_learning'],
+        supervisors: {
+            type: [{
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            }],
+            required: true
+        },
+        // the user type of leader determines if project is Student project or Faculty project
+        leader: {
+            type: Schema.Types.ObjectId,
+            ref: 'user',
+            required: true
+        },
+        members: {
+            type: [{
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            }],
+            required: true
+        },
+        funding_type: {
+            type: String,
+            enum: ['internal', 'external'],
+            required: true
+        },
+        // TODO: Convert this to an enum type with possibility of adding new fuding agencies??
+        funding_agency: {
+            type: String,
+            required: true
+        },
+        // Accepts file sizes upto 16MB -- Indicate limit as 8MB on Frontend 
+        // Transit as Base64 string on JSON 
+        pdf_document: {
+            type: Buffer,
+            required: true
+        },
+        budget: {
+            type: Number,
+            required: true
+        },
+        deleted_at: {
+            type: Date,
+            default: null
+        }
     )
 
     resp = requests.post(
