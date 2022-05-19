@@ -58,9 +58,29 @@ var ProposalSchema = new Schema(
         budget: {
             type: Number,
             required: true
+        },
+        is_deleted: {
+            type: Date,
+            default: null
+        }
+    },
+    {
+        timestamps: {
+            created_at: 'created_at',
+            modified_at: 'modified_at'
         }
     }
 );
+
+
+// Chain <ModelName>.onlyExisting before any query to list only "non-deleted" records
+ProposalSchema
+    .statics
+    .onlyExisting = function () {
+        return this.find({
+            is_deleted: null
+        });
+    };
 
 // virtual for executive members
 ProposalSchema

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Promise = require('promise');
 
 var Schema = mongoose.Schema;
 
@@ -12,9 +13,33 @@ var UserSchema = new Schema(
         access: {
             type: [{ type: String, enum: ['admin', 'resource_mgr', 'user'] }],
             required: true
+        },
+        deleted_at: { type: Date, default: null }
+    },
+    {
+        timestamps: {
+            created_at: 'created_at',
+            modified_at: 'modified_at'
         }
     }
 );
+
+// Chain <ModelName>.onlyExisting before any query to list only "non-deleted" records
+
+// Brute Wrapper (Not proud of it!)
+UserSchema
+    .statics
+    .onlyExisting = function () {
+        return this.find().onlyExisting();
+    }
+
+UserSchema
+    .query
+    .onlyExisting = function () {
+        return this.find({
+            deleted_at: null
+        });
+    };
 
 // virtual for user fullname
 UserSchema

@@ -22,10 +22,15 @@ def post(debug=True):
         print(resp.json())
 
 
-def get(debug=True):
-    resp = requests.get(
-        'http://localhost:3000/api/user/62861fe598960b16fdbcbb48',
-    )
+def get(id=None, debug=True):
+    if id is None:
+        resp = requests.get(
+            'http://localhost:3000/api/user'
+        )
+    else:
+        resp = requests.get(
+            f'http://localhost:3000/api/user/{id}'
+        )
 
     print(resp.text)
     print(resp.status_code)

@@ -3,10 +3,18 @@ var router = express.Router();
 
 var UserController = require('../controllers/api/user');
 
-/* GET users listing. */
+/*
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
+*/
+
+router.get(
+  '/',
+  function (req, res, next) {
+    UserController.getAll(req, res, next);
+  }
+)
 
 router.get(
   '/:userId',

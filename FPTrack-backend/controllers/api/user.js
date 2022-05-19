@@ -18,6 +18,14 @@ function create(req, res, next) {
         });
 };
 
+function getAll(req, res, next) {
+    UserModel.onlyExisting()
+        .then((resources) => {
+            console.log(resources)
+            res.status(200).send(resources);
+        });
+};
+
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
         UserModel
@@ -35,3 +43,4 @@ function getById(id, req, res, next) {
 
 exports.create = create;
 exports.getById = getById;
+exports.getAll = getAll;
