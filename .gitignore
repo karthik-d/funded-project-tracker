@@ -8,3 +8,6 @@ package*
 !package.json
 *.env
 migrate.json
+*/check_files/*
+*/check_files
+
