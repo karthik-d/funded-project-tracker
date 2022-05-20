@@ -4,21 +4,26 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
+// Validations to consider:
+// - assigned_by should be a resource_mgr
+// - (add on...)
 var ResourceAssignmentSchema = new Schema(
     {
-        assignee: {
+        assigned_to: {
             type: Schema.Types.ObjectId,
             ref: 'project',
             required: true,
-        },
-        assigned_on: {
-            type: Date,
-            required: true
         },
         assigned_by: {
             type: Schema.Types.ObjectId,
             ref: 'user',
             required: true,
+        }
+    },
+    {
+        timestamps: {
+            created_at: 'created_at',
+            modified_at: 'modified_at'
         }
     }
 );
