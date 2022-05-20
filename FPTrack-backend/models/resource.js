@@ -3,27 +3,6 @@ var Promise = require('promise');
 
 var Schema = mongoose.Schema;
 
-
-// assigned_by user MUST be resource_mgr
-var AssignmentSchema = new Schema(
-    {
-        assignee: {
-            type: Schema.Types.ObjectId,
-            ref: 'project',
-            required: true,
-        },
-        assigned_on: {
-            type: Date,
-            required: true
-        },
-        assigned_by: {
-            type: Schema.Types.ObjectId,
-            ref: 'user',
-            required: true,
-        }
-    }
-)
-
 // Key validation points:
 // - If is_multi_assignable is 'false', allow ONLY ONE element in assigned_to
 // - (add on ...)
@@ -53,8 +32,11 @@ ResourceSchema = new Schema(
             required: false
         },
         assigned_to: {
-            type: [AssignmentSchema],
-            default: () => { }
+            type: [{
+                type: Schema.Types.ObjectId,
+                ref: 'resource_assignment'
+            }],
+            default: () => [{}],
         },
         // mainly for equipments like GPU, Software access, etc.
         is_multi_assignable: {
