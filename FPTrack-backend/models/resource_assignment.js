@@ -23,4 +23,30 @@ var ResourceAssignmentSchema = new Schema(
     }
 );
 
+//-- 
+
+ResourceAssignmentSchema
+    .statics
+    .onlyExisting = function () {
+        return this.find().onlyExisiting();
+    };
+
+ResourceAssignmentSchema
+    .query
+    .onlyExisting = function () {
+        return this.find({
+            deleted_at: null
+        });
+    };
+
+//--
+
+// virtual for URL
+ResourceAssignmentSchema
+    .virtual('url')
+    .get(function () {
+        return '/api/rsrc-assign/' + this._id;
+    });
+
+
 module.exports = mongoose.model('resource_assignment', ResourceAssignmentSchema);
