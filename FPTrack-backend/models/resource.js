@@ -8,22 +8,18 @@ var Schema = mongoose.Schema;
 // - (add on ...)
 ResourceSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: true,
-            maxLength: 100
-        },
         resource_group: {
             type: Schema.Types.ObjectId,
             ref: 'resource_group'
         },
-        description: {
+        remarks: {
             type: String,
             required: false
         },
         scan_code: {
             type: String,
-            required: false
+            required: false,
+            unique: true
         },
         // if required, eg: for a software license
         expiry: {
