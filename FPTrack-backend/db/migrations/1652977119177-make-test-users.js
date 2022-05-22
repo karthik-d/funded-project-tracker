@@ -1,4 +1,4 @@
-const { User } = require('../../models')
+const User = require('../../models').User;
 
 async function up() {
   // Write migration here
@@ -51,10 +51,10 @@ async function up() {
  * Make any changes that UNDO the up function side effects here (if possible)
  */
 async function down() {
-  await User.deleteOne({ email: 'ben@admin.com' });
-  await User.deleteOne({ email: 'claire@admin.com' });
-  await User.deleteOne({ email: 'derek@admin.com' });
-  await User.deleteOne({ email: 'erin@admin.com' });
+  await User.deleteOne({ email: 'ben@gmail.com' });
+  await User.deleteOne({ email: 'claire@gmail.com' });
+  await User.deleteOne({ email: 'derek@gmail.com' });
+  await User.deleteOne({ email: 'erin@gmail.com' });
 }
 
 module.exports = { up, down };

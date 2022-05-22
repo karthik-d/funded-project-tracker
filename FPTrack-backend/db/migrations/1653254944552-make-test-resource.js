@@ -1,5 +1,7 @@
-const Resource = require('../../models/resource');
-const ResourceGroup = require('../../models/resource_group');
+const models = require('../../models');
+
+const ResourceGroup = models.ResourceGroup;
+const Resource = models.Resource;
 
 async function up() {
 
@@ -21,7 +23,7 @@ async function up() {
     }
   );
 
-  await ResourceSchema.create(
+  await Resource.create(
     {
       resource_group: arduino_rsrc._id,
       remarks: "Purchased through Amazon",
@@ -30,7 +32,7 @@ async function up() {
     }
   );
 
-  await ResourceSchema.create(
+  await Resource.create(
     {
       resource_group: arduino_rsrc._id,
       remarks: "Purchased through Flipkart",
@@ -39,7 +41,7 @@ async function up() {
     }
   );
 
-  await ResourceSchema.create(
+  await Resource.create(
     {
       resource_group: matlab_rsrc._id,
       remarks: "Fully licensed version",
@@ -48,7 +50,7 @@ async function up() {
     }
   );
 
-  await ResourceSchema.create(
+  await Resource.create(
     {
       resource_group: matlab_rsrc._id,
       remarks: "fully licensed version",
