@@ -76,10 +76,14 @@ var ProjectSchema = new Schema(
             type: Number,
             required: true
         },
+        approved_duration: {
+            type: Number, // in MONTHS
+            required: true
+        },
         completed_on: {
             type: Date,
             default: null
-        }
+        },
     },
     {
         timestamps: {
