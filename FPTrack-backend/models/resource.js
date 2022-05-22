@@ -4,7 +4,7 @@ var Promise = require('promise');
 var Schema = mongoose.Schema;
 
 // Key validation points:
-// - If is_multi_assignable is 'false', allow ONLY ONE element in assigned_to
+// - If is_multi_assignable is 'false', allow ONLY ONE element in resource_assignment
 // - (add on ...)
 ResourceSchema = new Schema(
     {
@@ -12,6 +12,10 @@ ResourceSchema = new Schema(
             type: String,
             required: true,
             maxLength: 100
+        },
+        resource_group: {
+            type: Schema.Types.ObjectId,
+            ref: 'resource_group'
         },
         description: {
             type: String,
@@ -30,13 +34,6 @@ ResourceSchema = new Schema(
         expiry: {
             type: Date,
             required: false
-        },
-        assigned_to: {
-            type: [{
-                type: Schema.Types.ObjectId,
-                ref: 'resource_assignment'
-            }],
-            default: () => [{}],
         },
         // mainly for equipments like GPU, Software access, etc.
         is_multi_assignable: {

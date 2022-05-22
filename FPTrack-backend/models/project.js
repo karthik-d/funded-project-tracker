@@ -60,13 +60,6 @@ var ProjectSchema = new Schema(
             ref: 'proposal',
             required: true
         },
-        resources_allocated: {
-            type: [{
-                type: Schema.Types.ObjectId,
-                ref: 'resource_assignment'
-            }],
-            default: () => [{}]
-        },
         status_updates: {
             type: [{
                 type: UpdatesSchema
