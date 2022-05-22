@@ -63,6 +63,36 @@ ResourceSchema
 
 //--
 
+ResourceSchema
+    .statics
+    .getById = function (id) {
+        return this.find().getById(id);
+    }
+
+ResourceSchema
+    .query
+    .getById = function (id) {
+        return this.find({
+            _id: id
+        });
+    }
+
+//--
+
+ResourceSchema
+    .statics
+    .getByScanCode = function (code) {
+        return this.find().getByScanCode(code);
+    }
+
+ResourceSchema
+    .query
+    .getByScanCode = function (code) {
+        return this.find({
+            scan_code: code
+        });
+    }
+
 // virtual for URL
 ResourceSchema
     .virtual('url')
