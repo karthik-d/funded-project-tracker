@@ -1,20 +1,18 @@
 var express = require('express');
-const { default: mongoose } = require('mongoose');
-var mongoose = require('mongoose');
 
-var UserModel = require('../../models/user');
+var ResourceGroupModel = require('../../models/resource_group');
 var ErrorHelper = require('../../helpers/error');
 
-// TODO: Add validation
+
 function create(req, res, next) {
-    const user = new UserModel(req.body);
-    user
+    const rsrc_grp = new ResourceGroupModel(req.body);
+    rsrc_grp
         .save()
         .then((resource) => {
             res.status(201).send({
                 id: resource._id,
                 url: resource.url,
-                message: "User created"
+                message: "Resource Group created"
             })
         })
         .catch((error) => {
@@ -25,7 +23,7 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-    UserModel.onlyExisting()
+    ResourceGroupModel.onlyExisting()
         .then((resources) => {
             res.status(200).send(resources);
         })
@@ -38,7 +36,7 @@ function getAll(req, res, next) {
 
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
-        UserModel
+        ResourceGroupModel
             .onlyExisting()
             .getById(id)
             .then((resource) => {
@@ -52,7 +50,7 @@ function getById(id, req, res, next) {
     }
     else {
         res.status(404).send({
-            message: "User not found"
+            message: "Resource Group not found"
         });
     }
 };

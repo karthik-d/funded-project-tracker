@@ -8,7 +8,7 @@ async function up() {
   var arduino_rsrc = await ResourceGroup.create(
     {
       name: "Arduino UNO",
-      description: "Microcontroller board with GPIO pins. Version 3",
+      description: "Microprocessor board with GPIO pins. Version 3",
       kind: "hardware",
       is_multi_assignable: false
     }
