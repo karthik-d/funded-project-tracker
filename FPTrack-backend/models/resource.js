@@ -50,7 +50,7 @@ ResourceSchema = new Schema(
 ResourceSchema
     .statics
     .onlyExisting = function () {
-        return this.find().onlyExisiting();
+        return this.find().onlyExisting();
     };
 
 ResourceSchema

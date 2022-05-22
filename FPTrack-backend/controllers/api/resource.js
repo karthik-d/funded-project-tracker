@@ -7,8 +7,8 @@ var ErrorHelper = require('../../helpers/error');
 
 
 function create(req, res, next) {
-    const rsrc_grp = new ResourceModel(req.body);
-    rsrc_grp
+    const rsrc = new ResourceModel(req.body);
+    rsrc
         .save()
         .then((resource) => {
             res.status(201).send({
