@@ -25,20 +25,10 @@ ResourceSchema = new Schema(
             type: String,
             required: false
         },
-        kind: {
-            type: String,
-            enum: ['software', 'hardware'],
-            required: true
-        },
         // if required, eg: for a software license
         expiry: {
             type: Date,
             required: false
-        },
-        // mainly for equipments like GPU, Software access, etc.
-        is_multi_assignable: {
-            type: Boolean,
-            required: true
         },
         // Store only most recent fault here --- history will be maintained in a separate 
         // `tokens` collection
