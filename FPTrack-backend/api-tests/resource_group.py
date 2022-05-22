@@ -3,10 +3,10 @@ import requests
 
 def post(debug=True):
     req_body = dict(
-      name: "Raspberry Pi 3",
-      description: "Microcontroller board without WiFi built-in",
-      kind: "hardware",
-      is_multi_assignable: false
+      name = "Raspberry Pi 3",
+      description = "Microcontroller board without WiFi built-in",
+      kind ="hardware",
+      is_multi_assignable = False
     )
 
     resp = requests.post(
