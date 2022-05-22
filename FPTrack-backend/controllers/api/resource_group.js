@@ -1,5 +1,7 @@
 var express = require('express');
 
+var mongoose = require('mongoose');
+
 var ResourceGroupModel = require('../../models/resource_group');
 var ErrorHelper = require('../../helpers/error');
 
@@ -23,7 +25,8 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-    ResourceGroupModel.onlyExisting()
+    ResourceGroupModel
+        .onlyExisting()
         .then((resources) => {
             res.status(200).send(resources);
         })

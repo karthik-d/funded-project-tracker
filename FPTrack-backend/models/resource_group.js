@@ -23,6 +23,10 @@ var ResourceGroupSchema = new Schema(
             type: Boolean,
             required: true
         },
+        deleted_at: {
+            type: Date,
+            default: null
+        }
     },
     {
         timestamps: {
@@ -37,7 +41,7 @@ var ResourceGroupSchema = new Schema(
 ResourceGroupSchema
     .statics
     .onlyExisting = function () {
-        return this.find().onlyExisiting();
+        return this.find().onlyExisting();
     };
 
 ResourceGroupSchema
@@ -47,6 +51,14 @@ ResourceGroupSchema
             deleted_at: null
         });
     };
+
+ResourceGroupSchema
+    .query
+    .getById = function (id) {
+        return this.find({
+            _id: id
+        });
+    }
 
 //--
 

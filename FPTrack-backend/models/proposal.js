@@ -104,7 +104,7 @@ ProposalSchema
 // --
 
 ProposalSchema
-    .query
+    .statics
     .getById = function (id) {
         return this.find().getById();
     }
