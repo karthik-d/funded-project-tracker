@@ -21,6 +21,11 @@ It handles the following key aspects:
 
 ## Backend
 
+### Major Design Todos
+
+- [ ] Find unique/de-duplication factor for Proposals (and hence, Projects)
+- [ ] Find unique/de-duplication factor for Resource Groups
+
 ### Global Installs
 
 Do `npm install -g [package-name]`
