@@ -7,12 +7,10 @@ sample_pdf_path = os.path.join(os.getcwd(), *((os.path.pardir,)*1), 'check_files
 
 def post(debug=True):
 
-    pdf_doc_b64_string = encode_pdf(sample_pdf_path)
-
     req_body = dict(
-        proposal: "",
-        approved_budget: 10000,
-        approved_duration: 20,
+        proposal ="628b5425099b1ba80b543da6",
+        approved_budget = 10000,
+        approved_duration = 20,
     )
 
     resp = requests.post(
@@ -46,7 +44,7 @@ def get(id=None, debug=True):
 
 
 # post()
-# get(debug=False)
+get(debug=False)
 # get(id='62869d17060d20b1dbcb56ee', debug=False)
 
 # print(resp.json())

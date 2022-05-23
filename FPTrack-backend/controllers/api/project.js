@@ -23,7 +23,7 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-    ResourceModel
+    ProjectModel
         .onlyExisting()
         .then((resources) => {
             res.status(200).send(resources);
@@ -37,7 +37,7 @@ function getAll(req, res, next) {
 
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
-        ResourceModel
+        ProjectModel
             .onlyExisting()
             .getById(id)
             .then((resource) => {

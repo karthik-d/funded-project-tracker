@@ -64,13 +64,13 @@ var ProjectSchema = new Schema(
             type: [{
                 type: UpdatesSchema
             }],
-            default: () => [{}]
+            default: () => []
         },
         outcomes: {
             type: [{
                 type: OutcomesSchema
             }],
-            default: () => [{}]
+            default: () => []
         },
         approved_budget: {
             type: Number,
@@ -98,7 +98,7 @@ var ProjectSchema = new Schema(
 ProjectSchema
     .statics
     .onlyExisting = function () {
-        return this.find().onlyExisiting();
+        return this.find().onlyExisting();
     };
 
 ProjectSchema
@@ -106,6 +106,22 @@ ProjectSchema
     .onlyExisting = function () {
         return this.find({
             deleted_at: null
+        });
+    };
+
+//--
+
+ProjectSchema   
+    .statics
+    .getById = function (id) {
+         return this.find().getById(id);
+    };
+
+ProjectSchema
+    .query
+    .getById = function (id) {
+        return this.find({
+            _id: id 
         });
     };
 
