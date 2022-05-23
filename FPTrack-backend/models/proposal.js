@@ -3,6 +3,10 @@ var Promise = require('promise');
 
 var Schema = mongoose.Schema;
 
+// Validations to consider
+// - rejected_on and approved_on should NOT BOTH be Non-NULL!
+// - setup a trigger/autorun to make on or the other null, if the other is forcefully non-nulled
+// - (add on...)
 var ProposalSchema = new Schema(
     {
         title: {
@@ -60,6 +64,14 @@ var ProposalSchema = new Schema(
             type: Number,
             required: true
         },
+        approved_on: {
+            type: Date,
+            default: null
+        },
+        rejected_on: {
+            type: Date,
+            default: null
+        },
         deleted_at: {
             type: Date,
             default: null
@@ -92,7 +104,7 @@ ProposalSchema
 // --
 
 ProposalSchema
-    .query
+    .statics
     .getById = function (id) {
         return this.find().getById();
     }

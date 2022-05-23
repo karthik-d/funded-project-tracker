@@ -1,30 +1,30 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
-var UserModel = require('../../models/user');
+var ProjectModel = require('../../models/project');
 var ErrorHelper = require('../../helpers/error');
 
-// TODO: Add validation
 function create(req, res, next) {
-    const user = new UserModel(req.body);
-    user
-        .save()
-        .then((resource) => {
-            res.status(201).send({
-                id: resource._id,
-                url: resource.url,
-                message: "User created"
-            })
-        })
-        .catch((error) => {
-            res.status(400).send(
-                ErrorHelper.construct_json_response(error)
-            );
-        });
+	const project = new ProjectModel(req.body);
+	project 
+	.save()
+	.then((resource) => {
+		res.status(200).send({
+			id: resource._id,
+			url: resource._url,
+			message: "Project created"
+		});
+	})
+	.catch((error) => {
+		res.status(400).send(
+			ErrorHelper.construct_json_response(error)
+		);
+	});
 };
 
 function getAll(req, res, next) {
-    UserModel.onlyExisting()
+    ProjectModel
+        .onlyExisting()
         .then((resources) => {
             res.status(200).send(resources);
         })
@@ -37,7 +37,7 @@ function getAll(req, res, next) {
 
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
-        UserModel
+        ProjectModel
             .onlyExisting()
             .getById(id)
             .then((resource) => {
@@ -51,7 +51,7 @@ function getById(id, req, res, next) {
     }
     else {
         res.status(404).send({
-            message: "User not found"
+            message: "Project not found"
         });
     }
 };
@@ -59,3 +59,4 @@ function getById(id, req, res, next) {
 exports.create = create;
 exports.getById = getById;
 exports.getAll = getAll;
+

@@ -1,19 +1,20 @@
 var express = require('express');
+
 var mongoose = require('mongoose');
 
-var UserModel = require('../../models/user');
+var ResourceModel = require('../../models/resource');
 var ErrorHelper = require('../../helpers/error');
 
-// TODO: Add validation
+
 function create(req, res, next) {
-    const user = new UserModel(req.body);
-    user
+    const rsrc = new ResourceModel(req.body);
+    rsrc
         .save()
         .then((resource) => {
             res.status(201).send({
                 id: resource._id,
                 url: resource.url,
-                message: "User created"
+                message: "Resource created"
             })
         })
         .catch((error) => {
@@ -24,7 +25,8 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-    UserModel.onlyExisting()
+    ResourceModel
+        .onlyExisting()
         .then((resources) => {
             res.status(200).send(resources);
         })
@@ -37,7 +39,7 @@ function getAll(req, res, next) {
 
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
-        UserModel
+        ResourceModel
             .onlyExisting()
             .getById(id)
             .then((resource) => {
@@ -51,7 +53,7 @@ function getById(id, req, res, next) {
     }
     else {
         res.status(404).send({
-            message: "User not found"
+            message: "Resource not found"
         });
     }
 };

@@ -4,44 +4,27 @@ var Promise = require('promise');
 var Schema = mongoose.Schema;
 
 // Key validation points:
-// - If is_multi_assignable is 'false', allow ONLY ONE element in assigned_to
+// - If is_multi_assignable is 'false', allow ONLY ONE element in resource_assignment
 // - (add on ...)
 ResourceSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: true,
-            maxLength: 100
+        resource_group: {
+            type: Schema.Types.ObjectId,
+            ref: 'resource_group'
         },
-        description: {
+        remarks: {
             type: String,
             required: false
         },
         scan_code: {
             type: String,
-            required: false
-        },
-        kind: {
-            type: String,
-            enum: ['software', 'hardware'],
-            required: true
+            required: false,
+            unique: true
         },
         // if required, eg: for a software license
         expiry: {
             type: Date,
             required: false
-        },
-        assigned_to: {
-            type: [{
-                type: Schema.Types.ObjectId,
-                ref: 'resource_assignment'
-            }],
-            default: () => [{}],
-        },
-        // mainly for equipments like GPU, Software access, etc.
-        is_multi_assignable: {
-            type: Boolean,
-            required: true
         },
         // Store only most recent fault here --- history will be maintained in a separate 
         // `tokens` collection
@@ -67,7 +50,7 @@ ResourceSchema = new Schema(
 ResourceSchema
     .statics
     .onlyExisting = function () {
-        return this.find().onlyExisiting();
+        return this.find().onlyExisting();
     };
 
 ResourceSchema
@@ -79,6 +62,36 @@ ResourceSchema
     };
 
 //--
+
+ResourceSchema
+    .statics
+    .getById = function (id) {
+        return this.find().getById(id);
+    }
+
+ResourceSchema
+    .query
+    .getById = function (id) {
+        return this.find({
+            _id: id
+        });
+    }
+
+//--
+
+ResourceSchema
+    .statics
+    .getByScanCode = function (code) {
+        return this.find().getByScanCode(code);
+    }
+
+ResourceSchema
+    .query
+    .getByScanCode = function (code) {
+        return this.find({
+            scan_code: code
+        });
+    }
 
 // virtual for URL
 ResourceSchema

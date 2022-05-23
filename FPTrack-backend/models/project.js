@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Promise = require('promise');
 
-var Schema = mongoose.model.Schema;
+var Schema = mongoose.Schema;
 
 
 // Child schema
@@ -60,33 +60,30 @@ var ProjectSchema = new Schema(
             ref: 'proposal',
             required: true
         },
-        resources_allocated: {
-            type: [{
-                type: Schema.Types.ObjectId,
-                ref: 'resource_assignment'
-            }],
-            default: () => [{}]
-        },
         status_updates: {
             type: [{
                 type: UpdatesSchema
             }],
-            default: () => [{}]
+            default: () => []
         },
         outcomes: {
             type: [{
                 type: OutcomesSchema
             }],
-            default: () => [{}]
+            default: () => []
         },
         approved_budget: {
             type: Number,
             required: true
         },
+        approved_duration: {
+            type: Number, // in MONTHS
+            required: true
+        },
         completed_on: {
             type: Date,
             default: null
-        }
+        },
     },
     {
         timestamps: {
@@ -101,7 +98,7 @@ var ProjectSchema = new Schema(
 ProjectSchema
     .statics
     .onlyExisting = function () {
-        return this.find().onlyExisiting();
+        return this.find().onlyExisting();
     };
 
 ProjectSchema
@@ -109,6 +106,22 @@ ProjectSchema
     .onlyExisting = function () {
         return this.find({
             deleted_at: null
+        });
+    };
+
+//--
+
+ProjectSchema   
+    .statics
+    .getById = function (id) {
+         return this.find().getById(id);
+    };
+
+ProjectSchema
+    .query
+    .getById = function (id) {
+        return this.find({
+            _id: id 
         });
     };
 

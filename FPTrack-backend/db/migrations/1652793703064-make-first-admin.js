@@ -1,4 +1,4 @@
-const { User } = require('../../models')
+const User = require('../../models').User;
 
 async function up() {
   await User.create(
