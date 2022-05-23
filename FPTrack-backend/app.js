@@ -13,7 +13,7 @@ var userRouter = require('./routes/user');
 var proposalRouter = require('./routes/proposal');
 var resourceGroupRouter = require('./routes/resource_group');
 var resourceRouter = require('./routes/resource');
-var projectRouter = require('/routes/project')
+var projectRouter = require('./routes/project')
 
 var app = express();
 

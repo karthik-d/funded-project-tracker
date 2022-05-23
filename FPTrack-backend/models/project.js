@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Promise = require('promise');
 
-var Schema = mongoose.model.Schema;
+var Schema = mongoose.Schema;
 
 
 // Child schema
