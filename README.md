@@ -26,6 +26,16 @@ It handles the following key aspects:
 - [ ] Find unique/de-duplication factor for Proposals (and hence, Projects)
 - [ ] Find unique/de-duplication factor for Resource Groups
 
+### Install NPM and Node.js
+
+Use LTS - Version v16.15.0
+(includes npm 8.5.5)
+
+- Install NVM using this: https://github.com/nvm-sh/nvm#install--update-script 
+- Install NodeJS LTS (16.15.0 as of now)
+`nvm install --lts`
+
+
 ### Global Installs
 
 Do `npm install -g [package-name]`
