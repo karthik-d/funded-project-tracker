@@ -43,6 +43,23 @@ ResourceAssignmentSchema
             deleted_at: null
         });
     };
+ 
+//--
+
+ResourceAssignmentSchema
+	.statics
+	.getById = function (id){
+		return this.find().getById(id);
+	};
+
+ResoureAssignmentSchema
+	.query
+	.getById = function (id) {
+		return this.find({
+			deleted_at: null
+		});
+	};
+	
 
 //--
 
