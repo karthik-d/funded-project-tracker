@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../../styles/Home.module.css'
+import styles from '../styles/Home.module.css'
 import Link from 'next/link';
 
 function Opt_button({props}){
@@ -15,6 +15,9 @@ export default function Options() {
                       ,
                       {"name":"Guest Search",
                         "url":"nothing"
+                      },,
+                      {"name":"View Users",
+                        "url":"viewusers"
                       }
 
                     ];
