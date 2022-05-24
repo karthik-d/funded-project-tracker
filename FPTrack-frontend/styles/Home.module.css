@@ -11,6 +11,12 @@
     display: block;
     
 }
+.proposalForm{
+  border:orange;
+   border-width:5px; 
+   border-style:solid;
+   margin: 40px;
+}
 .option button{
   padding: 5%;
   margin: 5%;
@@ -19,12 +25,14 @@
   border: #0070f3;
   color:white;
   font-size:large;
-  background-color:#0070f3;
+  background-color: rgb(3, 12, 191);
+  box-shadow: 5px 10px rgb(76, 81, 173);
 }
 
 .option button:hover{
   background-color:darkblue;
   cursor: pointer;
+  box-shadow: none;
 }
 
 .main {
@@ -139,3 +147,12 @@
     flex-direction: column;
   }
 }
+
+/* 
+customnise downloaded react components
+*/
+.searchBox#css_custom_input::placeholder { color: red; }
+.multiselectContainer { 
+  width:fit-content;
+  }
+
