@@ -3,6 +3,9 @@
 
 export default function Err404() {
     return(
-        <h1>404</h1>
+        <div>
+            <h1>404</h1>
+            <h2>500</h2>
+        </div>
     );
 }
