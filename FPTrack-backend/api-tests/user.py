@@ -11,6 +11,17 @@ def post(debug=True):
         access = ['user']
     )
 
+    """
+    req_body = dict(
+        first_name = "Harry",
+        last_name = "Yeates",
+        date_of_birth = '1999-09-09',
+        email = 'harry@gmail.com',
+        role = 'faculty',
+        access = ['resource_mgr']
+    )
+    """
+
     resp = requests.post(
         'http://localhost:3000/api/user',
         json = req_body

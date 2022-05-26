@@ -13,6 +13,8 @@ var userRouter = require('./routes/user');
 var proposalRouter = require('./routes/proposal');
 var resourceGroupRouter = require('./routes/resource_group');
 var resourceRouter = require('./routes/resource');
+var projectRouter = require('./routes/project')
+var resourceAssignmentRouter = require('./routes/resource_assignment');
 
 var app = express();
 
@@ -34,7 +36,8 @@ app.use('/api/user', userRouter);
 app.use('/api/proposal', proposalRouter);
 app.use('/api/resource-group', resourceGroupRouter);
 app.use('/api/resource', resourceRouter);
-
+app.use('/api/resource-assignment', resourceAssignmentRouter);
+app.use('/api/project', projectRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

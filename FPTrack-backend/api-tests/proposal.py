@@ -23,19 +23,30 @@ def post(debug=True):
 
     pdf_doc_b64_string = encode_pdf(sample_pdf_path)
 
+    # req_body = dict(
+    #     title = "IoT Driven Smart Trains",
+    #     decription = "blah blah blah...",
+    #     domains = ['iot', 'machine_learning'],
+    #     supervisors = ['admin@admin.com', 'test@admin.com'],
+    #     leader = 'ben@gmail.com',
+    #     members = ['claire@gmail.com', 'derek@gmail.com'],
+    #     funding_type = 'internal',
+    #     funding_agency = 'SSN Trust',
+    #     pdf_document = pdf_doc_b64_string,
+    #     budget = 10000
+    # )
     req_body = dict(
-        title = "IoT Driven Smart Trains",
-        decription = "blah blah blah...",
-        domains = ['iot', 'machine_learning'],
-        supervisors = ['admin@admin.com', 'test@admin.com'],
-        leader = 'ben@gmail.com',
-        members = ['claire@gmail.com', 'derek@gmail.com'],
-        funding_type = 'internal',
-        funding_agency = 'SSN Trust',
+        title = "Number plate detection",
+        decription = "blah blah blah...blah..",
+        domains = ['machine_learning'],
+        supervisors = ['test@admin.com'],
+        leader = 'greg@gmail.com',
+        members = ['ben@gmail.com', 'claire@gmail.com'],
+        funding_type = 'external',
+        funding_agency = 'DST-SERB',
         pdf_document = pdf_doc_b64_string,
-        budget = 10000
+        budget = 50000
     )
-
     resp = requests.post(
         'http://localhost:3000/api/proposal',
         json = req_body
@@ -64,12 +75,12 @@ def get(id=None, debug=True):
     print(resp.status_code)
     if not debug:
         print(resp.json()['_id'])
-        save_pdf(decode_pdf(resp.json()[0]['pdf_document']['data']))
+        # save_pdf(decode_pdf(resp.json()[0]['pdf_document']['data']))
 
 
-# post()
+post()
 # get(debug=False)
-get(id='62869d17060d20b1dbcb56ee', debug=False)
+# get(id='628b5425099b1ba80b543da6', debug=False)
 
 
 

@@ -13,6 +13,7 @@ var ResourceAssignmentSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'project',
             required: true,
+            validate: [checkProjectType, "Project should be internal!"]
         },
         assigned_by: {
             type: Schema.Types.ObjectId,
@@ -27,6 +28,16 @@ var ResourceAssignmentSchema = new Schema(
         }
     }
 );
+
+function checkProjectType(given_proj){
+    this.populate('assigned_to')
+        .then((project_rsrc) => {
+            project_rsrc.assigned_to.populate('proposal')
+                .then((proposal_rsrc) => {
+                    return (proposal_rsrc.proposal.funding_type=='internal');
+                })
+        })
+}
 
 //-- 
 
@@ -43,6 +54,23 @@ ResourceAssignmentSchema
             deleted_at: null
         });
     };
+ 
+//--
+
+ResourceAssignmentSchema
+	.statics
+	.getById = function (id){
+		return this.find().getById(id);
+	};
+
+ResourceAssignmentSchema
+	.query
+	.getById = function (id) {
+		return this.find({
+			deleted_at: null
+		});
+	};
+	
 
 //--
 
