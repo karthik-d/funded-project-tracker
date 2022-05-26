@@ -7,6 +7,7 @@ sample_pdf_path = os.path.join(os.getcwd(), *((os.path.pardir,)*1), 'check_files
 
 def post(debug=True):
 
+<<<<<<< HEAD
     # req_body = dict(
     #     proposal ="628b5425099b1ba80b543da6",
     #     approved_budget = 10000,
@@ -17,6 +18,14 @@ def post(debug=True):
         approved_budget = 25000,
         approved_duration = 40,
     )
+=======
+    req_body = dict(
+        proposal ="628b5425099b1ba80b543da6",
+        approved_budget = 10000,
+        approved_duration = 20,
+    )
+
+>>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
     resp = requests.post(
         'http://localhost:3000/api/project',
         json = req_body
@@ -47,8 +56,13 @@ def get(id=None, debug=True):
         print(resp.json())
 
 
+<<<<<<< HEAD
 post()
 # get(debug=False)
+=======
+# post()
+get(debug=False)
+>>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
 # get(id='62869d17060d20b1dbcb56ee', debug=False)
 
 # print(resp.json())

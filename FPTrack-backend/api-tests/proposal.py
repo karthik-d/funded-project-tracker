@@ -78,9 +78,15 @@ def get(id=None, debug=True):
         # save_pdf(decode_pdf(resp.json()[0]['pdf_document']['data']))
 
 
+<<<<<<< HEAD
 post()
 # get(debug=False)
 # get(id='628b5425099b1ba80b543da6', debug=False)
+=======
+# post()
+get(debug=False)
+get(id='628b5425099b1ba80b543da6', debug=False)
+>>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
 
 
 

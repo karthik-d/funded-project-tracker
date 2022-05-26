@@ -63,7 +63,11 @@ ResourceAssignmentSchema
 		return this.find().getById(id);
 	};
 
+<<<<<<< HEAD
 ResourceAssignmentSchema
+=======
+ResoureAssignmentSchema
+>>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
 	.query
 	.getById = function (id) {
 		return this.find({

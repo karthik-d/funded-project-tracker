@@ -21,6 +21,21 @@ It handles the following key aspects:
 
 ## Backend
 
+### Major Design Todos
+
+- [ ] Find unique/de-duplication factor for Proposals (and hence, Projects)
+- [ ] Find unique/de-duplication factor for Resource Groups
+
+### Install NPM and Node.js
+
+Use LTS - Version v16.15.0
+(includes npm 8.5.5)
+
+- Install NVM using this: https://github.com/nvm-sh/nvm#install--update-script 
+- Install NodeJS LTS (16.15.0 as of now)
+`nvm install --lts`
+
+
 ### Global Installs
 
 Do `npm install -g [package-name]`
@@ -45,9 +60,10 @@ Do `npm install -g [package-name]`
 ## Compiled Document
 - [Aggregated Documentation - Upto Activity Diagrams](https://drive.google.com/file/d/1-ugSlGmEHbMfo-DBxR1wm4ZShB_HDwF-/view?usp=sharing)
 
-## Procedure to run the Website
+## Procedure to run the frontned of  Website
 - Install nodejs 16.15.0 LTS
 - cd fptrack_front
 - npm install react react-dom next
+- npm install multiselect-react-dropdown
 - npm run dev
-- npx next telemetry disable ,if you want to disable
+- npx next telemetry disable //if you want to disable data collection
