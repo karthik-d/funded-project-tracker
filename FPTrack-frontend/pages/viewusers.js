@@ -7,54 +7,55 @@ import React, { useState, useEffect, Component } from 'react';
 import user from '../../FPTrack-backend/models/user';
 
 
-function obje(props){
-    return (
+function obje(props) {
+  return (
     <tr>
-        props.user .map(([key, value]) => {
-                <td>{value}</td>
-        });
+      props.user.map(function([key, value]){
+        <td>{value}</td>
+      });
 
-        </tr>
-    );
+    </tr>
+  );
 }
 
-export default function viewusers()  {
-    const [users, setUsers] = useState([]);
-    const keys = null;
-        const fetchData = () => {
-          fetch("http://localhost:3000/api/user")
-          .then(response => response.json())
-          .then(jsondata => {setUsers(jsondata);console.log(jsondata);
-            const arr = []
-            for (var key in jsondata[0]) {
-                if (jsondata[0].hasOwnProperty(key)) {
-                  var val = jsondata[0][key];
-                  arr.push(key);
-            }
-            }
-            keys=arr;
+export default function viewusers() {
+  const [users, setUsers] = useState([]);
+  const keys = null;
+  const fetchData = () => {
+    fetch("http://localhost:3000/api/user")
+      .then(response => response.json())
+      .then(jsondata => {
+        setUsers(jsondata); console.log(jsondata);
+        const arr = []
+        for (var key in jsondata[0]) {
+          if (jsondata[0].hasOwnProperty(key)) {
+            var val = jsondata[0][key];
+            arr.push(key);
+          }
         }
-            );
-        }
-    
-
-        useEffect(() => {
-          fetchData()
-        }, []);
-        
+        keys = arr;
+      }
+      );
+  }
 
 
-return (
+  useEffect(() => {
+    fetchData()
+  }, []);
+
+
+
+  return (
     <div>
-    <Header></Header>
-            <ul>
-          {users.map(user => (
-           <obje key={keys} val={user}/> 
-          ))}
-        </ul>
-      
+      <Header></Header>
+      <ul>
+        {users.map(user => (
+          <obje key={keys} val={user} />
+        ))}
+      </ul>
+
     </div>
 
-);
+  );
 
 }
