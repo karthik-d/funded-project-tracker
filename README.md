@@ -19,6 +19,20 @@ It handles the following key aspects:
 ### Validations to handle
 - PDF Proposal Upload must be under 8MB (soft limit)
 
+### Server-Client Behavior Agreeement
+- When new user uses OAuth to register, the token validation (POST /api/auth/) will return with,
+  ```
+  {
+      error_code: 901,
+      message: "User must be created",
+      url: "/api/user/",
+      method: "POST"
+  }
+  HTTP_CODE: 404
+  ```
+  Initiate a form on the frontend to collect user metadata i.e. role, access, etc. and create a user using the given URL and METHOD
+  Then, send the same token  to the token validation (POST /api/auth/) endpoint.
+
 ## Backend
 
 ### Major Design Todos
@@ -47,6 +61,17 @@ Do `npm install -g [package-name]`
 
 # References
 
+
+## Internal Error Codes      
+
+
+ 
+| Code    | Description | Suggested Action  |
+| :---:   | :---------- | :---------------- |
+| `901`   | Valid google user does not exist on FPTrack DB | Create user with same email, along with metadata by POSTing to /api/user first | 
+ 
+
+
 ## Atomic UML Documents
 - [Team Google Drive Directory](https://drive.google.com/drive/folders/1q4Pmt54Smr6XTmxe8-WBDu5sHodzzcVc?usp=sharing)
 - [Problem Statement Specification](https://drive.google.com/file/d/12lmrwYze91KfEdE4WlvUXiz-RDvtJo6p/view?usp=sharing)
@@ -60,10 +85,19 @@ Do `npm install -g [package-name]`
 ## Compiled Document
 - [Aggregated Documentation - Upto Activity Diagrams](https://drive.google.com/file/d/1-ugSlGmEHbMfo-DBxR1wm4ZShB_HDwF-/view?usp=sharing)
 
-## Procedure to run the frontned of  Website
-- Install nodejs 16.15.0 LTS
-- cd fptrack_front
-- npm install react react-dom next
-- npm install multiselect-react-dropdown
-- npm run dev
-- npx next telemetry disable //if you want to disable data collection
+## Procedure to Execute
+
+### Common Dependencies
+
+- nodejs 16.15.0 LTS (preferably, with nvm)
+
+### Frontend
+- Navigate to ./FPTrack-frontend
+- Install local dependencies using `npm install` from current context
+- Run `npm run dev` to get the frontend service going
+
+### Backend
+- Navigate to ./FPTrack-backend
+- Ensure that all `global installs` are done
+- Install local dependencies using `npm install` from current context
+- Run `npm run serverstart` to get the development server going
