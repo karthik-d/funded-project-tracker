@@ -148,12 +148,11 @@ function getById(id, req, res, next) {
         .onlyExisting()
         .getById(id)
         .populate('leader')
-        // .populate('members')
-        // .populate('supervisors')
+        .populate('members')
+        .populate('supervisors')
         .then(([resource]) => {
-            console.log("HERE" + resource._doc.toObject({ virtuals: true }));
-            // resource._doc.pdf_document = resource._doc.document_b64;
-            // console.log(resource._doc.document_b64);
+            resource.pdf_document = resource.document_base64;
+            console.log("HERE" + resource);
             res.status(200).send(resource);
         })
         .catch((error) => {

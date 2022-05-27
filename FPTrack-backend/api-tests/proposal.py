@@ -4,20 +4,22 @@ import os
 import json
 
 sample_pdf_path = os.path.join(os.getcwd(), *((os.path.pardir,)*1), 'check_files', 'agg_doc.pdf')
+destn_pdf_path = os.path.join(os.getcwd(), *((os.path.pardir,)*1), 'check_files', 'retreive_doc.pdf')
 
 def encode_pdf(filepath):
     pdf_doc_b64_bytes = base64.b64encode(open(filepath, 'rb').read())
     pdf_doc_b64_string = pdf_doc_b64_bytes.decode('utf-8')
     return pdf_doc_b64_string
 
-def save_pdf(filedata):
-    pass
+def save_pdf(filedata, filepath):
+    byte_data = decode_pdf(filedata)
+    with open(filepath, 'wb') as f_out:
+        f_out.write(byte_data)
+
 
 def decode_pdf(byte_list):
-    print(max(byte_list))
-    print(min(byte_list))
-    base64.b64decode(''.join([chr(ascii) for ascii in byte_list]))
-    return None
+    return base64.b64decode(''.join([chr(ascii) for ascii in byte_list]))
+
 
 def post(debug=True):
 
@@ -75,18 +77,15 @@ def get(id=None, debug=True):
     print(resp.status_code)
     if not debug:
         print(resp.json()['_id'])
-        # save_pdf(decode_pdf(resp.json()[0]['pdf_document']['data']))
+        print(resp.json().keys())
+        print(resp.json()['members'])
+        save_pdf(resp.json()['pdf_document']['data'], destn_pdf_path)
 
 
-<<<<<<< HEAD
-post()
-# get(debug=False)
-# get(id='628b5425099b1ba80b543da6', debug=False)
-=======
+# <<<<<<< HEAD
 # post()
-get(debug=False)
+# get(debug=False)
 get(id='628b5425099b1ba80b543da6', debug=False)
->>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
 
 
 

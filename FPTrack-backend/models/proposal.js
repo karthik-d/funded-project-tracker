@@ -14,7 +14,7 @@ var ProposalSchema = new Schema(
             required: true,
             maxLength: 100
         },
-        decription: {
+        description: {
             type: String
         },
         domains: {
