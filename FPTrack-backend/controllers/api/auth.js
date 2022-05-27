@@ -1,6 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var OAuthClient = require('google-auth-library');
+var { OAuthClient } = require('google-auth-library');
 
 var UserMode = require('../../models/user');
 var ErrorHelper = require('../../helpers/error');
@@ -13,7 +13,10 @@ TODO: Create Client ID env variable
 function getAuthUser(req, res, next) {
     var { userToken } = req.body;
     // validate token
-    OAuthClient.verifyIdToken({
+    var auth_client = new OAuthClient({
+        clientId: `${process.env.OAUTH_CLIENTID}`
+    });
+    auth_client.verifyIdToken({
         idToken: userToken,
         audient: `${process.env.OAUTH_CLIENTID}`
     })
@@ -47,3 +50,5 @@ function getAuthUser(req, res, next) {
             )
         });
 }
+
+exports.getAuthUser = getAuthUser;

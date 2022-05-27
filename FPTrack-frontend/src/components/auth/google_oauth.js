@@ -28,7 +28,7 @@ export function LoginOneTapCrux() {
             })
             .catch((error) => {
                 // PUT YOUR ERROR PAGE HANDLE HERE!!!
-                console.log(error);
+                console.log("ERROR 2" + error);
             });
     };
 
