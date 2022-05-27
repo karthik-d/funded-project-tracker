@@ -56,9 +56,6 @@ def post(debug=True):
 
     print(resp.text)    
     print(resp.status_code)
-    # print("Request:", resp.request.body.decode('utf-8')[:100])
-    # print(type(resp.request.body))
-    # print(len(resp.request.body)/(2**20))
     if not debug:
         print(resp.json())
 
@@ -76,18 +73,17 @@ def get(id=None, debug=True):
     print(resp.text)
     print(resp.status_code)
     if not debug:
-        print(resp.json()['_id'])
-        print(resp.json().keys())
-        print(resp.json()['members'])
-        save_pdf(resp.json()['pdf_document']['data'], destn_pdf_path)
+        if id is None:
+            json_response = resp.json()[2]
+        else:
+            json_response = resp.json()
+        print(json_response['_id'])
+        print(json_response.keys())
+        print(json_response['members'])
+        save_pdf(json_response['pdf_document']['data'], destn_pdf_path)
 
 
 # <<<<<<< HEAD
 # post()
-# get(debug=False)
-get(id='628b5425099b1ba80b543da6', debug=False)
-
-
-
-
-# print(resp.json())
+get(debug=False)
+# get(id='628b5425099b1ba80b543da6', debug=False)

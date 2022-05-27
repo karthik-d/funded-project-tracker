@@ -128,11 +128,11 @@ function getAll(req, res, next) {
     ProposalModel
         .onlyExisting()
         .then((resources) => {
-            // resources.forEach(
-            //     function (rsrc, idx) {
-            //         rsrc.pdf_document = rsrc.document_b64;
-            //     }
-            // );
+            resources.forEach(
+                function (rsrc, idx) {
+                    rsrc.pdf_document = rsrc.document_base64;
+                }
+            );
             res.status(200).send(resources)
         })
         .catch((error) => {
@@ -152,7 +152,6 @@ function getById(id, req, res, next) {
         .populate('supervisors')
         .then(([resource]) => {
             resource.pdf_document = resource.document_base64;
-            console.log("HERE" + resource);
             res.status(200).send(resource);
         })
         .catch((error) => {
@@ -165,7 +164,3 @@ function getById(id, req, res, next) {
 exports.create = create;
 exports.getAll = getAll;
 exports.getById = getById;
-
-
-// TODO: Return PDF Document in Base64
-// TODO: Verify PDF by re-rendering at client
