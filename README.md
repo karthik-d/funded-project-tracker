@@ -61,6 +61,17 @@ Do `npm install -g [package-name]`
 
 # References
 
+
+## Internal Error Codes      
+
+
+ 
+| Code    | Description | Suggested Action  |
+| :---:   | :---------- | :---------------- |
+| `901`   | Valid google user does not exist on FPTrack DB | Create user with same email, along with metadata by POSTing to /api/user first | 
+ 
+
+
 ## Atomic UML Documents
 - [Team Google Drive Directory](https://drive.google.com/drive/folders/1q4Pmt54Smr6XTmxe8-WBDu5sHodzzcVc?usp=sharing)
 - [Problem Statement Specification](https://drive.google.com/file/d/12lmrwYze91KfEdE4WlvUXiz-RDvtJo6p/view?usp=sharing)
