@@ -1,7 +1,9 @@
 import { GoogleLogin } from 'react-google-login';
 
 
-const handleLogin = async googleData => {
+const handleLogin = async (googleData) => {
+
+    console.log(googleData);
 
     const res = await fetch(
         "/api/v1/auth/google",
@@ -15,13 +17,13 @@ const handleLogin = async googleData => {
             }
         });
 
-    const data = await res.json();
-    conole.log(data);
+    const data = await res;
+    console.log(data);
 }
 
 export default function GoogleSignin() {
     return (<GoogleLogin
-        clientId={process.env.REACT_APP_OAUTH_CLIENTID}
+        clientId={"103603048152-42oo200pr067ahtntminh5m6kc88m618.apps.googleusercontent.com"}
         buttonText="Log in with Google"
         onSuccess={handleLogin}
         onFailure={handleLogin}
