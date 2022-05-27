@@ -22,8 +22,16 @@ function getAuthUser(req, res, next) {
             // retreive user
             UserModel
                 .onlyExisting
-                .findByEmail(payload.email)
+                .getByEmail(payload.email)
                 .then((user) => {
+                    if (user == null) {
+                        res.status(404).send({
+                            error_code: 901,
+                            message: "User must be created",
+                            url: "/api/user/",
+                            method: "POST"
+                        })
+                    }
                     user.auth_token = token;
                     res.status(200).send(user);
                 })
