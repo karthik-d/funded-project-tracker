@@ -1,6 +1,15 @@
 .header {
   background:rgb(244, 245, 238);
   padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pageTitle{
+  background-color: inherit;
+  color: rgb(76, 81, 173);
+  font-size: 32px;
+  font-weight: bold;
 }
 .onProposal box{
   float: left;
