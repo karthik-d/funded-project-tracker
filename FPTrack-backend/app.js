@@ -21,6 +21,7 @@ var projectRouter = require('./routes/project')
 var resourceAssignmentRouter = require('./routes/resource_assignment');
 // =======
 // >>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
+var authRouter = require('./routes/auth');
 
 var app = express();
 
@@ -47,6 +48,7 @@ app.use('/api/resource-assignment', resourceAssignmentRouter);
 // =======
 // >>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
 app.use('/api/project', projectRouter);
+app.use('/api/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
