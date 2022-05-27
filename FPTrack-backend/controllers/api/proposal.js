@@ -151,7 +151,7 @@ function getById(id, req, res, next) {
         // .populate('members')
         // .populate('supervisors')
         .then(([resource]) => {
-            // console.log("HERE" + resource._doc.toObject({ virtuals: true }));
+            console.log("HERE" + resource._doc.toObject({ virtuals: true }));
             // resource._doc.pdf_document = resource._doc.document_b64;
             // console.log(resource._doc.document_b64);
             res.status(200).send(resource);

@@ -29,12 +29,12 @@ var ResourceAssignmentSchema = new Schema(
     }
 );
 
-function checkProjectType(given_proj){
+function checkProjectType(given_proj) {
     this.populate('assigned_to')
         .then((project_rsrc) => {
             project_rsrc.assigned_to.populate('proposal')
                 .then((proposal_rsrc) => {
-                    return (proposal_rsrc.proposal.funding_type=='internal');
+                    return (proposal_rsrc.proposal.funding_type == 'internal');
                 })
         })
 }
@@ -54,27 +54,27 @@ ResourceAssignmentSchema
             deleted_at: null
         });
     };
- 
+
 //--
 
 ResourceAssignmentSchema
-	.statics
-	.getById = function (id){
-		return this.find().getById(id);
-	};
+    .statics
+    .getById = function (id) {
+        return this.find().getById(id);
+    };
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 ResourceAssignmentSchema
-=======
-ResoureAssignmentSchema
->>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
-	.query
-	.getById = function (id) {
-		return this.find({
-			deleted_at: null
-		});
-	};
-	
+    // =======
+    // ResoureAssignmentSche/ma
+    // >>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
+    .query
+    .getById = function (id) {
+        return this.find({
+            deleted_at: null
+        });
+    };
+
 
 //--
 
