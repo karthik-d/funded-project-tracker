@@ -60,10 +60,18 @@ Do `npm install -g [package-name]`
 ## Compiled Document
 - [Aggregated Documentation - Upto Activity Diagrams](https://drive.google.com/file/d/1-ugSlGmEHbMfo-DBxR1wm4ZShB_HDwF-/view?usp=sharing)
 
-## Procedure to run the frontned of  Website
+## Procedure to Execute
+
+### Frontend
 - Install nodejs 16.15.0 LTS
 - cd fptrack_front
 - npm install react react-dom next
 - npm install multiselect-react-dropdown
 - npm run dev
 - npx next telemetry disable //if you want to disable data collection
+
+### Backend
+- Navigate to ./FPTrack-backend
+- Ensure that all `global installs` are done
+- Install local dependencies using `npm install` from current context
+- Run `npm run serverstart` to get the development server going
