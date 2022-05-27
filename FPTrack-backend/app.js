@@ -38,6 +38,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/* Routing */
+
+// Pre-functor for allow Cross Origin Requests
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
+
+// Normal routes
 app.use('/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/proposal', proposalRouter);
