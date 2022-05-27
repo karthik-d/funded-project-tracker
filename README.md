@@ -19,6 +19,20 @@ It handles the following key aspects:
 ### Validations to handle
 - PDF Proposal Upload must be under 8MB (soft limit)
 
+### Server-Client Behavior Agreeement
+- When new user uses OAuth to register, the token validation (POST /api/auth/) will return with,
+  ```
+  {
+      error_code: 901,
+      message: "User must be created",
+      url: "/api/user/",
+      method: "POST"
+  }
+  HTTP_CODE: 404
+  ```
+  Initiate a form on the frontend to collect user metadata i.e. role, access, etc. and create a user using the given URL and METHOD
+  Then, send the same token  to the token validation (POST /api/auth/) endpoint.
+
 ## Backend
 
 ### Major Design Todos
