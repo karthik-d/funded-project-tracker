@@ -13,25 +13,24 @@ export default function GoogleSignin() {
 export function LoginOneTapCrux() {
 
     const onSuccess = async (googleData) => {
-
-        console.log("Success: " + googleData);
-
-        console.log("Handling...");
-        const res = await fetch(
-            "/api/v1/auth/google",
+        console.log("Login Tap Success");
+        // fetch user from server
+        fetch(
+            "http://localhost:3000/api/auth",
             {
                 method: "POST",
                 body: JSON.stringify({
-                    token: googleData.tokenId
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
+                    token: googleData.credential
+                })
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                // PUT YOUR ERROR PAGE HANDLE HERE!!!
+                console.log(error);
             });
-
-        const data = await res;
-        console.log(data);
-    }
+    };
 
     const onFailure = async (response) => {
         console.log("Failed: ");
@@ -41,12 +40,8 @@ export function LoginOneTapCrux() {
 
     return (
         <GoogleLogin
-            onSuccess={credentialResponse => {
-                console.log(credentialResponse);
-            }}
-            onError={() => {
-                console.log('Login Failed');
-            }}
+            onSuccess={onSuccess}
+            onError={onFailure}
             useOneTap
         />
     );
