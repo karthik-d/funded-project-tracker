@@ -62,13 +62,14 @@ Do `npm install -g [package-name]`
 
 ## Procedure to Execute
 
+### Common Dependencies
+
+- nodejs 16.15.0 LTS (preferably, with nvm)
+
 ### Frontend
-- Install nodejs 16.15.0 LTS
-- cd fptrack_front
-- npm install react react-dom next
-- npm install multiselect-react-dropdown
-- npm run dev
-- npx next telemetry disable //if you want to disable data collection
+- Navigate to ./FPTrack-frontend
+- Install local dependencies using `npm install` from current context
+- Run `npm run dev` to get the frontend service going
 
 ### Backend
 - Navigate to ./FPTrack-backend
