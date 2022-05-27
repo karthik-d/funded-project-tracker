@@ -30,7 +30,7 @@ It handles the following key aspects:
   }
   HTTP_CODE: 404
   ```
-  Initiate a form on the frontend to collect user metadata i.e. role, access, etc. and create a user using the given URL and METHOD
+  Initiate a form on the frontend to collect user metadata i.e. role, access, etc. and create a user using the given URL and METHOD.
   Then, send the same token  to the token validation (POST /api/auth/) endpoint.
 
 ## Backend
