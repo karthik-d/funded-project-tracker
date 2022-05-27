@@ -5,21 +5,21 @@ var ProjectModel = require('../../models/project');
 var ErrorHelper = require('../../helpers/error');
 
 function create(req, res, next) {
-	const project = new ProjectModel(req.body);
-	project 
-	.save()
-	.then((resource) => {
-		res.status(200).send({
-			id: resource._id,
-			url: resource._url,
-			message: "Project created"
-		});
-	})
-	.catch((error) => {
-		res.status(400).send(
-			ErrorHelper.construct_json_response(error)
-		);
-	});
+    const project = new ProjectModel(req.body);
+    project
+        .save()
+        .then((resource) => {
+            res.status(201).send({
+                id: resource._id,
+                url: resource._url,
+                message: "Project created"
+            });
+        })
+        .catch((error) => {
+            res.status(400).send(
+                ErrorHelper.construct_json_response(error)
+            );
+        });
 };
 
 function getAll(req, res, next) {

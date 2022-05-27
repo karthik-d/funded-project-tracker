@@ -13,6 +13,7 @@
     "express": "~4.16.1",
     "express-generator": "^4.2.0",
     "express-validator": "^6.14.1",
+    "google-auth-library": "^8.0.2",
     "http-errors": "~1.6.3",
     "mongoose": "^6.3.3",
     "morgan": "~1.9.1",
