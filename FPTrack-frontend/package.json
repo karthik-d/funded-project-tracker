@@ -9,12 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.2.4",
     "dotenv": "^16.0.1",
     "multiselect-react-dropdown": "^2.0.22",
     "next": "^12.1.6",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-google-login": "^5.2.2"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "eslint": "8.15.0",

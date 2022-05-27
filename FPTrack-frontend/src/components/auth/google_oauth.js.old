@@ -1,16 +1,9 @@
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { GoogleLogin } from '@react-oauth/google';
+// import { GoogleLogin } from 'react-google-login';
 
+/* deprecated OAuth */
+
+/*
 export default function GoogleSignin() {
-    return (
-        <GoogleOAuthProvider
-            clientId="103603048152-42oo200pr067ahtntminh5m6kc88m618.apps.googleusercontent.com">
-            <LoginOneTapCrux />
-        </GoogleOAuthProvider>
-    )
-}
-
-export function LoginOneTapCrux() {
 
     const onSuccess = async (googleData) => {
 
@@ -39,17 +32,15 @@ export function LoginOneTapCrux() {
         console.log(response.details);
     }
 
-    return (
-        <GoogleLogin
-            onSuccess={credentialResponse => {
-                console.log(credentialResponse);
-            }}
-            onError={() => {
-                console.log('Login Failed');
-            }}
-            useOneTap
-        />
-    );
-
+    const client_id = '103603048152-42oo200pr067ahtntminh5m6kc88m618.apps.googleusercontent.com';
+    const client_secret = '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'
+    return (<GoogleLogin
+        clientId={client_id}
+        clientSecret={client_secret}
+        buttonText="Log in with Google"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={'single_host_origin'}
+    />);
 }
-
+*/
