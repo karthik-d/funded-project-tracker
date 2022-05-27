@@ -4,7 +4,6 @@ import styles from '../styles/Home.module.css'
 import GoogleSignin from '../src/components/auth/google_oauth'
 
 export default function Header() {
-  console.log("HERE" + process.env.REACT_APP_OAUTH_CLIENTID);
   return (
     <div className={styles.header}>
       <Head>
