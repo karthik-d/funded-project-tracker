@@ -23,11 +23,16 @@ export default function Options() {
       "name": "Guest Search",
       "url": "nothing",
       "key": "search_guest"
-    }, ,
+    },
     {
       "name": "View Users",
       "url": "viewusers",
       "key": "view_users"
+    },
+    {
+      "name": "View Resources",
+      "url": "viewresrcs",
+      "key": "view_resources"
     }
   ];
 
