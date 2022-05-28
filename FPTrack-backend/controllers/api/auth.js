@@ -35,7 +35,7 @@ function getAuthUser(req, res, next) {
                         })
                     }
                     else {
-                        user.auth_token = token;
+                        user.auth_token = req.body.token;
                         res.status(200).send(user);
                     }
                 })
