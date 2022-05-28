@@ -1,6 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var { OAuthClient } = require('google-auth-library');
+var { OAuth2Client } = require('google-auth-library');
 
 var UserMode = require('../../models/user');
 var ErrorHelper = require('../../helpers/error');
@@ -11,14 +11,18 @@ ADV TODO: Update picture each time
 TODO: Create Client ID env variable
 */
 function getAuthUser(req, res, next) {
+    console.log("HERE");
+    console.log(req.body);
     var { userToken } = req.body;
     // validate token
-    var auth_client = new OAuthClient({
+    var auth_client = new OAuth2Client({
         clientId: `${process.env.OAUTH_CLIENTID}`
     });
+    console.log(userToken);
+    console.log(`${process.env.OAUTH_CLIENTID}`);
     auth_client.verifyIdToken({
         idToken: userToken,
-        audient: `${process.env.OAUTH_CLIENTID}`
+        audience: `${process.env.OAUTH_CLIENTID}`
     })
         .then((ticket) => {
             var payload = ticket.getPayload();

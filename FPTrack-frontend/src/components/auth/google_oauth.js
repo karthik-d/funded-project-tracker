@@ -18,17 +18,20 @@ export function LoginOneTapCrux() {
         fetch(
             "http://localhost:3000/api/auth",
             {
-                method: "POST",
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({
                     token: googleData.credential
                 })
             })
             .then((response) => {
-                console.log(response);
+                console.log(response)
             })
             .catch((error) => {
-                // PUT YOUR ERROR PAGE HANDLE HERE!!!
-                console.log("ERROR 2" + error);
+                console.log("Error" + error);
             });
     };
 
