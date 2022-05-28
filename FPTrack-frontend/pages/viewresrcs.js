@@ -9,21 +9,35 @@ import user from '../../FPTrack-backend/models/user';
 
 function Tabulate({props}){
     return (<div className = {styles.tabulate}>
-    <table>
+    <table >
       <thead id ="">
         <tr id="header">
-        {props.keys.map(key=>{
-          return (<th>{key}</th>);
-        })}
+        <th>_id</th>
+        <th>resource_group</th>
+        <th>remarks</th>
+        <th>scan_code</th>
+        <th>expiry</th>
+        <th>faulted_at</th>
+        <th>deleted_at</th>
+        <th>createdAt</th>
+        <th>updatedAt</th>
+        <th>__v</th>
         </tr>
       </thead>
-      <tbody id="objects">
-      {props.objects.map(obj=>{ 
+      <tbody id="resources">
+      {props.map(obj=>{ 
         return (<tr id={obj._id}>
-          {props.keys.map(key=>{
-            return (<td>{obj[key]}</td>);
-          })}
-          </tr>);
+        <th>{obj._id}</th>
+        <th>{obj.resource_group}</th>
+        <th>{obj.remarks}</th>
+        <th>{obj.scan_code}</th>
+        <th>{obj.expiry}</th>
+        <th>{obj.faulted_at}</th>
+        <th>{obj.deleted_at}</th>
+        <th>{obj.createdAt}</th>
+        <th>{obj.updatedAt}</th>
+        <th>{obj.__v}</th>
+        </tr>);
         })}
       </tbody>
     </table>
@@ -33,12 +47,12 @@ function Tabulate({props}){
 }
 
 export default function viewusers()  {
-    const [users, setUsers] = useState([]);
+    const [objarr, setObjarr] = useState([]);
     const [keys,setKeys] = useState([]);
         const fetchData = () => {
-          fetch("http://localhost:3000/api/user")
+          fetch("http://localhost:3000/api/resource")
           .then(response => response.json())
-          .then(jsondata => {setUsers(JSON.parse(JSON.stringify(jsondata)));
+          .then(jsondata => {setObjarr(JSON.parse(JSON.stringify(jsondata)));
             const arr = []
             for (var key in jsondata[0]) {
                 if (jsondata[0].hasOwnProperty(key)) {
@@ -56,12 +70,11 @@ export default function viewusers()  {
           fetchData()
         }, []);
         
-        let temp = {"objects":users,"keys":keys};
+        let temp = objarr;
 
 return (
     <div id="vieusers">
     <Header></Header>
-    {console.log(temp)}
     <Tabulate props={temp}/>;
     </div>
 

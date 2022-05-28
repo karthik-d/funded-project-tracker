@@ -156,9 +156,20 @@
     flex-direction: column;
   }
 }
+.tabulate {
+  margin: auto;
+  text-align: center;
+}
+.tabulate table td {
+  border: 1px solid black;
+}
+.tabulate table th {
+  border: 1px solid black;
+}
+
 
 /* 
-customnise downloaded react components
+custom downloaded react components
 */
 .searchBox#css_custom_input::placeholder { color: red; }
 .multiselectContainer { 
