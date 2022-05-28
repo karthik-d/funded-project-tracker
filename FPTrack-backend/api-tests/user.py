@@ -2,6 +2,17 @@ import requests
 
 
 def post(debug=True):
+
+    req_body = dict(
+        first_name = "Karthik",
+        last_name = "D",
+        date_of_birth = '1999-09-09',
+        email = 'karthik19047@cse.ssn.edu.in',
+        role = 'student',
+        access = ['user', 'admin', 'resource_mgr']
+    )
+
+    """
     req_body = dict(
         first_name = "Greg",
         last_name = "Timothy",
@@ -10,6 +21,7 @@ def post(debug=True):
         role = 'faculty',
         access = ['user']
     )
+    """
 
     """
     req_body = dict(
@@ -48,7 +60,7 @@ def get(id=None, debug=True):
     if not debug:
         print(resp.json())
 
-post()
+# post()
 get()
 get(id='6283b09950a9e277f0f8cd5a')
 

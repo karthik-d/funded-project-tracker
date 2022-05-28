@@ -15,7 +15,6 @@ function getAuthUser(req, res, next) {
     var auth_client = new OAuth2Client({
         clientId: `${process.env.OAUTH_CLIENTID}`
     });
-    console.log(`${process.env.OAUTH_CLIENTID}`);
     auth_client.verifyIdToken({
         idToken: req.body.token,
         audience: `${process.env.OAUTH_CLIENTID}`
