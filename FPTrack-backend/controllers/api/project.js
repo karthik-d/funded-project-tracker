@@ -45,7 +45,7 @@ function getAll(req, res, next) {
 function getByUser(user_id, req, res, next) {
 
     function getProjectsForRole(role_field, user_id) {
-        ProjectModel
+        return ProjectModel
             .onlyExisting()
             .populate({
                 path: 'proposal',
@@ -56,7 +56,7 @@ function getByUser(user_id, req, res, next) {
             .then((with_proposal) => {
                 return (with_proposal.filter(
                     function (project) {
-                        return (project.proposal == null)
+                        return (project.proposal != null)
                     }
                 ));
             });
