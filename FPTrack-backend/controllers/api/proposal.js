@@ -144,10 +144,25 @@ function getAll(req, res, next) {
 
 
 function getByUser(user_id, req, res, next) {
-    ProposalModel
-        .onlyExisting()
-
-}
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        ProposalModel
+            .onlyExisting()
+            .then((resources_all) => {
+                console.log(resources);
+                res.status(200).send(resources);
+            })
+            .catch((error) => {
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                );
+            });
+    }
+    else {
+        res.status(404).send({
+            message: "User not found"
+        });
+    }
+};
 
 
 function getById(id, req, res, next) {
@@ -171,3 +186,4 @@ function getById(id, req, res, next) {
 exports.create = create;
 exports.getAll = getAll;
 exports.getById = getById;
+exports.getByUser = getByUser;

@@ -23,6 +23,8 @@ function create(req, res, next) {
         });
 };
 
+
+// TODO: Allow case-insensitive matching for name, etc.
 function getAll(req, res, next) {
 
     // Extract filters
