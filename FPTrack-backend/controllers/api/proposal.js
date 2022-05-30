@@ -1,4 +1,5 @@
 var express = require('express');
+var mongoose = require('mongoose');
 
 var ProposalModel = require('../../models/proposal');
 var UserModel = require('../../models/user');
@@ -144,12 +145,28 @@ function getAll(req, res, next) {
 
 
 function getByUser(user_id, req, res, next) {
-    if (mongoose.Types.ObjectId.isValid(id)) {
-        ProposalModel
+
+    function getProposalsForRole(role_field, user_id) {
+        return ProposalModel
             .onlyExisting()
-            .then((resources_all) => {
-                console.log(resources);
-                res.status(200).send(resources);
+            .find({
+                role_field: user_id
+            });
+    };
+
+    if (mongoose.Types.ObjectId.isValid(user_id)) {
+        user_id = mongoose.Types.ObjectId(user_id);
+        Promise.all([
+            getProposalsForRole('supervisors', user_id),
+            getProposalsForRole('members', user_id),
+            getProposalsForRole('leader', user_id)
+        ])
+            .then(([supervisor_proposals, member_proposals, leader_proposals]) => {
+                res.status(200).send({
+                    as_supervisor: supervisor_proposals,
+                    as_member: member_proposals,
+                    as_leader: leader_proposals
+                });
             })
             .catch((error) => {
                 res.status(400).send(
