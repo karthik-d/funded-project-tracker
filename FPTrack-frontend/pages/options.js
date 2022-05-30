@@ -26,13 +26,18 @@ export default function Options() {
     },
     {
       "name": "View Users",
-      "url": "viewusers",
+      "url": "/guest/view_users",
       "key": "view_users"
     },
     {
       "name": "View Resources",
-      "url": "viewresrcs",
+      "url": "/guest/view_resources",
       "key": "view_resources"
+    },
+    {
+      "name": "View Projects",
+      "url": "/guest/view_projects",
+      "key": "view_projects"
     }
   ];
 
