@@ -32,6 +32,20 @@ It handles the following key aspects:
   ```
   Initiate a form on the frontend to collect user metadata i.e. role, access, etc. and create a user using the given URL and METHOD.
   Then, send the same token  to the token validation (POST /api/auth/) endpoint.
+  
+### Tailored API Endpoints
+
+#### GET api/project/user/[userId]
+
+- userId is the `_id` field value of the user
+- Responds with all projects belonging to the specified user, like so
+  ```
+  {
+    as_supervisor: [ <project collections with the user as a supervisor>... ],
+    as_member: 	[ <project collections with the user as a member>... ],
+    as_leader: 	[ <project collections with the user as a leader>... ]
+  }
+  ```
 
 ## Backend
 
