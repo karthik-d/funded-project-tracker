@@ -35,6 +35,8 @@ It handles the following key aspects:
   
 ### Tailored API Endpoints
 
+**NOTE**: Specify API endpoint requirements under `Requested Endpoint Requirements` here: https://docs.google.com/document/d/1BuqWLfZSf08XkSRbJId3BAIZCT0FmTrVLlO-6XchuT4/edit?usp=sharing
+
 #### GET api/user[?field=value&...]
 
 - Resonds with all user collections
