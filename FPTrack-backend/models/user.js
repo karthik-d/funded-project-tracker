@@ -9,7 +9,7 @@ var UserSchema = new Schema(
         last_name: { type: String, required: true, maxLength: 100 },
         date_of_birth: { type: Date },
         email: { type: String, required: true, unique: true },
-        role: { type: String, required: true, enum: ['student', 'faculty'], default: 'Maintenance' },
+        role: { type: String, required: true, enum: ['student', 'faculty'] },
         access: {
             type: [{ type: String, enum: ['admin', 'resource_mgr', 'user'] }],
             required: true
@@ -33,7 +33,6 @@ UserSchema
         const filter_fields = [
             'first_name',
             'last_name',
-            'date_of_birth',
             'email',
             'role'
         ];
