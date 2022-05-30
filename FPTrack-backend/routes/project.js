@@ -17,6 +17,13 @@ router.get(
     }
 )
 
+router.get(
+    '/user/:userId',
+    function (req, res, next) {
+        ProjectController.getByUser(req.params.userId, req, res, next);
+    }
+)
+
 router.post(
     '/',
     function (req, res, next) {

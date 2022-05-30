@@ -27,7 +27,12 @@ function getAll(req, res, next) {
     ProjectModel
         .onlyExisting()
         .then((resources) => {
-            res.status(200).send(resources);
+            Promise.all(resources.map((rsrc) => {
+                return rsrc.populate('proposal');
+            }))
+                .then((resources) => {
+                    res.status(200).send(resources);
+                });
         })
         .catch((error) => {
             res.status(400).send(
@@ -40,10 +45,12 @@ function getAll(req, res, next) {
 function getByUser(user_id, req, res, next) {
 
     function getProjectsForRole(role_field, user_id) {
+        var query_field = 'proposal.' + role_field
+        console.log(query_field);
         return ProjectModel
             .onlyExisting()
             .find({
-                [proposal + role_field]: user_id
+                [query_field]: user_id
             });
     };
 
@@ -80,6 +87,7 @@ function getById(id, req, res, next) {
         ProjectModel
             .onlyExisting()
             .getById(id)
+            .populate('proposal')
             .then((resource) => {
                 res.status(200).send(resource);
             })
@@ -99,4 +107,5 @@ function getById(id, req, res, next) {
 exports.create = create;
 exports.getById = getById;
 exports.getAll = getAll;
+exports.getByUser = getByUser;
 
