@@ -24,13 +24,25 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-    console.log(Object.keys(UserModel.schema.paths));
-    console.log(Object.keys(req.query));
-    console.log(UserModel.getDirectFilterFields());
 
+    // Extract filters
+    const filterables = UserModel.getDirectFilterFields();
+    const filters = Object.keys(req.query)
+        .filter((field) => {
+            return filterables.includes(field);
+        })
+        .reduce((obj, field) => {
+            return Object.assign(
+                obj,
+                { [field]: req.query[field] }
+            );
+        }, {});
+
+    // Get records
     UserModel
         .onlyExisting()
-        .then((resources) => {
+        .where(filters)
+        .then((resources_partial) => {
             res.status(200).send(resources);
         })
         .catch((error) => {
