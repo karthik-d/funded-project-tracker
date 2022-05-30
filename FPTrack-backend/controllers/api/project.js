@@ -45,12 +45,20 @@ function getAll(req, res, next) {
 function getByUser(user_id, req, res, next) {
 
     function getProjectsForRole(role_field, user_id) {
-        var query_field = 'proposal.' + role_field
-        console.log(query_field);
-        return ProjectModel
+        ProjectModel
             .onlyExisting()
-            .find({
-                [query_field]: user_id
+            .populate({
+                path: 'proposal',
+                match: {
+                    [role_field]: user_id
+                }
+            })
+            .then((with_proposal) => {
+                return (with_proposal.filter(
+                    function (project) {
+                        return (project.proposal == null)
+                    }
+                ));
             });
     };
 
