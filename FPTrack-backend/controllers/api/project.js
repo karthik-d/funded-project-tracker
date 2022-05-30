@@ -22,6 +22,7 @@ function create(req, res, next) {
         });
 };
 
+
 function getAll(req, res, next) {
     ProjectModel
         .onlyExisting()
@@ -34,6 +35,45 @@ function getAll(req, res, next) {
             );
         });
 };
+
+
+function getByUser(user_id, req, res, next) {
+
+    function getProjectsForRole(role_field, user_id) {
+        return ProjectModel
+            .onlyExisting()
+            .find({
+                [proposal + role_field]: user_id
+            });
+    };
+
+    if (mongoose.Types.ObjectId.isValid(user_id)) {
+        user_id = mongoose.Types.ObjectId(user_id);
+        Promise.all([
+            getProjectsForRole('supervisors', user_id),
+            getProjectsForRole('members', user_id),
+            getProjectsForRole('leader', user_id)
+        ])
+            .then(([supervisor_projects, member_projects, leader_projects]) => {
+                res.status(200).send({
+                    as_supervisor: supervisor_projects,
+                    as_member: member_projects,
+                    as_leader: leader_projects
+                });
+            })
+            .catch((error) => {
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                );
+            });
+    }
+    else {
+        res.status(404).send({
+            message: "User not found"
+        });
+    }
+};
+
 
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {

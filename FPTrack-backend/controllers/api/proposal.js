@@ -147,9 +147,6 @@ function getAll(req, res, next) {
 function getByUser(user_id, req, res, next) {
 
     function getProposalsForRole(role_field, user_id) {
-        console.log({
-            role_field: user_id
-        });
         return ProposalModel
             .onlyExisting()
             .find({
