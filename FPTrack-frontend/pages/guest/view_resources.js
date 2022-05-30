@@ -1,27 +1,27 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 import Link from 'next/link';
-import Header from './header';
+import Header from '../header';
 import React, { useState, useEffect, Component } from 'react';
-import user from '../../FPTrack-backend/models/user';
+import user from '../../../FPTrack-backend/models/user';
 
 
 function Tabulate({props}){
     return (<div className = {styles.tabulate}>
     <table>
       <thead id ="">
-        <tr id="header">
+        <tr id="header" key = "header">
         {props.keys.map(key=>{
-          return (<th>{key}</th>);
+          return (<th key = {key}>{key}</th>);
         })}
         </tr>
       </thead>
       <tbody id="objects">
       {props.objects.map(obj=>{ 
-        return (<tr id={obj._id}>
+        return (<tr key={obj._id}>
           {props.keys.map(key=>{
-            return (<td>{obj[key]}</td>);
+            return (<td key = {key}>{obj[key]}</td>);
           })}
           </tr>);
         })}
@@ -36,7 +36,7 @@ export default function viewusers()  {
     const [users, setUsers] = useState([]);
     const [keys,setKeys] = useState([]);
         const fetchData = () => {
-          fetch("http://localhost:3000/api/user")
+          fetch("http://localhost:3000/api/resource-group")
           .then(response => response.json())
           .then(jsondata => {setUsers(JSON.parse(JSON.stringify(jsondata)));
             const arr = []
@@ -61,7 +61,6 @@ export default function viewusers()  {
 return (
     <div id="vieusers">
     <Header></Header>
-    {console.log(temp)}
     <Tabulate props={temp}/>;
     </div>
 
