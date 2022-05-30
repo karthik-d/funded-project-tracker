@@ -20,7 +20,7 @@ export default class onProposal extends Component{
   constructor(props) {
     super();
    this.data = {
-    domains: [{name: 'ML', id: 1},{name: 'webdev', id: 2}]
+    domains: [{name: 'machine_learning', id: 1},{name: 'web_development', id: 2},{name: 'iot' ,id:3},{name: 'computer_vision',}]
 };  
 this.fileChangedHandler = (event) => {
   let file_size = event.target.files[0].size;
