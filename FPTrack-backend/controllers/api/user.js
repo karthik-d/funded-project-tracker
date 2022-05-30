@@ -45,7 +45,6 @@ function getAll(req, res, next) {
         .onlyExisting()
         .find(filters)
         .then((resources) => {
-            console.log(resources);
             res.status(200).send(resources);
         })
         .catch((error) => {

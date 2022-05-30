@@ -25,7 +25,7 @@ var UserSchema = new Schema(
 );
 
 // Chain <ModelName>.onlyExisting before any query to list only "non-deleted" records
-// Be sure to use either find() or self-defined wrappers (Convention used: get...() ), in these chains
+// Be sure to use either find() or self-defined wrappers (convention used: get...() ), in these chains
 
 UserSchema
     .statics

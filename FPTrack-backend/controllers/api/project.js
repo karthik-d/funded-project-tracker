@@ -44,6 +44,7 @@ function getAll(req, res, next) {
 
 function getByUser(user_id, req, res, next) {
 
+    // Ashamed of the inelegance in this function!!
     function getProjectsForRole(role_field, user_id) {
         return ProjectModel
             .onlyExisting()
@@ -89,7 +90,7 @@ function getByUser(user_id, req, res, next) {
     }
 };
 
-
+// Proposal field it explicitly popuated
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
         ProjectModel
