@@ -143,6 +143,13 @@ function getAll(req, res, next) {
 };
 
 
+function getByUser(user_id, req, res, next) {
+    ProposalModel
+        .onlyExisting()
+
+}
+
+
 function getById(id, req, res, next) {
     ProposalModel
         .onlyExisting()

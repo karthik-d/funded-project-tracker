@@ -41,8 +41,9 @@ function getAll(req, res, next) {
     // Get records
     UserModel
         .onlyExisting()
-        .where(filters)
-        .then((resources_partial) => {
+        .find(filters)
+        .then((resources) => {
+            console.log(resources);
             res.status(200).send(resources);
         })
         .catch((error) => {

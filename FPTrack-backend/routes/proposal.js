@@ -11,6 +11,13 @@ router.get(
 )
 
 router.get(
+    '/user/:userId',
+    function (req, res, next) {
+        ProposalController.getByUser(req.params.userId, req, res, next);
+    }
+)
+
+router.get(
     '/:proposalId',
     function (req, res, next) {
         ProposalController.getById(req.params.proposalId, req, res, next);
