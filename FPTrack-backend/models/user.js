@@ -27,6 +27,27 @@ var UserSchema = new Schema(
 // Chain <ModelName>.onlyExisting before any query to list only "non-deleted" records
 // Be sure to use either find() or self-defined wrappers (Convention used: get...() ), in these chains
 
+UserSchema
+    .statics
+    .getDirectFilterFields = function () {
+        const filter_fields = [
+            'first_name',
+            'last_name',
+            'date_of_birth',
+            'email',
+            'role'
+        ];
+        let return_fields = [];
+        filter_fields.forEach(
+            function (field) {
+                if (filter_fields.includes(field)) {
+                    return_fields.push(field);
+                }
+            }
+        )
+        return return_fields;
+    }
+
 // Brute Wrapper (Not proud of it!)
 UserSchema
     .statics

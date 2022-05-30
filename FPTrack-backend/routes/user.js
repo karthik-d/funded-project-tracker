@@ -12,6 +12,9 @@ router.get('/', function (req, res, next) {
 router.get(
   '/',
   function (req, res, next) {
+    /* Supports the following filters - supply as GET Parameters
+    : ?email=abc@email.com
+    */
     UserController.getAll(req, res, next);
   }
 )

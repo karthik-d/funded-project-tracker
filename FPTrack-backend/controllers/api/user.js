@@ -24,7 +24,12 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-    UserModel.onlyExisting()
+    console.log(Object.keys(UserModel.schema.paths));
+    console.log(Object.keys(req.query));
+    console.log(UserModel.getDirectFilterFields());
+
+    UserModel
+        .onlyExisting()
         .then((resources) => {
             res.status(200).send(resources);
         })
