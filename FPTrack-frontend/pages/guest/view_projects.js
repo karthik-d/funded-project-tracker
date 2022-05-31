@@ -8,6 +8,8 @@ import user from '../../../FPTrack-backend/models/user';
 
 
 function Tabulate({props}){
+	console.log("HERE--?");
+	console.log(typeof props.objects[0]);
     return (<div className = {styles.tabulate}>
     <table>
       <thead id ="">
@@ -18,13 +20,19 @@ function Tabulate({props}){
         </tr>
       </thead>
       <tbody id="objects">
-      {props.objects.map(obj=>{ 
-        return (<tr key={obj._id}>
-          {props.keys.map(key=>{
-            return (<td key = {key}>{obj[key]}</td>);
-          })}
-          </tr>);
-        })}
+      {		  
+		  props.objects[0].map(obj=>{ 
+			return (
+				<tr key={obj._id}>
+				{
+					props.keys[0].map(key=>{
+						return (<td key = {key}>{obj[key]}</td>);
+					})
+				}
+				</tr>
+			);
+        })
+		}
       </tbody>
     </table>
     </div>
@@ -57,7 +65,7 @@ export default function viewusers()  {
 				"status_updates",
 				"outcomes"
 			];
-			// add member names
+			// TODO: add member names
 			const sub_fields = [
 				"domains",
 				"funding_type",
@@ -74,11 +82,8 @@ export default function viewusers()  {
           fetchData()
         }, []);
         
-        console.log("hello 5");
-        console.log(proposals);
-        console.log(users);
         // Todo: Make objects multiple array sets
-        let temp = {"objects":users,"keys":keys, "link_objects":1};
+        let temp = {"objects":[users,users],"keys":[keys], "link_objects":1};
 
 return (
     <div id="vieusers">
