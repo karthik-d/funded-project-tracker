@@ -8,8 +8,7 @@ import user from '../../../FPTrack-backend/models/user';
 
 
 function Tabulate({ props }) {
-	console.log("HERE--?");
-	console.log(typeof props.objects[0]);
+	console.log(props.projects);
 	return (<div className={styles.tabulate}>
 		<table>
 			<thead id="">
@@ -35,30 +34,52 @@ function Tabulate({ props }) {
 						});
 					})
 				}
+				{
+					// Process all ith elems together
+					[...props.objects[0].keys()].map(proj_idx => {
+						return (
+							<tr key={obj_set[proj_idx]._id}>
+								{
+									[...props.objects.keys()].map(obj_idx => {
+										console.log(props.keys);
+										return (
+											props.keys[obj_idx][proj_idx].map(key => {
+												<td key={key}>
+													{props.objects[obj_idx][proj_idx][key]}
+												</td>
+											})
+										);
+									})
+								}
+							</tr>
+						)
+					})
+				}
 			</tbody>
 		</table>
 	</div>
-
 	);
 }
 
 export default function viewusers() {
+
 	const [projects, setProjects] = useState([]);
 	const [proposals, setProposals] = useState([]);
-	const [keys, setKeys] = useState([]);
+	const [projectKeys, setProjectKeys] = useState([]);
 	const [proposalKeys, setProposalKeys] = useState([]);
+
 	const fetchData = () => {
 		fetch("http://localhost:3000/api/project")
 			.then(response => response.json())
 			.then(jsondata => {
-				console.log("Gold Jagz");
-				setProjects(JSON.parse(JSON.stringify(jsondata)));
 				var proposal_objs = jsondata.map(
 					function (project) {
 						return project.proposal;
 					}
 				)
+				setProjects(JSON.parse(JSON.stringify(jsondata)));
 				setProposals(proposal_objs);
+				// set keys
 				const main_fields = [
 					"_id",
 					"approved_budget",
@@ -73,7 +94,7 @@ export default function viewusers() {
 					"funding_type",
 					"funding_agency",
 				];
-				setKeys(main_fields);
+				setProjectKeys(main_fields);
 				setProposalKeys(sub_fields);
 
 			})
@@ -82,13 +103,15 @@ export default function viewusers() {
 
 	useEffect(() => {
 		fetchData()
-	}, []);
+	}, [
+		projects,
+		projectKeys,
+		proposals,
+		proposalKeys
+	]);
 
-	console.log("CHECK");
-	console.log([projects, projects]);
 	// Todo: Make objects multiple array sets
-	let temp = { "objects": [projects, proposals], "keys": [keys, proposalKeys], "link_objects": 1 };
-
+	let temp = { "objects": [projects, proposals], "keys": [projectKeys, proposalKeys], "link_objects": 1 };
 	return (
 		<div id="vieusers">
 			<Header></Header>
