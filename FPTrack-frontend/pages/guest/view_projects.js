@@ -34,31 +34,51 @@ function Tabulate({props}){
 
 export default function viewusers()  {
     const [users, setUsers] = useState([]);
+    const [proposals, setProposals] = useState([]);
     const [keys,setKeys] = useState([]);
-        const fetchData = () => {
-          fetch("http://localhost:3000/api/project")
-          .then(response => response.json())
-          .then(jsondata => {setUsers(JSON.parse(JSON.stringify(jsondata)));
-            const arr = []
-            for (var key in jsondata[0]) {
-                if (jsondata[0].hasOwnProperty(key)) {
-                  var val = jsondata[0][key];
-                  arr.push(key);
-            	}
-            }
-            arr = [ "_id", "approved_budget", "approved_duration", "completed_on", "status_updates", "outcomes", "createdAt", "updatedAt", "__v"]
-            console.log(arr);
-            setKeys(arr);
-        }
-            );
-        }
+    const [proposalKeys, setProposalKeys] = useState([]);
+    const fetchData = () => {
+    	fetch("http://localhost:3000/api/project")
+		.then(response => response.json())
+        .then(jsondata => {
+        	console.log("Gold Jagz");
+        	setUsers(JSON.parse(JSON.stringify(jsondata)));
+        	var proposal_objs = jsondata.map(
+    			function (project){
+    				return project.proposal;
+    			}
+    		)
+        	setProposals(proposal_objs);
+        	const main_fields = [ 
+		    	"_id", 
+		    	"approved_budget",
+		    	"approved_duration",
+		    	"completed_on", 
+				"status_updates",
+				"outcomes"
+			];
+			// add member names
+			const sub_fields = [
+				"domains",
+				"funding_type",
+				"funding_agency",
+			];
+        	setKeys(main_fields);
+        	setProposalKeys(sub_fields);
+        	
+        })
+	}
     
 
         useEffect(() => {
           fetchData()
         }, []);
         
-        let temp = {"objects":users,"keys":keys};
+        console.log("hello 5");
+        console.log(proposals);
+        console.log(users);
+        // Todo: Make objects multiple array sets
+        let temp = {"objects":users,"keys":keys, "link_objects":1};
 
 return (
     <div id="vieusers">
