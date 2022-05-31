@@ -8,6 +8,7 @@ import user from '../../../FPTrack-backend/models/user';
 
 
 function Tabulate({ props }) {
+	console.log("CALLED");
 	console.log(props.projects);
 	return (<div className={styles.tabulate}>
 		<table>
@@ -19,7 +20,7 @@ function Tabulate({ props }) {
 				</tr>
 			</thead>
 			<tbody id="objects">
-				{
+				{/* {
 					[...props.objects.keys()].map(idx => {
 						return props.objects[idx].map(obj => {
 							return (
@@ -33,20 +34,22 @@ function Tabulate({ props }) {
 							);
 						});
 					})
-				}
+				} */}
 				{
 					// Process all ith elems together
-					[...props.objects[0].keys()].map(proj_idx => {
+					props.objects[0].map((_, proj_idx) => {
 						return (
-							<tr key={obj_set[proj_idx]._id}>
+							<tr key={props.objects[proj_idx]._id}>
 								{
-									[...props.objects.keys()].map(obj_idx => {
+									props.objects.map((obj_set, obj_idx) => {
 										console.log(props.keys);
 										return (
-											props.keys[obj_idx][proj_idx].map(key => {
-												<td key={key}>
-													{props.objects[obj_idx][proj_idx][key]}
-												</td>
+											props.keys[obj_idx].map(key_set => {
+												key_set[proj_idx].map((key) => {
+													<td key={key}>
+														{props.objects[obj_idx][proj_idx][key]}
+													</td>
+												})
 											})
 										);
 									})
