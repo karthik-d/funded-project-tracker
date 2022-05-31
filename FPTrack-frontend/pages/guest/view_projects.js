@@ -44,8 +44,10 @@ export default function viewusers()  {
                 if (jsondata[0].hasOwnProperty(key)) {
                   var val = jsondata[0][key];
                   arr.push(key);
+            	}
             }
-            }
+            arr = [ "_id", "approved_budget", "approved_duration", "completed_on", "status_updates", "outcomes", "createdAt", "updatedAt", "__v"]
+            console.log(arr);
             setKeys(arr);
         }
             );

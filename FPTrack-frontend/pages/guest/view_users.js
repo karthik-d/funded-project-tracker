@@ -44,8 +44,9 @@ export default function viewusers()  {
                 if (jsondata[0].hasOwnProperty(key)) {
                   var val = jsondata[0][key];
                   arr.push(key);
+            	}
             }
-            }
+            
             setKeys(arr);
         }
             );
