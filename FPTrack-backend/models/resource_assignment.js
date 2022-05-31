@@ -13,7 +13,31 @@ var ResourceAssignmentSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'project',
             required: true,
-            validate: [checkProjectType, "Project should be internal!"]
+            validate: {
+                validator : function(given_proj){
+                    let isInternal = true;
+                    this.populate('assigned_to')
+                    .then((project_rsrc) => {
+                        project_rsrc.assigned_to.populate('proposal')
+                            .then((proposal_rsrc) => {
+                                // console.log(proposal_rsrc.proposal.funding_type);
+                                if (proposal_rsrc.proposal.funding_type != 'internal'){
+                                    isInternal = false;
+                                }
+                                return isInternal;
+                                
+                            }).then((val)=>{
+                                return val;
+                            })
+                    }).then((val) => {
+                        return val;
+                    })
+                    // return (proposal_rsrc.proposal.funding_type == 'internal');
+                    // console.log("after prmis =>" + isInternal)
+                    
+                },
+                message: props => `${props.value} is not a internal !`
+            }
         },
         assigned_by: {
             type: Schema.Types.ObjectId,
@@ -29,15 +53,15 @@ var ResourceAssignmentSchema = new Schema(
     }
 );
 
-function checkProjectType(given_proj) {
-    this.populate('assigned_to')
-        .then((project_rsrc) => {
-            project_rsrc.assigned_to.populate('proposal')
-                .then((proposal_rsrc) => {
-                    return (proposal_rsrc.proposal.funding_type == 'internal');
-                })
-        })
-}
+// function checkProjectType(given_proj) {
+//     this.populate('assigned_to')
+//         .then((project_rsrc) => {
+//             project_rsrc.assigned_to.populate('proposal')
+//                 .then((proposal_rsrc) => {
+//                     return (proposal_rsrc.proposal.funding_type == 'internal');
+//                 })
+//         })
+// }
 
 //-- 
 
