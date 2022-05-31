@@ -44,7 +44,7 @@ function checkProjectType(given_proj) {
 ResourceAssignmentSchema
     .statics
     .onlyExisting = function () {
-        return this.find().onlyExisiting();
+        return this.find().onlyExisting();
     };
 
 ResourceAssignmentSchema
