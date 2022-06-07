@@ -20,7 +20,9 @@ var UserSchema = new Schema(
         timestamps: {
             created_at: 'created_at',
             modified_at: 'modified_at'
-        }
+        },
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
     }
 );
 

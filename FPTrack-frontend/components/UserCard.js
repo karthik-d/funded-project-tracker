@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './UserCard.module.css';
+import styles from './styles/UserCard.module.css';
 
 export default class User extends React.Component {
 
@@ -10,32 +10,23 @@ export default class User extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className={styles.wrapper}>
                 <div className={styles.card_container}>
-                    <span className={styles.pro}>Leader</span>
-                    <img className={styles.round} src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
-                    <h3 className={styles.h3}>Ricky Park</h3>
-                    <h6 className={styles.h6}>New York</h6>
-                    <p className={styles.p}>User interface designer and <br /> front-end developer</p>
-                    <div className={styles.buttons}>
-                        <button className={styles.primary}>
-                            Message
-                        </button>
-                        <button className={`${styles.primary} ${styles.ghost}`}>
-                            Following
-                        </button>
-                    </div>
+                    <span className={styles.pro}>{this.props.role}</span>
+                    <img className={styles.round} src="../assets/imgs/user-profile.png" alt="user" />
+                    <h3 className={styles.h3}>{this.props.name}</h3>
+                    <h6 className={styles.h6}>SSN Collge of Engineering</h6>
+                    <p className={`${styles.email} ${styles.p}`}>{this.props.email}</p>
                     <div className={styles.skills}>
-                        <h6>Roles</h6>
+                        <h6>Access Rights</h6>
                         <ul>
-                            <li>UI / UX</li>
-                            <li>Front End Development</li>
-                            <li>HTML</li>
-                            <li>CSS</li>
-                            <li>JavaScript</li>
-                            <li>React</li>
-                            <li>Node</li>
+                            {
+                                this.props.access.map((access, idx) => {
+                                    return (<li key={idx}>{access}</li>);
+                                })
+                            }
                         </ul>
                     </div>
                 </div >
@@ -43,3 +34,12 @@ export default class User extends React.Component {
         );
     }
 }
+
+// first_name: { type: String, required: true, maxLength: 100 },
+// last_name: { type: String, required: true, maxLength: 100 },
+// date_of_birth: { type: Date },
+// email: { type: String, required: true, unique: true },
+// role: { type: String, required: true, enum: ['student', 'faculty'] },
+// access: {
+//     type: [{ type: String, enum: ['admin', 'resource_mgr', 'user'] }],
+//         required: true

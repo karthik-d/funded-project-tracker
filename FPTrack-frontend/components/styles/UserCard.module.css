@@ -89,6 +89,7 @@ button.primary.ghost {
 	padding: 15px;
 	margin-top: 30px;
     box-sizing: border-box;
+    font-size: 14px;
 }
 
 .skills ul {
