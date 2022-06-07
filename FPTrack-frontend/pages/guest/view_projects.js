@@ -6,12 +6,19 @@ import Header from '../header';
 import React, { useState, useEffect, Component } from 'react';
 import user from '../../../FPTrack-backend/models/user';
 
+import UserCard from '../../components/UserCard';
+
 // todo: represent multi-valued fields suitably
 // todo: display member names suitably
-// todo: add hyperlinks to related objects
+// todo: rename tabe headers to user readables
+
+const zip = ((arr1, arr2) => {
+	return arr1.map((elem, idx) => {
+		return [elem, arr2[idx]];
+	});
+});
 
 function Tabulate({ props }) {
-	console.log(props.values);
 	return (
 		<div className={styles.tabulate}>
 			<table>
@@ -26,11 +33,14 @@ function Tabulate({ props }) {
 					{
 						props.values.map((proj_row) => {
 							return (
-								<tr key={proj_row[0]}>
+								<tr key={proj_row[0][0]}>
 									{
-										proj_row.map((val, idx) => {
+										proj_row[0].map((val, idx) => {
 											return (<td key={idx}>{val}</td>);
 										})
+									}
+									{
+										<td><a href={proj_row[1]}>View Project</a></td>
 									}
 								</tr>
 							);
@@ -38,6 +48,7 @@ function Tabulate({ props }) {
 					}
 				</tbody>
 			</table>
+			<UserCard />
 		</div>
 	);
 }
@@ -45,6 +56,7 @@ function Tabulate({ props }) {
 export default function viewusers() {
 	const [values, setValues] = useState([]);
 	const [keys, setKeys] = useState([]);
+	const [uris, setUris] = useState([]);
 	const fetchData = () => {
 		fetch("http://localhost:3000/api/project")
 			.then(response => response.json())
@@ -70,11 +82,13 @@ export default function viewusers() {
 				// TODO: add member names
 				var proposal_fields = [
 					"domains",
+					"leader",
 					"funding_type",
 					"funding_agency",
 				];
 
 				var all_values = [];
+				var uris = [];
 				all_data.forEach(
 					function (project) {
 						let local_values = [];
@@ -89,11 +103,14 @@ export default function viewusers() {
 							}
 						);
 						all_values.push(local_values);
+						uris.push(project.url);
 					}
 				);
 				var all_fields = project_fields.concat(proposal_fields);
+
 				setValues(all_values);
 				setKeys(all_fields);
+				setUris(uris);
 			})
 	}
 
@@ -102,7 +119,7 @@ export default function viewusers() {
 	}, []);
 
 	// Todo: Make objects multiple array sets
-	let payload = { "values": values, "keys": keys, "link_objects": 1 };
+	let payload = { "values": zip(values, uris), "keys": keys, "link_objects": 1 };
 	return (
 		<div id="vieusers">
 			<Header></Header>

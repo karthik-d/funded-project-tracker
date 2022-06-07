@@ -1,0 +1,11 @@
+.users_wrapper{
+    display: flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.row_break {
+  flex-basis: 100%;
+  height: 0;
+}
