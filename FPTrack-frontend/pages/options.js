@@ -35,10 +35,15 @@ export default function Options() {
       "key": "view_resources"
     },
     {
+      "name": "View Proposals",
+      "url": "/guest/view_proposals",
+      "key": "view_proposals"
+    },
+    {
       "name": "View Projects",
       "url": "/guest/view_projects",
       "key": "view_projects"
-    }
+    },
   ];
 
   return (

@@ -8,82 +8,55 @@ import user from '../../../FPTrack-backend/models/user';
 
 
 function Tabulate({ props }) {
-	console.log("CALLED");
-	console.log(props.projects);
-	return (<div className={styles.tabulate}>
-		<table>
-			<thead id="">
-				<tr id="header" key="header">
-					{props.keys[0].map(key => {
-						return (<th key={key}>{key}</th>);
-					})}
-				</tr>
-			</thead>
-			<tbody id="objects">
-				{/* {
-					[...props.objects.keys()].map(idx => {
-						return props.objects[idx].map(obj => {
+	console.log(typeof props.objects);
+	return (
+		<div className={styles.tabulate}>
+			<table>
+				<thead id="">
+					<tr id="header" key="header">
+						{props.keys.map(key => {
+							return (<th key={key}>{key}</th>);
+						})}
+					</tr>
+				</thead>
+				<tbody id="objects">
+					{
+						props.values.map(proj_row => {
 							return (
-								<tr key={obj._id}>
+								<tr key={proj_row[0]}>
 									{
-										props.keys[idx].map(key => {
-											return (<td key={key}>{obj[key]}</td>);
+										proj_row.map((val, idx) => {
+											return (<td key={idx}>{val}</td>);
 										})
 									}
 								</tr>
 							);
-						});
-					})
-				} */}
-				{
-					// Process all ith elems together
-					props.objects[0].map((_, proj_idx) => {
-						return (
-							<tr key={props.objects[proj_idx]._id}>
-								{
-									props.objects.map((obj_set, obj_idx) => {
-										console.log(props.keys);
-										return (
-											props.keys[obj_idx].map(key_set => {
-												key_set[proj_idx].map((key) => {
-													<td key={key}>
-														{props.objects[obj_idx][proj_idx][key]}
-													</td>
-												})
-											})
-										);
-									})
-								}
-							</tr>
-						)
-					})
-				}
-			</tbody>
-		</table>
-	</div>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
 	);
 }
 
 export default function viewusers() {
-
-	const [projects, setProjects] = useState([]);
-	const [proposals, setProposals] = useState([]);
-	const [projectKeys, setProjectKeys] = useState([]);
-	const [proposalKeys, setProposalKeys] = useState([]);
-
+	const [values, setValues] = useState([]);
+	const [keys, setKeys] = useState([]);
 	const fetchData = () => {
 		fetch("http://localhost:3000/api/project")
 			.then(response => response.json())
 			.then(jsondata => {
-				var proposal_objs = jsondata.map(
+
+				var all_data = JSON.parse(
+					JSON.stringify(jsondata)
+				);
+				var proposal_data = all_data.map(
 					function (project) {
 						return project.proposal;
 					}
-				)
-				setProjects(JSON.parse(JSON.stringify(jsondata)));
-				setProposals(proposal_objs);
-				// set keys
-				const main_fields = [
+				);
+
+				var project_fields = [
 					"_id",
 					"approved_budget",
 					"approved_duration",
@@ -92,17 +65,43 @@ export default function viewusers() {
 					"outcomes"
 				];
 				// TODO: add member names
-				const sub_fields = [
+				var proposal_fields = [
 					"domains",
 					"funding_type",
 					"funding_agency",
 				];
-				setProjectKeys(main_fields);
-				setProposalKeys(sub_fields);
 
+				var all_values = [];
+				all_data.forEach(
+					function (project) {
+						var local_values = [];
+						project_fields.forEach(
+							function (key) {
+								local_values.push(project.key);
+							}
+						);
+						proposal_fields.forEach(
+							function (key) {
+								local_values.push(project.proposal.key)
+							}
+						);
+						all_values.push(local_values);
+					}
+				);
+				var all_fields = project_fields.concat(proposal_fields);
+				console.log(all_fields);
+
+				setValues(all_values);
+				setKeys(all_fields);
 			})
 	}
 
+	useEffect(() => {
+		fetchData()
+	}, []);
+
+	// Todo: Make objects multiple array sets
+	let temp = { "values": values, "keys": keys, "link_objects": 1 };
 
 	useEffect(() => {
 		fetchData()
