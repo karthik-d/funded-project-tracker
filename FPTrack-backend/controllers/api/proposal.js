@@ -40,12 +40,12 @@ function create(req, res, next) {
         getUsersFromEmails([req.body.leader])
     ])
         .then(([supervisors, members, [leader]]) => {
-            if (supervisors.includes(null)) {
+            if (supervisors.length != req.body.supervisors.length) {
                 res.status(400).send({
                     message: "One or more invalid emails for supervisors"
                 });
             }
-            else if (members.includes(null)) {
+            else if (members.length != req.body.members.length) {
                 res.status(400).send({
                     message: "One or more invalid emails for members"
                 });
