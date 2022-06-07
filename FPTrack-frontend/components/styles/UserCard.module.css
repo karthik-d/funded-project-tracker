@@ -11,9 +11,10 @@
 	justify-content: center;
 	flex-direction: column;
     box-sizing: border-box;
-	margin: 0;
+	margin: 10px;
     width: max-content;
     height: max-content;
+	flex-wrap: wrap;
 }
 
 .h3 {

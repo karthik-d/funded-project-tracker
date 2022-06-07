@@ -8,6 +8,8 @@ import user from '../../../FPTrack-backend/models/user';
 
 import UserCard from '../../components/UserCard';
 
+import userStyles from './styles/view_user.module.css'
+
 
 function Tabulate({ props }) {
   return (<div className={styles.tabulate}>
@@ -64,14 +66,17 @@ export default function viewusers() {
   return (
     <div id="vieusers">
       <Header></Header>
+      <div className={userStyles.users_wrapper}>
+        {
+          users.map((usr) => {
+            console.log(usr);
+            return <UserCard {...usr} />;
+          })
+        }
+      </div>
+
       <Tabulate props={temp} />;
-      {
-        users.map((usr) => {
-          console.log(usr);
-          return <UserCard {...usr} />;
-        })
-      }
-    </div>
+    </div >
 
   );
 
