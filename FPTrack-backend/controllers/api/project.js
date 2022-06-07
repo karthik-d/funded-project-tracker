@@ -28,9 +28,11 @@ function getAll(req, res, next) {
         .onlyExisting()
         .then((resources) => {
             Promise.all(resources.map((rsrc) => {
-                return rsrc.populate('proposal');
+                return rsrc
+                    .populate('proposal');
             }))
                 .then((resources) => {
+                    console.log(Object.keys(resources[0]))
                     res.status(200).send(resources);
                 });
         })

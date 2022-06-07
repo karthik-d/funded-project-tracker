@@ -134,7 +134,7 @@ function getAll(req, res, next) {
                     rsrc.pdf_document = rsrc.document_base64;
                 }
             );
-            res.status(200).send(resources)
+            res.status(200).send(resources);
         })
         .catch((error) => {
             res.status(400).send(

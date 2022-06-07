@@ -89,7 +89,9 @@ var ProjectSchema = new Schema(
         timestamps: {
             created_at: 'created_at',
             modified_at: 'modified_at'
-        }
+        },
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
     }
 );
 
@@ -111,17 +113,17 @@ ProjectSchema
 
 //--
 
-ProjectSchema   
+ProjectSchema
     .statics
     .getById = function (id) {
-         return this.find().getById(id);
+        return this.find().getById(id);
     };
 
 ProjectSchema
     .query
     .getById = function (id) {
         return this.find({
-            _id: id 
+            _id: id
         });
     };
 
