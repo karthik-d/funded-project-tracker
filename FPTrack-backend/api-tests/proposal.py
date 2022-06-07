@@ -38,10 +38,10 @@ def post(debug=True):
     #     budget = 10000
     # )
     req_body = dict(
-        title = "Number plate detection",
-        decription = "blah blah blah...blah..",
+        title = "Number Plate Detection",
+        decription = "Blah blah blah...blah..",
         domains = ['machine_learning'],
-        supervisors = ['test@admin.com'],
+        supervisors = ['claire@gmail.com'],
         leader = 'greg@gmail.com',
         members = ['ben@gmail.com', 'claire@gmail.com'],
         funding_type = 'external',
@@ -84,6 +84,6 @@ def get(id=None, debug=True):
 
 
 # <<<<<<< HEAD
-# post()
-get(debug=False)
+post()
+# get(debug=False)
 # get(id='628b5425099b1ba80b543da6', debug=False)

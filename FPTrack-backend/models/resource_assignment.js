@@ -13,12 +13,47 @@ var ResourceAssignmentSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'project',
             required: true,
-            validate: [checkProjectType, "Project should be internal!"]
+            validate: {
+                validator : function(given_proj){
+                    var rsrc_assign = this;
+                    return new Promise(
+                        function(resolve, reject){
+                            rsrc_assign.populate('assigned_to')
+                            .then((project_rsrc) => {
+                                project_rsrc.assigned_to.populate('proposal')
+                                    .then((project_rsrc) => {
+                                        return resolve(
+                                            project_rsrc.proposal.funding_type == 'internal'
+                                        )
+                                    })
+                                })
+                            }
+                        );
+                },
+                message: props => `${props.value} is not a internal !`
+            },
         },
         assigned_by: {
             type: Schema.Types.ObjectId,
             ref: 'user',
             required: true,
+            validate: {
+                validator : function(given_proj){
+                    var rsrc_assign = this;
+                    return new Promise(
+                        function(resolve, reject){
+                            rsrc_assign.populate('assigned_by')
+                            .then((rsrc_assign_pop) => {
+                                console.log(rsrc_assign_pop.assigned_by.role);
+                                    return resolve(
+                                        rsrc_assign_pop.assigned_by.role == 'resource_mgr'
+                                    )
+                                })
+                            }
+                        );
+                },
+                message: props => `${props.value} is not a resource manager !`
+            },
         }
     },
     {
@@ -28,18 +63,6 @@ var ResourceAssignmentSchema = new Schema(
         }
     }
 );
-
-function checkProjectType(given_proj) {
-    this.populate('assigned_to')
-        .then((project_rsrc) => {
-            project_rsrc.assigned_to.populate('proposal')
-                .then((proposal_rsrc) => {
-                    return (proposal_rsrc.proposal.funding_type == 'internal');
-                })
-        })
-}
-
-//-- 
 
 ResourceAssignmentSchema
     .statics
