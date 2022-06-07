@@ -8,25 +8,25 @@ import user from '../../../FPTrack-backend/models/user';
 
 
 function Tabulate({props}){
-	console.log("HERE--?");
-	console.log(typeof props.objects[0]);
-    return (<div className = {styles.tabulate}>
+	console.log(typeof props.objects);
+    return (
+        <div className = {styles.tabulate}>
     <table>
       <thead id ="">
         <tr id="header" key = "header">
-        {props.keys.map(key=>{
-          return (<th key = {key}>{key}</th>);
+        {props.keys.map(key=> {
+          return (<th key={key}>{key}</th>);
         })}
         </tr>
       </thead>
       <tbody id="objects">
       {		  
-		  props.objects[0].map(obj=>{ 
+		  props.values.map(proj_row=>{ 
 			return (
-				<tr key={obj._id}>
+				<tr key={proj_row[0]}>
 				{
-					props.keys[0].map(key=>{
-						return (<td key = {key}>{obj[key]}</td>);
+					proj_row.map((val, idx)=>{
+						return (<td key={idx}>{val}</td>);
 					})
 				}
 				</tr>
@@ -41,24 +41,24 @@ function Tabulate({props}){
 }
 
 export default function viewusers()  {
-    const [users, setUsers] = useState([]);
-    const [proposals, setProposals] = useState([]);
+    const [values, setValues] = useState([]);
     const [keys,setKeys] = useState([]);
-    const [proposalKeys, setProposalKeys] = useState([]);
     const fetchData = () => {
     	fetch("http://localhost:3000/api/project")
 		.then(response => response.json())
         .then(jsondata => {
-        	console.log("Gold Jagz");
-        	setUsers(JSON.parse(JSON.stringify(jsondata)));
-        	var proposal_objs = jsondata.map(
+
+        	var all_data = JSON.parse(
+                JSON.stringify(jsondata)
+            );
+        	var proposal_data = all_data.map(
     			function (project){
     				return project.proposal;
     			}
-    		)
-        	setProposals(proposal_objs);
-        	const main_fields = [ 
-		    	"_id", 
+    		);
+
+        	var project_fields = [ 
+                "_id", 
 		    	"approved_budget",
 		    	"approved_duration",
 		    	"completed_on", 
@@ -66,24 +66,43 @@ export default function viewusers()  {
 				"outcomes"
 			];
 			// TODO: add member names
-			const sub_fields = [
+			var proposal_fields = [
 				"domains",
 				"funding_type",
 				"funding_agency",
 			];
-        	setKeys(main_fields);
-        	setProposalKeys(sub_fields);
-        	
-        })
-	}
-    
 
-        useEffect(() => {
-          fetchData()
-        }, []);
-        
-        // Todo: Make objects multiple array sets
-        let temp = {"objects":[users,users],"keys":[keys], "link_objects":1};
+            var all_values = [];
+            all_data.forEach(
+                function(project){
+                    var local_values = [];
+                    project_fields.forEach(
+                        function(key){
+                            local_values.push(project.key);
+                        }
+                    );
+                    proposal_fields.forEach(
+                        function(key){
+                            local_values.push(project.proposal.key)
+                        }
+                    );
+                    all_values.push(local_values);
+                }
+            );
+            var all_fields = project_fields.concat(proposal_fields);
+            console.log(all_fields);
+
+            setValues(all_values);
+        	setKeys(all_fields);        	
+        })
+	}    
+
+    useEffect(() => {
+      fetchData()
+    }, []);
+    
+    // Todo: Make objects multiple array sets
+    let temp = {"values": values,"keys": keys, "link_objects": 1};
 
 return (
     <div id="vieusers">

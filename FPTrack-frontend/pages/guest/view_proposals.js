@@ -49,10 +49,10 @@ export default function viewusers()  {
             const main_fields = [
               "title", 
               "description",
-              "leader",
               "funding_type",
               "funding_agency",
-              "budget"
+              "budget",
+              "approved_on"
             ];
             setKeys(main_fields);
         }
