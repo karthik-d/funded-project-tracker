@@ -6,9 +6,10 @@ import Header from '../header';
 import React, { useState, useEffect, Component } from 'react';
 import user from '../../../FPTrack-backend/models/user';
 
+import UserCard from '../../components/UserCard';
+
 // todo: represent multi-valued fields suitably
 // todo: display member names suitably
-// todo: add hyperlinks to related objects
 // todo: rename tabe headers to user readables
 
 const zip = ((arr1, arr2) => {
@@ -47,6 +48,7 @@ function Tabulate({ props }) {
 					}
 				</tbody>
 			</table>
+			<UserCard />
 		</div>
 	);
 }
@@ -80,6 +82,7 @@ export default function viewusers() {
 				// TODO: add member names
 				var proposal_fields = [
 					"domains",
+					"leader",
 					"funding_type",
 					"funding_agency",
 				];
