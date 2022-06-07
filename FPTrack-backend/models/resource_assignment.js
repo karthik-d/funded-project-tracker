@@ -15,29 +15,23 @@ var ResourceAssignmentSchema = new Schema(
             required: true,
             validate: {
                 validator : function(given_proj){
-                    let isInternal = true;
-                    this.populate('assigned_to')
-                    .then((project_rsrc) => {
-                        project_rsrc.assigned_to.populate('proposal')
-                            .then((proposal_rsrc) => {
-                                // console.log(proposal_rsrc.proposal.funding_type);
-                                if (proposal_rsrc.proposal.funding_type != 'internal'){
-                                    isInternal = false;
-                                }
-                                return isInternal;
-                                
-                            }).then((val)=>{
-                                return val;
-                            })
-                    }).then((val) => {
-                        return val;
-                    })
-                    // return (proposal_rsrc.proposal.funding_type == 'internal');
-                    // console.log("after prmis =>" + isInternal)
-                    
+                    var rsrc_assign = this;
+                    return new Promise(
+                        function(resolve, reject){
+                            rsrc_assign.populate('assigned_to')
+                            .then((project_rsrc) => {
+                                project_rsrc.assigned_to.populate('proposal')
+                                    .then((project_rsrc) => {
+                                        return resolve(
+                                            project_rsrc.proposal.funding_type == 'internal'
+                                        )
+                                    })
+                                })
+                            }
+                        );
                 },
                 message: props => `${props.value} is not a internal !`
-            }
+            },
         },
         assigned_by: {
             type: Schema.Types.ObjectId,
@@ -57,8 +51,8 @@ var ResourceAssignmentSchema = new Schema(
 //     this.populate('assigned_to')
 //         .then((project_rsrc) => {
 //             project_rsrc.assigned_to.populate('proposal')
-//                 .then((proposal_rsrc) => {
-//                     return (proposal_rsrc.proposal.funding_type == 'internal');
+//                 .then((project_rsrc) => {
+//                     return (project_rsrc.proposal.funding_type == 'internal');
 //                 })
 //         })
 // }
