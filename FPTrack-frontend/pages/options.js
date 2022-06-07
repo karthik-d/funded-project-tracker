@@ -13,6 +13,12 @@ function Opt_button({ props }) {
 export default function Options() {
 
   const options = [
+    // Temporary
+    {
+      "name": "Singup",
+      "url": "/guest/signup",
+      "key": "signup"
+    },
     {
       "name": "Submit proposal",
       "url": "/registered_user/proposal",
