@@ -32,7 +32,6 @@ function getAll(req, res, next) {
                     .populate('proposal');
             }))
                 .then((resources) => {
-                    console.log(Object.keys(resources[0]))
                     res.status(200).send(resources);
                 });
         })

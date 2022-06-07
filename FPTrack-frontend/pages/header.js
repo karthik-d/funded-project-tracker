@@ -2,8 +2,28 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import GoogleSignin from '../components/auth/google_oauth'
+import React, { useEffect } from 'react';
 
 export default function Header() {
+
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = "google-signin-client_id";
+    meta.content = "103603048152-42oo200pr067ahtntminh5m6kc88m618.apps.googleusercontent.com";
+    document.body.appendChild(meta);
+
+    const script = document.createElement("script");
+    script.src = "https://apis.google.com/js/platform.js";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // clean up the script when the component in unmounted
+      document.body.removeChild(script);
+    }
+  }, [])
+
   return (
     <div className={styles.header}>
       <Head>
@@ -14,6 +34,7 @@ export default function Header() {
       <center>
         <a href="/"><img src="/logo.png" height="100px"></img></a>
       </center>
+      <div class="g-signin2">THIS IS HERE</div>
       <div>
         <p className={styles.pageTitle}>
           Funded Project Tracker

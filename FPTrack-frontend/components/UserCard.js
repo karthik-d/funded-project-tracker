@@ -10,7 +10,6 @@ export default class User extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className={styles.wrapper}>
                 <div className={styles.card_container}>

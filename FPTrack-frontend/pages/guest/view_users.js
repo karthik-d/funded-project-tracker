@@ -69,7 +69,6 @@ export default function viewusers() {
       <div className={userStyles.users_wrapper}>
         {
           users.map((usr) => {
-            console.log(usr);
             return <UserCard {...usr} />;
           })
         }

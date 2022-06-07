@@ -21,6 +21,7 @@ function getAuthUser(req, res, next) {
     })
         .then((ticket) => {
             var payload = ticket.getPayload();
+            console.log(payload);
             // retreive user
             UserModel
                 .onlyExisting()
