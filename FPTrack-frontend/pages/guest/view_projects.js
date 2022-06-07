@@ -11,6 +11,12 @@ import user from '../../../FPTrack-backend/models/user';
 // todo: add hyperlinks to related objects
 // todo: rename tabe headers to user readables
 
+const zip = ((arr1, arr2) => {
+	return arr1.map((elem, idx) => {
+		return [elem, arr2[idx]];
+	});
+});
+
 function Tabulate({ props }) {
 	return (
 		<div className={styles.tabulate}>
@@ -26,11 +32,14 @@ function Tabulate({ props }) {
 					{
 						props.values.map((proj_row) => {
 							return (
-								<tr key={proj_row[0]}>
+								<tr key={proj_row[0][0]}>
 									{
-										proj_row.map((val, idx) => {
+										proj_row[0].map((val, idx) => {
 											return (<td key={idx}>{val}</td>);
 										})
+									}
+									{
+										<td><a href={proj_row[1]}>View Project</a></td>
 									}
 								</tr>
 							);
@@ -45,6 +54,7 @@ function Tabulate({ props }) {
 export default function viewusers() {
 	const [values, setValues] = useState([]);
 	const [keys, setKeys] = useState([]);
+	const [uris, setUris] = useState([]);
 	const fetchData = () => {
 		fetch("http://localhost:3000/api/project")
 			.then(response => response.json())
@@ -75,6 +85,7 @@ export default function viewusers() {
 				];
 
 				var all_values = [];
+				var uris = [];
 				all_data.forEach(
 					function (project) {
 						let local_values = [];
@@ -89,11 +100,14 @@ export default function viewusers() {
 							}
 						);
 						all_values.push(local_values);
+						uris.push(project.url);
 					}
 				);
 				var all_fields = project_fields.concat(proposal_fields);
+
 				setValues(all_values);
 				setKeys(all_fields);
+				setUris(uris);
 			})
 	}
 
@@ -102,7 +116,7 @@ export default function viewusers() {
 	}, []);
 
 	// Todo: Make objects multiple array sets
-	let payload = { "values": values, "keys": keys, "link_objects": 1 };
+	let payload = { "values": zip(values, uris), "keys": keys, "link_objects": 1 };
 	return (
 		<div id="vieusers">
 			<Header></Header>
