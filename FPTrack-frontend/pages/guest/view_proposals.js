@@ -36,7 +36,7 @@ export default function viewusers()  {
     const [users, setUsers] = useState([]);
     const [keys,setKeys] = useState([]);
         const fetchData = () => {
-          fetch("http://localhost:3000/api/resource-group")
+          fetch("http://localhost:3000/api/proposal")
           .then(response => response.json())
           .then(jsondata => {setUsers(JSON.parse(JSON.stringify(jsondata)));
             const arr = []
@@ -46,7 +46,15 @@ export default function viewusers()  {
                   arr.push(key);
             }
             }
-            setKeys(arr);
+            const main_fields = [
+              "title", 
+              "description",
+              "leader",
+              "funding_type",
+              "funding_agency",
+              "budget"
+            ];
+            setKeys(main_fields);
         }
             );
         }
