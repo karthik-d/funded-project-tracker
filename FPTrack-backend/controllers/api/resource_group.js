@@ -29,7 +29,6 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-    console.log(req.query);
     var custom_filters = [];
     Object.keys(req.query).map(
         (param) => {

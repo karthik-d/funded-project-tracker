@@ -13,7 +13,6 @@ function applyAsyncFilters(filters) {
             return fltr(item);
         }))
             .then((filter_truths) => {
-                console.log(filter_truths);
                 return filter_truths
                     .every(Boolean)
             })
