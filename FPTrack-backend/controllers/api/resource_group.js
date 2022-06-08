@@ -6,6 +6,8 @@ var ResourceGroupModel = require('../../models/resource_group');
 var ErrorHelper = require('../../helpers/error');
 var ResourceGroupHelpers = require('../../helpers/resource_group');
 
+var ResourceGroupFilters = require('../../helpers/filters/resource_group');
+
 
 function create(req, res, next) {
     const rsrc_grp = new ResourceGroupModel(req.body);
@@ -26,12 +28,15 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
+
     ResourceGroupModel
         .onlyExisting()
         .then((resources) => {
-            ResourceGroupHelpers.get_unavl_resource_count(resources[0])
-                .then((cnt) => { console.log(cnt) });
-            res.status(200).send(resources);
+            resources
+                .applyFilters(custom_filters)
+                .then((resources) => {
+                    res.status(200).send(resources);
+                })
         })
         .catch((error) => {
             res.status(400).send(

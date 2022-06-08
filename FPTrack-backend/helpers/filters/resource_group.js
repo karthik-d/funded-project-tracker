@@ -1,11 +1,10 @@
-const ResourceModel = require('../../models/resource');
+const ResourceGroupHelpers = require('../resource_group');
 
 function is_available(rsrc_grp) {
-    ResourceModel
-        .onlyExisting()
-        .find({
-            resource_group: rsrc_grp._id
-        })
+    return Boolean(
+        ResourceGroupHelpers
+            .get_avl_resource_count(rsrc_grp)
+    );
 }
 
 exports.is_available = is_available;
