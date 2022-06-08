@@ -9,7 +9,15 @@ export default class SignupForm extends React.Component {
         super(props);
         this.state = {};
         this.data = {
-            roles: [{ name: "Admin", id: "admin" }, { name: "User", id: "user" }, { name: "Resource Manager", id: "rsrc_mgr" }]
+            rights: [
+                { name: "Admin", id: "admin" },
+                { name: "User", id: "user" },
+                { name: "Resource Manager", id: "rsrc_mgr" }
+            ],
+            roles: [
+                { value: 'student', label: 'Student' },
+                { value: 'faculty', label: 'Faculty' }
+            ]
         }
     }
 
@@ -21,17 +29,22 @@ export default class SignupForm extends React.Component {
                     <div className={styles.content} >
                         <form className={styles.form} action="#">
                             <div className={styles.user_details}>
-                                <div className={styles.input_box}>
+                                {/* <div className={styles.input_box}>
                                     <span className={styles.details}>Username</span>
                                     <input type="text" placeholder="Enter your username" required />
-                                </div>
+                                </div> */}
                                 <div className={styles.input_box}>
-                                    <span className={styles.details}>Email</span>
-                                    <input type="text" placeholder="Enter your email" required />
-                                </div >
-                                <div className={styles.input_box}>
-                                    < span className={styles.details}>Phone Number</span>
-                                    <input type="text" placeholder="Enter your number" required />
+                                    < span className={styles.details}>Role</span>
+                                    <Multiselect
+                                        style={{
+                                            multiselectContainer: {
+                                                width: 'fit-content'
+                                            }
+                                        }}
+                                        options={this.data.roles}
+                                        displayValue="label"
+                                        singleSelect="true"
+                                    />
                                 </div >
                                 <div className={styles.input_box}>
                                     < span className={styles.details}>Access Rights</span>
@@ -41,7 +54,7 @@ export default class SignupForm extends React.Component {
                                                 width: 'fit-content'
                                             }
                                         }}
-                                        options={this.data.roles}
+                                        options={this.data.rights}
                                         displayValue="name"
                                     />
                                 </div >
