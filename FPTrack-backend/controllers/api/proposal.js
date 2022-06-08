@@ -68,11 +68,7 @@ function create(req, res, next) {
                             url: resource.url,
                             message: "Proposal created"
                         })
-                    }).catch((error) => {
-                        res.status(400).send(
-                            ErrorHelper.construct_json_response(error)
-                        );
-                    });
+                    })
             }
         })
         .catch((error) => {
