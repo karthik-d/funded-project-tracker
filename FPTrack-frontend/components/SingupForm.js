@@ -27,7 +27,7 @@ export default class SignupForm extends React.Component {
                 <h2 className={styles.h2}>Hey, {this.props.name}!<br />Just a few more details...</h2>
                 <div className={styles.wrapper}>
                     <div className={styles.content} >
-                        <form className={styles.form} action="#">
+                        <form action="http://localhost:3000/api/proposal" className={styles.form} method="get">
                             <div className={styles.user_details}>
                                 {/* <div className={styles.input_box}>
                                     <span className={styles.details}>Username</span>
@@ -69,7 +69,6 @@ export default class SignupForm extends React.Component {
         );
     }
 }
-
 
 
 

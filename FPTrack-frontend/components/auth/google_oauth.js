@@ -35,6 +35,11 @@ export function LoginOneTapCrux() {
             });
     };
 
+    // response contains user data --- email, name, etc. 
+    // TODO: Redirect to signup page  (Component ready)
+    // TODO: Construct user creation request with the form data and `response`
+    // TODO: Hit POST:/api/user to create the user
+
     const onFailure = async (response) => {
         console.log("Failed: ");
         console.log(response.error);
