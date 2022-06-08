@@ -5,8 +5,9 @@ import Link from 'next/link';
 import Header from '../header';
 import React, { useState, useEffect, Component } from 'react';
 import user from '../../../FPTrack-backend/models/user';
-
+import userStyles from './styles/view_user.module.css'
 import UserCard from '../../components/UserCard';
+import ProjectCard from '../../components/ProjectCard';
 
 // todo: represent multi-valued fields suitably
 // todo: display member names suitably
@@ -19,6 +20,7 @@ const zip = ((arr1, arr2) => {
 });
 
 function Tabulate({ props }) {
+	
 	return (
 		<div className={styles.tabulate}>
 			<table>
@@ -48,12 +50,12 @@ function Tabulate({ props }) {
 					}
 				</tbody>
 			</table>
-			<UserCard />
+			
 		</div>
 	);
 }
 
-export default function viewusers() {
+export default function viewprojects() {
 	const [values, setValues] = useState([]);
 	const [keys, setKeys] = useState([]);
 	const [uris, setUris] = useState([]);
@@ -72,19 +74,19 @@ export default function viewusers() {
 				);
 
 				var project_fields = [
-					"_id",
-					"approved_budget",
-					"approved_duration",
-					"completed_on",
-					"status_updates",
-					"outcomes"
+					"_id", //0
+					"approved_budget", //1
+					"approved_duration", //2
+					"completed_on", //3
+					"status_updates",  //4
+					"outcomes" //5
 				];
 				// TODO: add member names
 				var proposal_fields = [
-					"domains",
-					"leader",
-					"funding_type",
-					"funding_agency",
+					"domains", //6
+					"leader", //7
+					"funding_type", //8
+					"funding_agency", //9
 				];
 
 				var all_values = [];
@@ -120,10 +122,19 @@ export default function viewusers() {
 
 	// Todo: Make objects multiple array sets
 	let payload = { "values": zip(values, uris), "keys": keys, "link_objects": 1 };
+	console.log("Payload",payload);
 	return (
 		<div id="vieusers">
 			<Header></Header>
-			<Tabulate props={payload} />;
+			<div className={userStyles.users_wrapper}>
+        {
+          payload["values"].map((obj) => {
+            console.log(obj);
+            return <ProjectCard {...obj} />;
+          })
+        }
+      </div>
+			{/* <Tabulate props={payload} /> */}
 		</div>
 
 	);
