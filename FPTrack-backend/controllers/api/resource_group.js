@@ -5,6 +5,10 @@ var mongoose = require('mongoose');
 var ResourceGroupModel = require('../../models/resource_group');
 var ErrorHelper = require('../../helpers/error');
 
+var ResourceGroupHelpers = require('../../helpers/resource_group');
+var ResourceGroupFilters = require('../../helpers/filters/resource_group');
+var Utils = require('../../helpers/utils');
+
 
 function create(req, res, next) {
     const rsrc_grp = new ResourceGroupModel(req.body);
@@ -25,10 +29,34 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
+    var custom_filters = [];
+    Object.keys(req.query).map(
+        (param) => {
+            if (ResourceGroupFilters.available_filters.includes(param)) {
+                custom_filters.push(Utils.getFunctionByName(param, ResourceGroupFilters));
+            }
+        }
+    )
+
     ResourceGroupModel
         .onlyExisting()
         .then((resources) => {
-            res.status(200).send(resources);
+            resources = resources
+                .filter(Utils.applyAsyncFilters(custom_filters))
+            Promise.all(resources.map((rsrc) => {
+                return new Promise((resolve, reject) => {
+                    ResourceGroupHelpers.get_avl_resource_count(rsrc)
+                        .then((qty) => {
+                            resolve(Object.assign(
+                                rsrc.toObject(),
+                                { avl_qty: qty }
+                            ));
+                        })
+                });
+            }))
+                .then((resources) => {
+                    res.status(200).send(resources);
+                })
         })
         .catch((error) => {
             res.status(400).send(
