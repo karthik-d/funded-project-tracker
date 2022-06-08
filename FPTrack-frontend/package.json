@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-oauth/google": "^0.2.4",
+    "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "mongodb-client-encryption": "^2.1.0",
     "multiselect-react-dropdown": "^2.0.22",

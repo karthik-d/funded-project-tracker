@@ -75,7 +75,7 @@ export default function viewusers() {
         }
       </div>
 
-      <Tabulate props={temp} />;
+      {/* <Tabulate props={temp} />; */}
     </div >
 
   );
