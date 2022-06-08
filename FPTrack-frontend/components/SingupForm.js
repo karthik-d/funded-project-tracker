@@ -11,33 +11,60 @@ export default class SignupForm extends React.Component {
 
     render() {
         return (
-            <section className={styles.signup}>
-                <div className={styles.container}>
-                    <div className={styles.signup_content}>
-                        <div className={styles.signup_form}>
-                            <h2 className={styles.form_title}>Sign up</h2>
-                            <form method="POST" className={styles.register_form} id="register_form">
-                                <div className={styles.form_group}>
-                                    <input type="text" name="name" id="name" placeholder="Your Name" />
-                                </div >
-                                <div className={styles.form_group}>
-                                    <input type="email" name="email" id="email" placeholder="Your Email" />
-                                </div >
-                                <div className={styles.form_group}>
-                                    <input type="password" name="pass" id="pass" placeholder="Password" />
-                                </div >
-                                <div className={styles.form_group}>
-                                    < input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
-                                </div >
-
-                                <div className={`${styles.form_group} ${styles.form_button}`} >
-                                    <input type="submit" name="signup" id="signup" className={styles.form_submit} value="Register" />
-                                </div>
-                            </form >
+            <div className={styles.content} >
+                <form className={styles.form} action="#">
+                    <div className={styles.user_details}>
+                        <div className={styles.input_box}>
+                            <span className={styles.details}>Full Name</span>
+                            <input type="text" placeholder="Enter your name" required />
+                        </div>
+                        <div className={styles.input_box}>
+                            <span className={styles.details}>Username</span>
+                            <input type="text" placeholder="Enter your username" required />
+                        </div>
+                        <div className={styles.input_box}>
+                            <span className={styles.details}>Email</span>
+                            <input type="text" placeholder="Enter your email" required />
+                        </div >
+                        <div className={styles.input_box}>
+                            < span className={styles.details}>Phone Number</span>
+                            <input type="text" placeholder="Enter your number" required />
+                        </div >
+                        <div className={styles.input_box}>
+                            < span className={styles.details}>Password</span>
+                            <input type="text" placeholder="Enter your password" required />
+                        </div >
+                        <div className={styles.input_box}>
+                            < span className={styles.details}>Confirm Password</span>
+                            <input type="text" placeholder="Confirm your password" required />
                         </div >
                     </div >
-                </div >
-            </section >
+                    <div className={styles.gender_details}>
+                        < input type="radio" name="gender" id="dot-1" />
+                        <input type="radio" name="gender" id="dot-2" />
+                        <input type="radio" name="gender" id="dot-3" />
+                        <span className={styles.gender_title}>Gender</span>
+                        < div className={styles.category}>
+                            <label for="dot_1" >
+                                <span className={`${styles.dot} ${styles.one}`}></span>
+                                <span className={styles.gender}>Male</span>
+                            </ label>
+                            <label for="dot_2">
+                                <span className={`${styles.dot} ${styles.two}`}></span>
+                                <span className={styles.gender}>Female</span>
+                            </ label >
+                            <label for="dot_3">
+                                <span className={`${styles.dot} ${styles.three}`}></span>
+                                <span className={styles.gender}>Prefer not to say</span>
+                            </ label >
+                        </div >
+                    </ div >
+                    <div className={styles.button}>
+                        < input type="submit" value="Register" />
+                    </div >
+                </form>
+            </div>
+
         );
     }
 }
