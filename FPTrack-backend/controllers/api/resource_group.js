@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var ResourceGroupModel = require('../../models/resource_group');
 var ErrorHelper = require('../../helpers/error');
 
+var ResourceGroupHelpers = require('../../helpers/resource_group');
 var ResourceGroupFilters = require('../../helpers/filters/resource_group');
 var Utils = require('../../helpers/utils');
 
@@ -41,9 +42,22 @@ function getAll(req, res, next) {
     ResourceGroupModel
         .onlyExisting()
         .then((resources) => {
-            var resources = resources
+            resources = resources
                 .filter(Utils.applyAsyncFilters(custom_filters))
-            res.status(200).send(resources);
+            Promise.all(resources.map((rsrc) => {
+                return new Promise((resolve, reject) => {
+                    ResourceGroupHelpers.get_avl_resource_count(rsrc)
+                        .then((qty) => {
+                            resolve(Object.assign(
+                                rsrc.toObject(),
+                                { avl_qty: qty }
+                            ));
+                        })
+                });
+            }))
+                .then((resources) => {
+                    res.status(200).send(resources);
+                })
         })
         .catch((error) => {
             res.status(400).send(
