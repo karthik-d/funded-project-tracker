@@ -29,6 +29,28 @@ var ProposalSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref: 'user'
             }],
+            validate: {
+                validator : function(given_proj){
+                    var current_proposal = this;
+                    return new Promise(
+                        function(resolve, reject){
+                            current_proposal.populate('supervisors')
+                            .then((populated_data) => {
+                                var allFaculties = true;
+                                var supervisorsList = populated_data.supervisors;
+                                supervisorsList.forEach((supervisor)=>{
+                                    console.log(supervisor.role);
+                                    if (supervisor.role != "faculty"){
+                                        allFaculties = false;
+                                    }
+                                })
+                                return resolve(allFaculties)
+                                })
+                            }
+                        );
+                },
+                message: props => `All supervisors must be faculty`
+            },
             required: true
         },
         // the user type of leader determines if project is Student project or Faculty project
@@ -42,6 +64,32 @@ var ProposalSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref: 'user'
             }],
+            validate: {
+                validator : function(given_proj){
+                    var current_proposal = this;
+                    return new Promise(
+                        function(resolve, reject){
+                            var memberList = current_proposal.members;
+                            var leaderEmail = current_proposal.leader.email;
+                            var existed = false;
+                            console.log(leaderEmail);
+                            memberList.forEach(function(member){
+                                if (member.email == leaderEmail){
+                                    existed = true;
+                                }
+                            })
+
+                            if (existed){
+                                return resolve(false);
+                            }
+                            else {
+                                return resolve(true);
+                            }
+                        }
+                    );
+                },
+                message: props => `Duplicate entry for leader found in members list. Mention only once`
+            },
             required: true
         },
         funding_type: {
