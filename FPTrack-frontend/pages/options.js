@@ -15,7 +15,7 @@ export default function Options() {
   const options = [
     // Temporary
     {
-      "name": "Singup",
+      "name": "Sign up",
       "url": "/guest/signup",
       "key": "signup"
     },

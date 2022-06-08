@@ -1,7 +1,7 @@
-import SignupForm from '../../components/SingupForm';
+import SignupForm from '../../components/SignupForm';
 import Header from '../header';
 
-export default function viewusers() {
+export default function signup() {
     return (
         <div id="signupform">
             <Header></Header>

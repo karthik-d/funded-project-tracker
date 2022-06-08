@@ -7,6 +7,7 @@ var ErrorHelper = require('../../helpers/error');
 // TODO: Add validation
 function create(req, res, next) {
     const user = new UserModel(req.body);
+    console.log(req.body);
     user
         .save()
         .then((resource) => {
