@@ -9,6 +9,11 @@ var Schema = mongoose.Schema;
 // - (add on...)
 var ResourceAssignmentSchema = new Schema(
     {
+        resource: {
+            type: Schema.Types.ObjectId,
+            ref: 'resource',
+            required: true
+        },
         assigned_to: {
             type: Schema.Types.ObjectId,
             ref: 'project',
