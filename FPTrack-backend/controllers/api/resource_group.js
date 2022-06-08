@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 var ResourceGroupModel = require('../../models/resource_group');
 var ErrorHelper = require('../../helpers/error');
+var ResourceGroupHelpers = require('../../helpers/resource_group');
 
 
 function create(req, res, next) {
@@ -28,6 +29,8 @@ function getAll(req, res, next) {
     ResourceGroupModel
         .onlyExisting()
         .then((resources) => {
+            ResourceGroupHelpers.get_unavl_resource_count(resources[0])
+                .then((cnt) => { console.log(cnt) });
             res.status(200).send(resources);
         })
         .catch((error) => {

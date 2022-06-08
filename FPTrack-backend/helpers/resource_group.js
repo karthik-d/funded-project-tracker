@@ -1,9 +1,10 @@
 const ResourceModel = require('../models/resource');
-const ResourceAssignmentModel = require('./models/resource_assignment');
+
+const ResourceFilters = require('./filters/resource');
 
 function get_resource_count(rsrc_grp) {
     return ResourceModel
-        .onlyExisiting()
+        .onlyExisting()
         .find({
             resource_group: rsrc_grp._id
         })
@@ -13,10 +14,31 @@ function get_resource_count(rsrc_grp) {
 }
 
 function get_avl_resource_count(rsrc_grp) {
-    var all_resources = ResourceModel
-        .onlyExisiting()
+    return ResourceModel
+        .onlyExisting()
         .find({
             resource_group: rsrc_grp._id,
+        })
+        .then((resources) => {
+            return resources
+                .filter(ResourceFilters.not_assigned)
+                .length;
         });
-    var assignments = ResourceAssignment
 }
+
+function get_unavl_resource_count(rsrc_grp) {
+    return ResourceModel
+        .onlyExisting()
+        .find({
+            resource_group: rsrc_grp._id,
+        })
+        .then((resources) => {
+            return resources
+                .filter(ResourceFilters.assigned)
+                .length;
+        });
+}
+
+exports.get_resource_count = get_resource_count;
+exports.get_avl_resource_count = get_avl_resource_count;
+exports.get_unavl_resource_count = get_unavl_resource_count;
