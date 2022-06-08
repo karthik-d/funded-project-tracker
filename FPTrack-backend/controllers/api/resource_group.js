@@ -28,14 +28,16 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-    var custom_filters = Object.keys(req.query).map(
+    console.log(req.query);
+    var custom_filters = [];
+    Object.keys(req.query).map(
         (param) => {
             if (ResourceGroupFilters.available_filters.includes(param)) {
-                return Utils.getFunctionByName(param, ResourceGroupFilters);
+                custom_filters.push(Utils.getFunctionByName(param, ResourceGroupFilters));
             }
         }
     )
-    console.log(custom_filters);
+
     ResourceGroupModel
         .onlyExisting()
         .then((resources) => {
