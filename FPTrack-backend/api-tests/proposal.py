@@ -42,11 +42,13 @@ def post(debug=True):
         decription = "Blah blah blah...blah..",
         domains = ['machine_learning'],
         supervisors = ['greg@gmail.com'],
-        leader = 'claire@gmail.com',
+        leader = 'ben@gmail.com',
         members = ['greg@gmail.com', 'claire@gmail.com'],
         funding_type = 'external',
         funding_agency = 'DST-SERB',
         pdf_document = pdf_doc_b64_string,
+        approved_on = "2020-12-12",
+        rejected_on = "2020-12-14",
         budget = 50000
     )
     resp = requests.post(

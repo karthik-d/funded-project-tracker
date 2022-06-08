@@ -118,7 +118,23 @@ var ProposalSchema = new Schema(
         },
         rejected_on: {
             type: Date,
-            default: null
+            default: null,
+            validate: {
+                validator: function (given_proj) {
+                    var current_proposal = this;
+                    return new Promise(
+                        function (resolve, reject) {
+                            var result = true;
+                            if (current_proposal.rejected_on != null  && current_proposal.approved_on != null){
+                                result = false;
+                            }
+                            // console.log(result)
+                            return resolve(result);
+                        }
+                    );
+                },
+                message: props => `Either rejected or approved date should be mentioned but not both!`
+            },
         },
         deleted_at: {
             type: Date,
