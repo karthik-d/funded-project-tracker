@@ -11,8 +11,32 @@ body{
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  background: linear-gradient(135deg, #71b7e6, #1F1A36);
 } */
+
+.content{
+    text-align: center;
+}
+
+.h2{
+    color: rgb(145, 149, 224);
+}
+
+.wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+  width: 40%;
+  height: max-content;
+  padding: 10px;
+  background: #516e81;
+  border-radius: 10px;
+}
+
 .container{
   max-width: 700px;
   width: 100%;
@@ -34,10 +58,10 @@ body{
   height: 3px;
   width: 30px;
   border-radius: 5px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  background: linear-gradient(135deg, #71b7e6, #1F1A36);
 }
 .content .form .user_details{
-  display: flex;
+  display: block;
   flex-wrap: wrap;
   justify-content: space-between;
   margin: 20px 0 12px 0;
@@ -46,14 +70,15 @@ body{
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
 }
-.form .input_box span.details{
+.form .input_box .details{
   display: block;
   font-weight: 500;
   margin-bottom: 5px;
 }
+
 .user_details .input_box input{
   height: 45px;
-  width: 100%;
+  /* width: 100%; */
   outline: none;
   font-size: 16px;
   border-radius: 5px;
@@ -64,12 +89,9 @@ body{
 }
 .user_details .input_box input:focus,
 .user_details .input_box input:valid{
-  border-color: #9b59b6;
+  border-color: #1F1A36;
 }
- .form .gender-details .gender-title{
-  font-size: 20px;
-  font-weight: 500;
- }
+
  .form .category{
    display: flex;
    width: 80%;
@@ -90,12 +112,8 @@ body{
   border: 5px solid transparent;
   transition: all 0.3s ease;
 }
- #dot_1:checked ~ .category label .one,
- #dot_2:checked ~ .category label .two,
- #dot_3:checked ~ .category label .three{
-   background: #9b59b6;
-   border-color: #d9d9d9;
- }
+
+
  .form input[type="radio"]{
    display: none;
  }
@@ -114,11 +132,11 @@ body{
    letter-spacing: 1px;
    cursor: pointer;
    transition: all 0.3s ease;
-   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+   background: rgba(0, 128, 0, 0.651);
  }
  .form .button input:hover{
   /* trans.form: scale(0.99); */
-  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+  background: rgba(0, 128, 0, 0.651);
   }
  @media(max-width: 584px){
  .container{

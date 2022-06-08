@@ -5,7 +5,7 @@ export default function viewusers() {
     return (
         <div id="signupform">
             <Header></Header>
-            <SignupForm />
+            <SignupForm name="Adam" />
         </div>
     );
 }
