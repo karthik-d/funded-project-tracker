@@ -7,6 +7,7 @@ var ErrorHelper = require('../../helpers/error');
 var ResourceGroupHelpers = require('../../helpers/resource_group');
 
 var ResourceGroupFilters = require('../../helpers/filters/resource_group');
+var Utils = require('../../helpers/utils');
 
 
 function create(req, res, next) {
@@ -28,7 +29,14 @@ function create(req, res, next) {
 };
 
 function getAll(req, res, next) {
-
+    var custom_filters = Object.keys(req.query).map(
+        (param) => {
+            if (ResourceGroupFilters.available_filter.includes(param)) {
+                return Utils.getFunctionByName(param, ResourceGroupFilters);
+            }
+        }
+    )
+    console.log(custom_filter);
     ResourceGroupModel
         .onlyExisting()
         .then((resources) => {

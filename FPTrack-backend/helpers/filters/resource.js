@@ -15,5 +15,10 @@ function not_assigned(rsrc) {
     return !assigned(rsrc);
 }
 
+exports.available_filters = [
+    'assigned',
+    'not_assigned'
+];
+
 exports.assigned = assigned;
 exports.not_assigned = not_assigned;

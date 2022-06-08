@@ -1,10 +1,14 @@
 const ResourceGroupHelpers = require('../resource_group');
 
-function is_available(rsrc_grp) {
+function available(rsrc_grp) {
     return Boolean(
         ResourceGroupHelpers
             .get_avl_resource_count(rsrc_grp)
     );
 }
 
-exports.is_available = is_available;
+exports.available_filters = [
+    'available'
+];
+
+exports.available = available;
