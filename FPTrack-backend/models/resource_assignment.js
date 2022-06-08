@@ -14,21 +14,21 @@ var ResourceAssignmentSchema = new Schema(
             ref: 'project',
             required: true,
             validate: {
-                validator : function(given_proj){
+                validator: function (given_proj) {
                     var rsrc_assign = this;
                     return new Promise(
-                        function(resolve, reject){
+                        function (resolve, reject) {
                             rsrc_assign.populate('assigned_to')
-                            .then((project_rsrc) => {
-                                project_rsrc.assigned_to.populate('proposal')
-                                    .then((project_rsrc) => {
-                                        return resolve(
-                                            project_rsrc.proposal.funding_type == 'internal'
-                                        )
-                                    })
+                                .then((project_rsrc) => {
+                                    project_rsrc.assigned_to.populate('proposal')
+                                        .then((project_rsrc) => {
+                                            return resolve(
+                                                project_rsrc.proposal.funding_type == 'internal'
+                                            )
+                                        })
                                 })
-                            }
-                        );
+                        }
+                    );
                 },
                 message: props => `${props.value} is not a internal !`
             },
@@ -38,19 +38,19 @@ var ResourceAssignmentSchema = new Schema(
             ref: 'user',
             required: true,
             validate: {
-                validator : function(given_proj){
+                validator: function (given_proj) {
                     var rsrc_assign = this;
                     return new Promise(
-                        function(resolve, reject){
+                        function (resolve, reject) {
                             rsrc_assign.populate('assigned_by')
-                            .then((rsrc_assign_pop) => {
-                                console.log(rsrc_assign_pop.assigned_by.role);
+                                .then((rsrc_assign_pop) => {
+                                    console.log(rsrc_assign_pop.assigned_by.role);
                                     return resolve(
                                         rsrc_assign_pop.assigned_by.role == 'resource_mgr'
                                     )
                                 })
-                            }
-                        );
+                        }
+                    );
                 },
                 message: props => `${props.value} is not a resource manager !`
             },
@@ -63,6 +63,8 @@ var ResourceAssignmentSchema = new Schema(
         }
     }
 );
+
+//--
 
 ResourceAssignmentSchema
     .statics
