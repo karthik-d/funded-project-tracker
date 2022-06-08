@@ -7,4 +7,19 @@ function getFunctionByName(functionName, context) {
     return context[function_];
 }
 
+function applyAsyncFilters(filters) {
+    return ((item) => {
+        return Promise.all(filters.map((fltr) => {
+            return fltr(item);
+        }))
+            .then((filter_truths) => {
+                console.log(filter_truths);
+                return filter_truths
+                    .every(Boolean)
+            })
+    });
+
+}
+
 exports.getFunctionByName = getFunctionByName;
+exports.applyAsyncFilters = applyAsyncFilters;

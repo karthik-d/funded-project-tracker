@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 
 var ResourceGroupModel = require('../../models/resource_group');
 var ErrorHelper = require('../../helpers/error');
-var ResourceGroupHelpers = require('../../helpers/resource_group');
 
 var ResourceGroupFilters = require('../../helpers/filters/resource_group');
 var Utils = require('../../helpers/utils');
@@ -31,20 +30,18 @@ function create(req, res, next) {
 function getAll(req, res, next) {
     var custom_filters = Object.keys(req.query).map(
         (param) => {
-            if (ResourceGroupFilters.available_filter.includes(param)) {
+            if (ResourceGroupFilters.available_filters.includes(param)) {
                 return Utils.getFunctionByName(param, ResourceGroupFilters);
             }
         }
     )
-    console.log(custom_filter);
+    console.log(custom_filters);
     ResourceGroupModel
         .onlyExisting()
         .then((resources) => {
-            resources
-                .applyFilters(custom_filters)
-                .then((resources) => {
-                    res.status(200).send(resources);
-                })
+            var resources = resources
+                .filter(Utils.applyAsyncFilters(custom_filters))
+            res.status(200).send(resources);
         })
         .catch((error) => {
             res.status(400).send(
