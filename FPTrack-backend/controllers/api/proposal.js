@@ -68,7 +68,11 @@ function create(req, res, next) {
                             url: resource.url,
                             message: "Proposal created"
                         })
-                    })
+                    }).catch((error) => {
+                        res.status(400).send(
+                            ErrorHelper.construct_json_response(error)
+                        );
+                    });
             }
         })
         .catch((error) => {
@@ -134,7 +138,7 @@ function getAll(req, res, next) {
                     rsrc.pdf_document = rsrc.document_base64;
                 }
             );
-            res.status(200).send(resources)
+            res.status(200).send(resources);
         })
         .catch((error) => {
             res.status(400).send(
