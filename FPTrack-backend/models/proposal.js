@@ -120,6 +120,10 @@ var ProposalSchema = new Schema(
             type: Date,
             default: null
         },
+        rejection_remarks: {
+            type: String,
+            default: null
+        },
         deleted_at: {
             type: Date,
             default: null

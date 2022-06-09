@@ -44,7 +44,7 @@ function create(req, res, next) {
                     res.status(201).send({
                         id: resource._id,
                         url: resource._url,
-                        message: "Project created"
+                        message: "Project created. Proposal updated"
                     });
                 })
         })
