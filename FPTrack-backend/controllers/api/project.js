@@ -4,24 +4,50 @@ var mongoose = require('mongoose');
 var ProjectModel = require('../../models/project');
 var ProposalModel = require('../../models/proposal');
 var ErrorHelper = require('../../helpers/error');
+const proposal = require('../../models/proposal');
 
 function create(req, res, next) {
 
-    // check if corresonding proposal is pending status
-
-    var proposal = ProposalModel
-        .onlyExisting()
-        .getById(req.body.proposal);
-    if (!proposal.isAwaitingDecision()) {
-        return void res.status(400).send(
-            ErrorHelper.construct_json_response({
-                name: "Proposal not awaiting decision",
-                error: "Proposal not awating decision. It has already been approved or rejected",
-                code: 951
+    // check if corresonding proposal is pending status - udpate if not
+    new Promise((resolve, reject) => {
+        ProposalModel
+            .onlyExisting()
+            .getById(req.body.proposal)
+            .then(([proposal]) => {
+                if (!proposal.isAwaitingDecision()) {
+                    reject({
+                        name: "Proposal not awaiting decision",
+                        error: "Proposal not awating decision. It has already been approved or rejected",
+                        code: 951
+                    });
+                }
+                else {
+                    // update status of the proposal
+                    ProposalModel
+                        .updateOne({
+                            _id: req.body.proposal,
+                        }, {
+                            approved_on: Date.now()
+                        })
+                        .then((result) => {
+                            resolve(result);
+                        })
+                }
             })
-        );
-    }
+    })
+        .then((updation_data) => {
+            console.log(updation_data);
+        })
 
+        .catch((error) => {
+            res.status(400).send(
+                ErrorHelper.construct_json_response(error)
+            )
+        });
+
+
+
+    /*
     const project = new ProjectModel(req.body);
     project
         .save()
@@ -37,6 +63,7 @@ function create(req, res, next) {
                 ErrorHelper.construct_json_response(error)
             );
         });
+        */
 };
 
 

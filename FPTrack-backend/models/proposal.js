@@ -169,19 +169,19 @@ ProposalSchema
 // --
 
 ProposalSchema
-    .method
+    .methods
     .isApproved = function () {
         return (this.rejected_on != null && this.approved_on == null);
     }
 
 ProposalSchema
-    .method
+    .methods
     .isRejected = function () {
         return (this.rejected_on == null && this.approved_on != null);
     }
 
 ProposalSchema
-    .method
+    .methods
     .isAwaitingDecision = function () {
         return (this.rejected_on == null && this.approved_on == null);
     }
