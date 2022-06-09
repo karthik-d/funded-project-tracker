@@ -31,4 +31,11 @@ router.post(
     }
 );
 
+router.patch(
+    '/reject/:proposalId',
+    function (req, res, next) {
+        ProposalController.rejectProposal(req.params.proposalId, req, res, next);
+    }
+)
+
 module.exports = router;
