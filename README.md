@@ -86,7 +86,35 @@ It handles the following key aspects:
   .
   .
  ]
-  ```
+```
+#### PATCH api/proposal/reject : To REJECT a proposal
+
+With request body,
+```
+{
+  id: '62912ac4f4ebb586b9b82e02',
+  remarks: 'Needs more novelty'
+}
+```
+- `id` is the corresponding proposal's `_id` field
+- `remarks` is the remarks given during rejection, by the scrutiny team (if any)
+- Marks the proposal as `rejected`, as long as it is `pending decision` state --- neither approved nor rejected to far
+- Responds with the proposal's `_id`  and updation status.
+
+#### POST api/project : To ACCEPT a proposal
+
+With request body,
+```
+{
+  proposal = <proposal_id>,
+  approved_budget = 10000,
+  approved_duration = 20
+}
+```
+- `proposal` is the corresponding proposal's `_id` field
+- `approved_duration` is the the approved project duration in months
+- Marks the proposal as `rejected`, as long as it is `pending decision` state --- neither approved nor rejected to far
+- Responds with the proposal's `_id`  and updation status.
 
 ## Backend
 
@@ -123,7 +151,9 @@ Do `npm install -g [package-name]`
  
 | Code    | Description | Suggested Action  |
 | :---:   | :---------- | :---------------- |
-| `901`   | Valid google user does not exist on FPTrack DB | Create user with same email, along with metadata by POSTing to /api/user first | 
+| `901`   | Valid google user does not exist on FPTrack DB | Create user with same email, along with metadata by POSTing to /api/user first |
+| `951`   | Trying to modify approval/rejection status of already approved/rejected proposal| `N/A`: Verify proposal details with admin | 
+| `951`   | DB error when trying to update status of a collection | Attempt the same operation later | 
  
 
 

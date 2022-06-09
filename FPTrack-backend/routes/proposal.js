@@ -31,4 +31,11 @@ router.post(
     }
 );
 
+router.patch(
+    '/reject',
+    function (req, res, next) {
+        ProposalController.rejectProposal(req, res, next);
+    }
+)
+
 module.exports = router;
