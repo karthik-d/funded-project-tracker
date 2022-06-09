@@ -70,6 +70,23 @@ It handles the following key aspects:
     as_leader: 	[ <project collections with the user as a leader>... ]
   }
   ```
+#### GET api/resource-group?available=[anything]
+
+- `[anything]` is an arbitrary value. This is parsed for GET syntactic convenience - value ignored
+- The key `available` is of importance
+- Responds with all resource groups having allocatable resources along with an additional field `avl_qty` to denote number of reource instances of the group that can be allotted, like so
+ ```
+ [
+  {
+    <all-resource-group fields> : <field-values>,
+    .
+    .
+    avl_qty: 2
+  }
+  .
+  .
+ ]
+  ```
 
 ## Backend
 
