@@ -3,8 +3,9 @@ var mongoose = require('mongoose');
 
 var ProjectModel = require('../../models/project');
 var ProposalModel = require('../../models/proposal');
+
 var ErrorHelper = require('../../helpers/error');
-const proposal = require('../../models/proposal');
+var Utils = require('../../helpers/utils');
 
 // TODO: Do NOT allow updates within 1-day intervals
 
@@ -176,48 +177,51 @@ function updateStatus(req, res, next) {
             }
         })
 
-        ProjectModel.getById(project_id)
-            .then(([project]) => {
-                console.log(project);
-                var update = project.getMostRecentUpdate()
-                console.log(update);
+        // check if last update was at least 2 days ago
+        new Promise((resolve, reject) => {
+            ProjectModel.getById(project_id)
+                .then(([project]) => {
+                    if (project.getMostRecentUpdate() < 2) {
+                        reject({
+                            name: "Status update too frequent",
+                            message: "Previous status update was made less than 2 days ago",
+                            code: 961
+                        });
+                    }
+                    resolve(project);
+                });
+        })
+            .then((project) => {
+                // make update
+                ProjectModel
+                    .onlyExisting()
+                    .updateOne({
+                        _id: project_id
+                    }, {
+                        $addToSet: {
+                            status_updates: update_obj
+                        }
+                    })
+                    .then((updation_meta) => {
+                        if (!updation_meta.acknowledged) {
+                            throw {
+                                name: "Project update could not be written",
+                                message: "Error occurred when updating project. Try later",
+                                code: 952
+                            }
+                        }
+                        res.status(204).send({
+                            id: project_id,
+                            message: "Project status updated",
+                            update_title: req.body.title
+                        })
+                    })
             })
             .catch((error) => {
                 res.status(400).send(
                     ErrorHelper.construct_json_response(error)
                 );
             })
-        /*
-    // make update
-    ProjectModel
-        .onlyExisting()
-        .updateOne({
-            _id: project_id
-        }, {
-            $addToSet: {
-                status_updates: update_obj
-            }
-        })
-        .then((updation_meta) => {
-            if (!updation_meta.acknowledged) {
-                throw {
-                    name: "Project update could not be written",
-                    message: "Error occurred when updating project. Try later",
-                    code: 952
-                }
-            }
-            res.status(204).send({
-                id: project_id,
-                message: "Project status updated",
-                update_title: req.body.title
-            })
-        })
-        .catch((error) => {
-            res.status(400).send(
-                ErrorHelper.construct_json_response(error)
-            );
-        })
-        */
     }
     else {
         res.status(404).send({

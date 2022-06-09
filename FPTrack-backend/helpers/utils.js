@@ -20,5 +20,9 @@ function applyAsyncFilters(filters) {
 
 }
 
+function timeDelta_days(date_to, date_from) {
+    return Math.round((date_to - date_from) / (1000 * 60 * 60 * 24));
+}
+
 exports.getFunctionByName = getFunctionByName;
 exports.applyAsyncFilters = applyAsyncFilters;
