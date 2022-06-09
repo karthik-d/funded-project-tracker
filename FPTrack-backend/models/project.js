@@ -129,6 +129,18 @@ ProjectSchema
 
 //--
 
+ProjectSchema
+    .methods
+    .getMostRecentUpdate = function () {
+        return this.status_updates.reduce((prev_update, current_update) => {
+            return (prev_update.created_at >= current_update.created_at)
+                ? prev_update
+                : current_update
+        })
+    };
+
+//--
+
 // virtual for URL
 ProjectSchema
     .virtual('url')
