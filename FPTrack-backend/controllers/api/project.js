@@ -163,8 +163,55 @@ function getById(id, req, res, next) {
     }
 };
 
+function updateStatus(req, res, next) {
+
+    // make update subdocument first
+    if (mongoose.Types.ObjectId.isValid(req.body.id)) {
+        project_id = mongoose.Types.ObjectId(req.body.id);
+        update_obj = {};
+        ['title', 'description'].map((key) => {
+            if (req.body.hasOwnProperty(key)) {
+                Object.assign(update_obj, { key: req.body[key] })
+            }
+        })
+        // make update
+        ProjectModel
+            .onlyExisting()
+            .updateOne({
+                _id: project_id
+            }, update_obj
+            )
+            .then((updation_data) => {
+                if (!updation_data.acknowledged) {
+                    throw {
+                        name: "Project update could not be written",
+                        message: "Error occurred when updating project. Try later",
+                        code: 952
+                    }
+                }
+                res.status(204).send({
+                    id: project_id,
+                    message: "Project status updated",
+                    update_title: req.body.title
+                })
+            })
+            .catch((error) => {
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                );
+            })
+    }
+    else {
+        res.status(404).send({
+            message: "Proposal not found"
+        });
+    }
+}
+
+
 exports.create = create;
 exports.getById = getById;
 exports.getAll = getAll;
 exports.getByUser = getByUser;
+exports.updateStatus = updateStatus;
 

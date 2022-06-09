@@ -31,4 +31,11 @@ router.post(
     }
 );
 
+router.patch(
+    '/update-status',
+    function (req, res, next) {
+        ProjectController.updateStatus(req, res, next);
+    }
+);
+
 module.exports = router;
