@@ -86,7 +86,35 @@ It handles the following key aspects:
   .
   .
  ]
-  ```
+```
+#### PATCH api/proposal/reject : To REJECT a proposal
+
+With request body,
+```
+{
+  id: '62912ac4f4ebb586b9b82e02',
+  remarks: 'Needs more novelty'
+}
+```
+- `id` is the corresponding proposal's `_id` field
+- `remarks` is the remarks given during rejection, by the scrutiny team (if any)
+- Marks the proposal as `rejected`, as long as it is `pending decision` state --- neither approved nor rejected to far
+- Responds with the proposal's `_id`  and updation status.
+
+#### POST api/project : To ACCEPT a proposal
+
+With request body,
+```
+{
+  proposal = <proposal_id>,
+  approved_budget = 10000,
+  approved_duration = 20
+}
+```
+- `proposal` is the corresponding proposal's `_id` field
+- `approved_duration` is the the approved project duration in months
+- Marks the proposal as `rejected`, as long as it is `pending decision` state --- neither approved nor rejected to far
+- Responds with the proposal's `_id`  and updation status.
 
 ## Backend
 

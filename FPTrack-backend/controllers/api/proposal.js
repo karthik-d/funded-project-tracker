@@ -246,7 +246,7 @@ function rejectProposal(req, res, next) {
                     };
                 }
                 res.status(201).send({
-                    id: proposal_id,
+                    proposal_id: proposal_id,
                     message: "Proposal marked as rejected"
                 });
             })
