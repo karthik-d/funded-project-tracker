@@ -39,6 +39,13 @@ function create(req, res, next) {
         })
             .then((updation_data) => {
                 // create a new project
+                if (!updation_data.acknowledged) {
+                    throw {
+                        name: "Proposal status could not be updated",
+                        message: "Error occurred when updating proposal status. Try later",
+                        code: 952
+                    };
+                }
                 const project = new ProjectModel(req.body);
                 project
                     .save()

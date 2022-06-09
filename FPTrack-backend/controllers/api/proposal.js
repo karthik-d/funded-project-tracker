@@ -238,14 +238,15 @@ function rejectProposal(req, res, next) {
                 })
         })
             .then((updation_data) => {
-                throw {
-                    name: "Proposal could not be updated",
-                    message: "Proposal not awating decision. It has already been approved or rejected",
-                    code: 951
-                };
+                if (!updation_data.acknowledged) {
+                    throw {
+                        name: "Proposal could not be updated",
+                        message: "Error occurred when updating proposal status. Try later",
+                        code: 952
+                    };
+                }
                 res.status(201).send({
-                    id: resource._id,
-                    url: resource._url,
+                    id: proposal_id,
                     message: "Proposal marked as rejected"
                 });
             })

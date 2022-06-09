@@ -38,12 +38,12 @@ def post(debug=True):
     #     budget = 10000
     # )
     req_body = dict(
-        title = "Number Plate Detection",
+        title = "Number Plate Detection, Again",
         decription = "Blah blah blah...blah..",
         domains = ['machine_learning'],
         supervisors = ['greg@gmail.com'],
         leader = 'claire@gmail.com',
-        members = ['greg@gmail.com', 'claire@gmail.com'],
+        members = ['ben@gmail.com', 'derek@gmail.com'],
         funding_type = 'external',
         funding_agency = 'DST-SERB',
         pdf_document = pdf_doc_b64_string,
@@ -85,7 +85,7 @@ def get(id=None, debug=True):
 
 def patch(debug=False):
     req_body = dict(
-        id = '',
+        id = '62912ac4f4ebb586b9b82e02',
         remarks = 'Needs more novelty'
     )
     resp = requests.patch(
