@@ -2,24 +2,72 @@ var express = require('express');
 var mongoose = require('mongoose');
 
 var ProjectModel = require('../../models/project');
+var ProposalModel = require('../../models/proposal');
 var ErrorHelper = require('../../helpers/error');
+const proposal = require('../../models/proposal');
 
 function create(req, res, next) {
-    const project = new ProjectModel(req.body);
-    project
-        .save()
-        .then((resource) => {
-            res.status(201).send({
-                id: resource._id,
-                url: resource._url,
-                message: "Project created"
-            });
+
+    if (mongoose.Types.ObjectId.isValid(req.body.proposal)) {
+        proposal_id = mongoose.Types.ObjectId(req.body.proposal);
+        // check if corresonding proposal is pending status - udpate only if so
+        new Promise((resolve, reject) => {
+            ProposalModel
+                .onlyExisting()
+                .getById(proposal_id)
+                .then(([proposal]) => {
+                    if (!proposal.isAwaitingDecision()) {
+                        reject({
+                            name: "Proposal not awaiting decision",
+                            message: "Proposal not awating decision. It has already been approved or rejected",
+                            code: 951
+                        });
+                    }
+                    else {
+                        // update status of the proposal
+                        ProposalModel
+                            .updateOne({
+                                _id: proposal_id,
+                            }, {
+                                approved_on: Date.now()
+                            })
+                            .then((result) => {
+                                resolve(result);
+                            })
+                    }
+                })
         })
-        .catch((error) => {
-            res.status(400).send(
-                ErrorHelper.construct_json_response(error)
-            );
+            .then((updation_data) => {
+                // create a new project
+                if (!updation_data.acknowledged) {
+                    throw {
+                        name: "Proposal status could not be updated",
+                        message: "Error occurred when updating proposal status. Try later",
+                        code: 952
+                    };
+                }
+                const project = new ProjectModel(req.body);
+                project
+                    .save()
+                    .then((resource) => {
+                        res.status(201).send({
+                            id: resource._id,
+                            url: resource._url,
+                            message: "Project created. Proposal updated"
+                        });
+                    })
+            })
+            .catch((error) => {
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                )
+            });
+    }
+    else {
+        res.status(404).send({
+            message: "Proposal not found"
         });
+    }
 };
 
 

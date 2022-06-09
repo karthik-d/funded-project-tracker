@@ -120,6 +120,10 @@ var ProposalSchema = new Schema(
             type: Date,
             default: null
         },
+        rejection_remarks: {
+            type: String,
+            default: null
+        },
         deleted_at: {
             type: Date,
             default: null
@@ -164,6 +168,26 @@ ProposalSchema
         return this.find({
             _id: id
         });
+    }
+
+// --
+
+ProposalSchema
+    .methods
+    .isApproved = function () {
+        return (this.rejected_on != null && this.approved_on == null);
+    }
+
+ProposalSchema
+    .methods
+    .isRejected = function () {
+        return (this.rejected_on == null && this.approved_on != null);
+    }
+
+ProposalSchema
+    .methods
+    .isAwaitingDecision = function () {
+        return (this.rejected_on == null && this.approved_on == null);
     }
 
 // --

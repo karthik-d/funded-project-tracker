@@ -180,7 +180,7 @@ function getByUser(user_id, req, res, next) {
     }
     else {
         res.status(404).send({
-            message: "User not found"
+            message: "Proposal not found"
         });
     }
 };
@@ -204,7 +204,68 @@ function getById(id, req, res, next) {
         });
 };
 
+
+function rejectProposal(req, res, next) {
+
+    // check if proposal is pending status
+    if (mongoose.Types.ObjectId.isValid(req.body.id)) {
+        proposal_id = mongoose.Types.ObjectId(req.body.id);
+        new Promise((resolve, reject) => {
+            ProposalModel
+                .onlyExisting()
+                .getById(proposal_id)
+                .then(([proposal]) => {
+                    if (!proposal.isAwaitingDecision()) {
+                        reject({
+                            name: "Proposal not awaiting decision",
+                            message: "Proposal not awating decision. It has already been approved or rejected",
+                            code: 951
+                        });
+                    }
+                    else {
+                        // update status of the proposal
+                        ProposalModel
+                            .updateOne({
+                                _id: proposal_id,
+                            }, {
+                                rejected_on: Date.now(),
+                                rejection_remarks: req.body.remarks
+                            })
+                            .then((result) => {
+                                resolve(result);
+                            })
+                    }
+                })
+        })
+            .then((updation_data) => {
+                if (!updation_data.acknowledged) {
+                    throw {
+                        name: "Proposal could not be updated",
+                        message: "Error occurred when updating proposal status. Try later",
+                        code: 952
+                    };
+                }
+                res.status(201).send({
+                    proposal_id: proposal_id,
+                    message: "Proposal marked as rejected"
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                )
+            });
+    }
+    else {
+        res.status(404).send({
+            message: "Proposal not found"
+        });
+    }
+};
+
 exports.create = create;
 exports.getAll = getAll;
 exports.getById = getById;
 exports.getByUser = getByUser;
+exports.rejectProposal = rejectProposal;
