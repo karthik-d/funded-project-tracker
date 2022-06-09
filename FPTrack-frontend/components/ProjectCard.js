@@ -1,23 +1,39 @@
 import React from 'react';
 
 import styles from './styles/ProjectCard.module.css';
-export default class ProjectCard extends React.Component {
+import { useRouter } from 'next/router'
+import { Redirect } from 'react-router-dom';
 
-    constructor(props) {
-        super(props);
-        this.state = {};
+export default function ProjectCard(props) {
+
+    const router = useRouter(); 
+    const handleSubmit =  (e) => {
+        e.preventDefault();
+        
+        let href= document.getElementById("link").href;
+        console.log("HREF",href);
+        fetch(href)
+      .then(response => response.json())
+      .then(jsondata => {
+        
+        let data=JSON.parse(JSON.stringify(jsondata));
+        router.push({
+            pathname:"/guest/view_project",
+                query: {"data":data}},"hiden");
+      });
     }
 
-    render() {
-        console.log("Project card",this.props);
-        return (
+
+    return (
+            <a id = "link" href ={"//localhost:3000"+props[1]} onClick={handleSubmit}>
             <div className={styles.wrapper}>
-            <div className={styles.card_container}>
-                <span className={styles.pro}>{this.props[0]}</span>
+            
+                         <div className={styles.card_container}>
+                <span className={styles.pro}>{props[0][6]}</span>
                 <img className={styles.round} src="../assets/imgs/user-profile.png" alt="user" />
-                <h3 className={styles.h3}>{this.props[1]}</h3>
+                <h3 className={styles.h3}>{props[0][7]}</h3>
                 <h6 className={styles.h6}>SSN Collge of Engineering</h6>
-                <p className={`${styles.email} ${styles.p}`}>{this.props[2]}</p>
+                <p className={`${styles.email} ${styles.p}`}>{props[2]}</p>
                 <div className={styles.skills}>
                     <h6>Access Rights</h6>
                     {/* <ul>
@@ -29,7 +45,8 @@ export default class ProjectCard extends React.Component {
                     </ul> */}
                 </div>
             </div >
+            
         </div>
+        </a>
         );
-    }
 }
