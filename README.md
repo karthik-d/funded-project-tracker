@@ -116,6 +116,22 @@ With request body,
 - Marks the proposal as `rejected`, as long as it is `pending decision` state --- neither approved nor rejected to far
 - Responds with the proposal's `_id`  and updation status.
 
+#### PATCH api/project/update-status : To add a status update for a project
+
+With request body like so,
+```
+{
+  id: '62912ac4f4ebb586b9b82e02',
+  title: 'Lit survey done',
+  description: 'reviewed 10 directions'
+}
+```
+- `id` is the corresponding project's `_id` field
+- `title` is a short name for the update
+- `description` (optional) is a short description abo0ut the status update
+- Updates are `rejected` if they are made more frequently than 2 days i.e. the second update in a continual period of 2 days is rejected
+- Responds with the proposal's `_id`, a short message and the update title
+
 ## Backend
 
 ### Major Design Todos
@@ -153,7 +169,8 @@ Do `npm install -g [package-name]`
 | :---:   | :---------- | :---------------- |
 | `901`   | Valid google user does not exist on FPTrack DB | Create user with same email, along with metadata by POSTing to /api/user first |
 | `951`   | Trying to modify approval/rejection status of already approved/rejected proposal| `N/A`: Verify proposal details with admin | 
-| `951`   | DB error when trying to update status of a collection | Attempt the same operation later | 
+| `952`   | DB error when trying to update status of a collection | Attempt the same operation later | 
+| `961`   | Very frequent project update | Attempt to make a project update entry after at least 2 days from the previous | 
  
 
 
