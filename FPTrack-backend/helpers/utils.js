@@ -26,3 +26,4 @@ function timeDelta_days(date_to, date_from) {
 
 exports.getFunctionByName = getFunctionByName;
 exports.applyAsyncFilters = applyAsyncFilters;
+exports.timeDelta_days = timeDelta_days;
