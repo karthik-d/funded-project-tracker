@@ -39,14 +39,34 @@ def get(id=None, debug=True):
             f'http://localhost:3000/api/project/{id}'
         )
 
-    print(resp.text)
+    # print(resp.text)
     print(resp.status_code)
     if not debug:
-        print(resp.json())
+        resp = resp.json()[0]
+        print(resp.keys())
+        resp.pop('proposal')
+        print(resp)
 
 
-post()
-# get(debug=False)
+def patch(id=None, debug=True):
+    req_body = dict(
+        id ="62a1e2c06d8b165d85b877e6",
+        title = "Literature Survey Completed"
+    )
+
+
+    resp = requests.patch(
+        'http://localhost:3000/api/project/update-status',
+        json = req_body
+    )
+
+    print(resp.text)    
+    print(resp.status_code)
+
+
+# post()
+patch()
+get(debug=False)
 
 # get(id='62869d17060d20b1dbcb56ee', debug=False)
 

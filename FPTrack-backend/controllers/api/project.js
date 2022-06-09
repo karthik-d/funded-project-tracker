@@ -37,9 +37,9 @@ function create(req, res, next) {
                     }
                 })
         })
-            .then((updation_data) => {
+            .then((updation_meta) => {
                 // create a new project
-                if (!updation_data.acknowledged) {
+                if (!updation_meta.acknowledged) {
                     throw {
                         name: "Proposal status could not be updated",
                         message: "Error occurred when updating proposal status. Try later",
@@ -171,24 +171,30 @@ function updateStatus(req, res, next) {
         update_obj = {};
         ['title', 'description'].map((key) => {
             if (req.body.hasOwnProperty(key)) {
-                Object.assign(update_obj, { key: req.body[key] })
+                Object.assign(update_obj, { [key]: req.body[key] })
             }
         })
+        console.log(update_obj);
         // make update
         ProjectModel
             .onlyExisting()
             .updateOne({
                 _id: project_id
-            }, update_obj
-            )
-            .then((updation_data) => {
-                if (!updation_data.acknowledged) {
+            }, {
+                $addToSet: {
+                    status_updates: update_obj
+                }
+            })
+            .then((updation_meta) => {
+                console.log(updation_meta);
+                if (!updation_meta.acknowledged) {
                     throw {
                         name: "Project update could not be written",
                         message: "Error occurred when updating project. Try later",
                         code: 952
                     }
                 }
+                console.log(project_id);
                 res.status(204).send({
                     id: project_id,
                     message: "Project status updated",
