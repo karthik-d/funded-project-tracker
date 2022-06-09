@@ -6,6 +6,8 @@ var ProposalModel = require('../../models/proposal');
 var ErrorHelper = require('../../helpers/error');
 const proposal = require('../../models/proposal');
 
+// TODO: Do NOT allow updates within 1-day intervals
+
 function create(req, res, next) {
 
     if (mongoose.Types.ObjectId.isValid(req.body.proposal)) {
@@ -80,7 +82,6 @@ function getAll(req, res, next) {
                     .populate('proposal');
             }))
                 .then((resources) => {
-                    console.log(Object.keys(resources[0]))
                     res.status(200).send(resources);
                 });
         })
@@ -140,7 +141,7 @@ function getByUser(user_id, req, res, next) {
     }
 };
 
-// Proposal field it explicitly popuated
+// Proposal field is explicitly popuated
 function getById(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
         ProjectModel
@@ -174,7 +175,6 @@ function updateStatus(req, res, next) {
                 Object.assign(update_obj, { [key]: req.body[key] })
             }
         })
-        console.log(update_obj);
         // make update
         ProjectModel
             .onlyExisting()
@@ -186,7 +186,6 @@ function updateStatus(req, res, next) {
                 }
             })
             .then((updation_meta) => {
-                console.log(updation_meta);
                 if (!updation_meta.acknowledged) {
                     throw {
                         name: "Project update could not be written",
@@ -194,7 +193,6 @@ function updateStatus(req, res, next) {
                         code: 952
                     }
                 }
-                console.log(project_id);
                 res.status(204).send({
                     id: project_id,
                     message: "Project status updated",
