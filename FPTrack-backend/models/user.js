@@ -39,13 +39,14 @@ UserSchema
             'role'
         ];
         let return_fields = [];
-        filter_fields.forEach(
+        Object.keys(this.schema.paths).forEach(
             function (field) {
                 if (filter_fields.includes(field)) {
                     return_fields.push(field);
                 }
             }
         )
+        console.log(return_fields);
         return return_fields;
     }
 
