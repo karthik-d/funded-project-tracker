@@ -2,9 +2,26 @@ var express = require('express');
 var mongoose = require('mongoose');
 
 var ProjectModel = require('../../models/project');
+var ProposalModel = require('../../models/proposal');
 var ErrorHelper = require('../../helpers/error');
 
 function create(req, res, next) {
+
+    // check if corresonding proposal is pending status
+
+    var proposal = ProposalModel
+        .onlyExisting()
+        .getById(req.body.proposal);
+    if (!proposal.isAwaitingDecision()) {
+        return void res.status(400).send(
+            ErrorHelper.construct_json_response({
+                name: "Proposal not awaiting decision",
+                error: "Proposal not awating decision. It has already been approved or rejected",
+                code: 951
+            })
+        );
+    }
+
     const project = new ProjectModel(req.body);
     project
         .save()

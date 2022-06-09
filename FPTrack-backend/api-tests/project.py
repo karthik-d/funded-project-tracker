@@ -45,8 +45,8 @@ def get(id=None, debug=True):
         print(resp.json())
 
 
-# post()
-get(debug=False)
+post()
+# get(debug=False)
 
 # get(id='62869d17060d20b1dbcb56ee', debug=False)
 

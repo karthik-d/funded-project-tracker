@@ -168,6 +168,26 @@ ProposalSchema
 
 // --
 
+ProposalSchema
+    .method
+    .isApproved = function () {
+        return (this.rejected_on != null && this.approved_on == null);
+    }
+
+ProposalSchema
+    .method
+    .isRejected = function () {
+        return (this.rejected_on == null && this.approved_on != null);
+    }
+
+ProposalSchema
+    .method
+    .isAwaitingDecision = function () {
+        return (this.rejected_on == null && this.approved_on == null);
+    }
+
+// --
+
 
 // virtual for executive members
 ProposalSchema
