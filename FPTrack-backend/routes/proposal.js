@@ -32,9 +32,9 @@ router.post(
 );
 
 router.patch(
-    '/reject/:proposalId',
+    '/reject',
     function (req, res, next) {
-        ProposalController.rejectProposal(req.params.proposalId, req, res, next);
+        ProposalController.rejectProposal(req, res, next);
     }
 )
 

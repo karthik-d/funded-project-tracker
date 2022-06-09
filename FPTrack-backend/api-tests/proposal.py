@@ -83,7 +83,23 @@ def get(id=None, debug=True):
         save_pdf(json_response['pdf_document']['data'], destn_pdf_path)
 
 
+def patch(debug=False):
+    req_body = dict(
+        id = '',
+        remarks = 'Needs more novelty'
+    )
+    resp = requests.patch(
+        'http://localhost:3000/api/proposal/reject',
+        json = req_body
+    )
+
+    print(resp.text)    
+    print(resp.status_code)
+    if not debug:
+        print(resp.json())
+
 # <<<<<<< HEAD
-post()
+# post()
 # get(debug=False)
 # get(id='628b5425099b1ba80b543da6', debug=False)
+patch()
