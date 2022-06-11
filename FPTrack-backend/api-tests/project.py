@@ -40,7 +40,8 @@ def get(id=None, debug=True):
         )
 
     # print(resp.text)
-    print(resp.status_code)
+    # print(resp.status_code)
+    # print(resp.text)
     if not debug:
         resp = resp.json()[0]
         print(resp.keys())
@@ -51,16 +52,20 @@ def get(id=None, debug=True):
 def patch(id=None, debug=True):
     req_body = dict(
         id ="62a1e2c06d8b165d85b877e6",
-        title = "Literature Survey Completed"
+        title = "Patent submitted",
+        description = "Fully approved design patent made",
+        kind = "patent",
+        reference = "www.patents.com/aaa123"
     )
 
 
     resp = requests.patch(
-        'http://localhost:3000/api/project/update-status',
+        'http://localhost:3000/api/project/update-outcome',
         json = req_body
     )
 
     print(resp.text)    
+    print(resp.json())
     print(resp.status_code)
 
 
@@ -70,4 +75,4 @@ get(debug=False)
 
 # get(id='62869d17060d20b1dbcb56ee', debug=False)
 
-# print(resp.json())
+# print(resp.json()),

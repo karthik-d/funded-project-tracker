@@ -254,6 +254,7 @@ function updateOutcome(req, res, next) {
             ProjectModel.getById(project_id)
                 .then(([project]) => {
                     let last_outcome = project.getMostRecentOutcome();
+                    console.log(last_outcome);
                     if (Utils.timeDelta_days(
                         Date.now(),
                         last_outcome.createdAt
@@ -278,7 +279,7 @@ function updateOutcome(req, res, next) {
                         _id: project_id
                     }, {
                         $addToSet: {
-                            status_outcomes: outcome_obj
+                            outcomes: outcome_obj
                         }
                     })
                     .then((updation_meta) => {
@@ -315,4 +316,5 @@ exports.getById = getById;
 exports.getAll = getAll;
 exports.getByUser = getByUser;
 exports.updateStatus = updateStatus;
+exports.updateOutcome = updateOutcome
 
