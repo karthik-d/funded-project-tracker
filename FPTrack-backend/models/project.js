@@ -138,11 +138,16 @@ ProjectSchema
 ProjectSchema
     .methods
     .getMostRecentUpdate = function () {
-        return this.status_updates.reduce((prev_update, current_update) => {
-            return (prev_update.created_at >= current_update.created_at)
-                ? prev_update
-                : current_update
-        })
+        if (this.status_updates.length > 0) {
+            return this.status_updates.reduce((prev_update, current_update) => {
+                return (prev_update.created_at >= current_update.created_at)
+                    ? prev_update
+                    : current_update
+            });
+        }
+        else {
+            return null;
+        }
     };
 
 //--

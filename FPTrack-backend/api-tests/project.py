@@ -9,9 +9,9 @@ def post(debug=True):
 
 
     req_body = dict(
-        proposal ="628b5425099b1ba80b543da6",
-        approved_budget = 10000,
-        approved_duration = 20,
+        proposal ="62a4e20b19d791faaf76e195",
+        approved_budget = 12000,
+        approved_duration = 18,
     )
 
 
@@ -43,7 +43,7 @@ def get(id=None, debug=True):
     # print(resp.status_code)
     # print(resp.text)
     if not debug:
-        resp = resp.json()[0]
+        resp = resp.json()[1]
         print(resp.keys())
         resp.pop('proposal')
         print(resp)
@@ -51,7 +51,7 @@ def get(id=None, debug=True):
 
 def patch(id=None, debug=True):
     req_body = dict(
-        id ="62a1e2c06d8b165d85b877e6",
+        id ="62a4e23619d791faaf76e19a",
         title = "Patent submitted",
         description = "Fully approved design patent made",
         kind = "patent",
@@ -60,7 +60,7 @@ def patch(id=None, debug=True):
 
 
     resp = requests.patch(
-        'http://localhost:3000/api/project/update-outcome',
+        'http://localhost:3000/api/project/update-status',
         json = req_body
     )
 

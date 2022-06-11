@@ -41,11 +41,11 @@ def post(debug=True):
         title = "Number Plate Detection, Again",
         decription = "Blah blah blah...blah..",
         domains = ['machine_learning'],
-        supervisors = ['greg@gmail.com'],
-        leader = 'claire@gmail.com',
-        members = ['ben@gmail.com', 'derek@gmail.com'],
-        funding_type = 'external',
-        funding_agency = 'DST-SERB',
+        supervisors = ['sarabesh2001@gmail.com'],
+        leader = 'ben@gmail.com',
+        members = ['erin@gmail.com', 'greg@gmail.com'],
+        funding_type = 'internal',
+        funding_agency = 'SSN Trust',
         pdf_document = pdf_doc_b64_string,
         budget = 50000
     )
@@ -54,10 +54,13 @@ def post(debug=True):
         json = req_body
     )
 
-    print(resp.text)    
+    # print(resp.text)    
     print(resp.status_code)
     if not debug:
-        print(resp.json())
+        resp = resp.json()[0]
+        print(resp.keys())
+        resp.pop('pdf_document')
+        print(resp)
 
 
 def get(id=None, debug=True):
@@ -80,6 +83,10 @@ def get(id=None, debug=True):
         print(json_response['_id'])
         print(json_response.keys())
         print(json_response['members'])
+        resp = resp.json()[0]
+        print(resp.keys())
+        resp.pop('pdf_document')
+        print(resp)
         save_pdf(json_response['pdf_document']['data'], destn_pdf_path)
 
 
@@ -100,6 +107,6 @@ def patch(debug=False):
 
 # <<<<<<< HEAD
 # post()
-# get(debug=False)
-# get(id='628b5425099b1ba80b543da6', debug=False)
-patch()
+get(debug=False)
+# get(id='628abd6a4bc531d7264a0aa2', debug=False)
+# patch()

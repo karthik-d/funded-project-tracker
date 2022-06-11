@@ -182,10 +182,11 @@ function updateStatus(req, res, next) {
             ProjectModel.getById(project_id)
                 .then(([project]) => {
                     let last_update = project.getMostRecentUpdate();
-                    if (Utils.timeDelta_days(
-                        Date.now(),
-                        last_update.createdAt
-                    ) < 2) {
+                    if (last_update != null &&
+                        Utils.timeDelta_days(
+                            Date.now(),
+                            last_update.createdAt
+                        ) < 2) {
                         reject({
                             name: "Status update too frequent",
                             message: "Previous status update was made less than 2 days ago",
@@ -254,7 +255,6 @@ function updateOutcome(req, res, next) {
             ProjectModel.getById(project_id)
                 .then(([project]) => {
                     let last_outcome = project.getMostRecentOutcome();
-                    console.log(last_outcome);
                     if (last_outcome != null &&
                         Utils.timeDelta_days(
                             Date.now(),
