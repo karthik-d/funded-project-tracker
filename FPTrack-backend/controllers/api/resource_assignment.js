@@ -61,7 +61,26 @@ function getById(id, req, res, next) {
 
 function getByProject(id, req, res, next) {
     if (mongoose.Types.ObjectId.isValid(id)) {
-        ;
+        project_id = mongoose.Types.ObjectId(id);
+        ResourceAssignmentModel
+            .aggregate([
+                {
+                    $match: {
+                        deleted_on: null,
+                        assigned_to: project_id
+                    }
+                }, {
+                    $group: {
+                        _id: "$resource.resource_group",
+                        assigned_qty: {
+                            $sum: 1
+                        }
+                    }
+                }
+            ])
+            .then((grouped_assigns) => {
+                console.log(grouped_assigns);
+            });
     }
     else {
         res.staus(404).send(
@@ -78,3 +97,4 @@ function getByProject(id, req, res, next) {
 exports.create = create;
 exports.getById = getById;
 exports.getAll = getAll;
+exports.getByProject = getByProject;

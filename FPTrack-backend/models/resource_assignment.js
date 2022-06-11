@@ -35,7 +35,7 @@ var ResourceAssignmentSchema = new Schema(
                         }
                     );
                 },
-                message: props => `${props.value} is not a internal !`
+                message: props => `${props.value} is not a internal`
             },
         },
         assigned_by: {
@@ -51,13 +51,13 @@ var ResourceAssignmentSchema = new Schema(
                                 .then((rsrc_assign_pop) => {
                                     console.log(rsrc_assign_pop.assigned_by.role);
                                     return resolve(
-                                        rsrc_assign_pop.assigned_by.role == 'resource_mgr'
+                                        rsrc_assign_pop.assigned_by.access.includes('resource_mgr')
                                     )
                                 })
                         }
                     );
                 },
-                message: props => `${props.value} is not a resource manager !`
+                message: props => `${props.value} is not a resource manager`
             },
         }
     },
@@ -105,6 +105,8 @@ ResourceAssignmentSchema
         });
     };
 
+
+//--
 
 //--
 
