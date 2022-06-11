@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 
 // Validations to consider:
 // - assigned_by should be a resource_mgr
+// - don't allow duplicate assignment for resources!!
 // - (add on...)
 var ResourceAssignmentSchema = new Schema(
     {
@@ -114,7 +115,7 @@ ResourceAssignmentSchema
 ResourceAssignmentSchema
     .virtual('url')
     .get(function () {
-        return '/api/rsrc-assign/' + this._id;
+        return '/api/resource-assignment/' + this._id;
     });
 
 
