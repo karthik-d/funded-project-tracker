@@ -15,7 +15,7 @@ export default function ProjectCard(props) {
         
         // let data=JSON.parse(JSON.stringify(jsondata));
         router.push({
-            pathname:"/guest/view_project",
+            pathname:"/guest/project_page",
                 query: {"data":href}},"projectpage");
      
     }

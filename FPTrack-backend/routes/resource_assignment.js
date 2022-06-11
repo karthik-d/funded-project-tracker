@@ -1,5 +1,5 @@
 var express = require('express');
-var xrouter = express.Router();
+var router = express.Router();
 
 var ResourceAssignmentController = require('../controllers/api/resource_assignment');
 

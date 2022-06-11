@@ -4,6 +4,7 @@ import userStyles from '../components/styles/UserCard.module.css'
 import useCollapse from 'react-collapsed';
 import Usercard from '../components/UserCard';
 import useSWR from 'swr'
+import Popup from 'reactjs-popup';
 import { Document, Page } from 'react-pdf';
 
 
@@ -90,9 +91,11 @@ export default function FullProject(props){
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
       }
+      const Modal = () => (  <Popup trigger={<button className="button"> Open Modal </button>} modal>    <span> Modal content </span>  </Popup>);
     return (
         <div>
             <div><span>Title: </span>{props.props.proposal.title}</div>
+            <div>Domain: {props.props.proposal.domains.map(obj=>{return obj+",";})}</div>
             <div><span>Budget requested: </span>{props.props.proposal.budget}</div>
             <div><span>Budget approved: </span>{props.props.approved_budget}</div>
             <div><span>Duration: </span>{props.props.approved_duration} months</div>
@@ -105,11 +108,13 @@ export default function FullProject(props){
             <Leader props={props.props.proposal.leader} />
             <Members props={props.props.proposal.members}/>
             <Supervisors props={props.props.proposal.supervisors}/>
-        <div>Resources    <Popup trigger={<button> Click to open popup </button>} 
-     position="right center">
-      <div>GeeksforGeeks</div>
-      <button>Click here</button>
-    </Popup></div>
+        <div>Resources   
+        <Popup    trigger={<button className="button"> Open Modal </button>}    modal    nested  >    {close => (      <div className="modal">        <button className="close" onClick={close}>          &times;        </button>        <div className="header"> Modal Title </div>        <div className="content">          {' '}          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.          Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates          delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?          <br />          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit          commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae          explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?        </div>        <div className="actions">          <Popup            trigger={<button className="button"> Trigger </button>}            position="top center"            nested          >            <span>              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae              magni omnis delectus nemo, maxime molestiae dolorem numquam              mollitia, voluptate ea, accusamus excepturi deleniti ratione              sapiente! Laudantium, aperiam doloribus. Odit, aut.            </span>          </Popup>          <button            className="button"            onClick={() => {              console.log('modal closed ');              close();            }}          >            close modal          </button>        </div>      </div>    )}  </Popup>
+
+
+
+
+        </div>
         </div>
     );
 
