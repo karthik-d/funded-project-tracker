@@ -17,6 +17,13 @@ router.get(
     }
 )
 
+router.get(
+    '/project/:projectId',
+    function (req, res, next) {
+        ResourceAssignmentController.getByProject(req.params.projectId, req, res, next);
+    }
+)
+
 router.post(
     '/',
     function (req, res, next) {

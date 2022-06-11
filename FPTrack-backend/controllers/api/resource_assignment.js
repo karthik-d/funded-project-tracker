@@ -58,6 +58,23 @@ function getById(id, req, res, next) {
     }
 };
 
+
+function getByProject(id, req, res, next) {
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        ;
+    }
+    else {
+        res.staus(404).send(
+            ErrorHelper.construct_json_response({
+                error: "Project not found",
+                message: "Could not find a project for that ID",
+                code: 801
+            })
+        )
+    }
+}
+
+
 exports.create = create;
 exports.getById = getById;
 exports.getAll = getAll;
