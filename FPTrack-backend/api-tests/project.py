@@ -65,7 +65,7 @@ def patch(id=None, debug=True):
     )
 
     print(resp.text)    
-    print(resp.json())
+    # print(resp.json())
     print(resp.status_code)
 
 

@@ -255,10 +255,11 @@ function updateOutcome(req, res, next) {
                 .then(([project]) => {
                     let last_outcome = project.getMostRecentOutcome();
                     console.log(last_outcome);
-                    if (Utils.timeDelta_days(
-                        Date.now(),
-                        last_outcome.createdAt
-                    ) < 2) {
+                    if (last_outcome != null &&
+                        Utils.timeDelta_days(
+                            Date.now(),
+                            last_outcome.createdAt
+                        ) < 2) {
                         reject({
                             name: "Outcome update too frequent",
                             message: "Previous outcome update was made less than 2 days ago",

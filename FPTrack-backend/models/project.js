@@ -47,6 +47,12 @@ var OutcomesSchema = new Schema(
             type: String,
             required: true
         }
+    },
+    {
+        timestamps: {
+            created_at: 'created_at',
+            modified_at: 'modified_at'
+        }
     }
 )
 
@@ -144,11 +150,17 @@ ProjectSchema
 ProjectSchema
     .methods
     .getMostRecentOutcome = function () {
-        return this.outcomes.reduce((prev_outcome, current_outcome) => {
-            return (prev_outcome.created_at >= current_outcome.created_at)
-                ? prev_outcome
-                : current_outcome
-        });
+        if (this.outcomes.length > 0) {
+            return this.outcomes.reduce((prev_outcome, current_outcome) => {
+                return (prev_outcome.created_at >= current_outcome.created_at)
+                    ? prev_outcome
+                    : current_outcome
+            });
+        }
+        else {
+            return null;
+        }
+
     }
 
 //--
