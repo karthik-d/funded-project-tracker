@@ -141,6 +141,18 @@ ProjectSchema
 
 //--
 
+ProjectSchema
+    .methods
+    .getMostRecentOutcome = function () {
+        return this.outcomes.reduce((prev_outcome, current_outcome) => {
+            return (prev_outcome.created_at >= current_outcome.created_at)
+                ? prev_outcome
+                : current_outcome
+        });
+    }
+
+//--
+
 // virtual for URL
 ProjectSchema
     .virtual('url')
