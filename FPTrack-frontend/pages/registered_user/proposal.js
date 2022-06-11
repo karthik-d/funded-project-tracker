@@ -49,13 +49,13 @@ export default class onProposal extends Component {
 </legend>
 
 <label className={styles.titletag}>Title<br /></label>
-<input className={styles.projtitle} type="text" name="title" /><br /><br />
+<input placeholder="Title" className={styles.projtitle} type="text" name="title" /><br /><br />
 
 <label className={styles.titletag}>Description<br /></label> 
-<textarea name="description"></textarea><br /><br />
+<textarea placeholder="Description" name="description"></textarea><br /><br />
 
 <label className={styles.titletag}>Domains: <br /></label>
-<Multiselect //https://reactjsexample.com/react-multiselect-dropdown-with-search-and-various-options/
+<Multiselect placeholder="Domains" //https://reactjsexample.com/react-multiselect-dropdown-with-search-and-various-options/
   style={{ // To change css for multiselect (Width,height,etc..)
     multiselectContainer: {
       width: 'fit-content',
@@ -69,28 +69,29 @@ export default class onProposal extends Component {
 /> <br />
 
 <label className={styles.titletag}>Supervisors<br /></label>
-<textarea name="supervisors"></textarea> <br /><br />
+<textarea placeholder="Supervisor" name="supervisors"></textarea> <br /><br />
 
 <label className={styles.titletag}>Leader<br /></label>
-<input name="leader" type="email" /><br /><br />
+<input placeholder="Leader" name="leader" type="email" /><br /><br />
 
 <label className={styles.titletag}>Members<br /></label>
-<textarea name="members"></textarea><br /><br />
+<textarea placeholder="Members" name="members"></textarea><br /><br />
 
 <label className={styles.titletag}>Funding Type<br /></label>
-  <select className={styles.selectfundingtype} name="funding_type">
+  <select placeholder="Funding Type" className={styles.selectfundingtype} name="funding_type">
+    <option value="" disabled selected>Funding Type</option>
     <option value="internal">Internal</option>
     <option value="external">External</option>
   </select><br /><br />
 
 <label className={styles.titletag}>Funding Agency<br /></label>
-<input name="funding_agency" type="text" /><br /><br />
+<input placeholder="Funding Agency" name="funding_agency" type="text" /><br /><br />
 
 <label className={styles.titletag}>Proposal Document<br /></label>
-<input name="pdf_document" type="file" accept="application/pdf" onChange={this.fileChangedHandler} /><br /><br />
+<input placeholder="Document" name="pdf_document" type="file" accept="application/pdf" onChange={this.fileChangedHandler} /><br /><br />
 
 <label className={styles.titletag}>Budget<br /></label>
-<input name="budget" type="number" min="1" /><br /><br />
+<input className={styles.budget} name="budget" type="number" min="1" placeholder="Budget"/><br /><br />
 
 <input className={styles.buttonsubmit} type="submit"></input>
 <br></br>
