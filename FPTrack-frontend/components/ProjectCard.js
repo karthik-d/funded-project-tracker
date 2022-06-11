@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './styles/ProjectCard.module.css';
 import { useRouter } from 'next/router'
-import { Redirect } from 'react-router-dom';
+import useSWR from 'swr'
 
 export default function ProjectCard(props) {
 
@@ -12,15 +12,12 @@ export default function ProjectCard(props) {
         
         let href= document.getElementById("link").href;
         console.log("HREF",href);
-        fetch(href)
-      .then(response => response.json())
-      .then(jsondata => {
         
-        let data=JSON.parse(JSON.stringify(jsondata));
+        // let data=JSON.parse(JSON.stringify(jsondata));
         router.push({
             pathname:"/guest/view_project",
-                query: {"data":data}},"hiden");
-      });
+                query: {"data":href}},"projectpage");
+     
     }
 
 
@@ -28,7 +25,7 @@ export default function ProjectCard(props) {
             <a id = "link" href ={"//localhost:3000"+props[1]} onClick={handleSubmit}>
             <div className={styles.wrapper}>
             
-                         <div className={styles.card_container}>
+                <div className={styles.card_container}>
                 <span className={styles.pro}>{props[0][6]}</span>
                 <img className={styles.round} src="../assets/imgs/user-profile.png" alt="user" />
                 <h3 className={styles.h3}>{props[0][7]}</h3>
