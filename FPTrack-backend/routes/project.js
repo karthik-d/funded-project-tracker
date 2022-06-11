@@ -38,4 +38,11 @@ router.patch(
     }
 );
 
+router.patch(
+    '/update-outcome',
+    function (req, res, next) {
+        ProjectController.updateOutcome(req, res, next);
+    }
+)
+
 module.exports = router;

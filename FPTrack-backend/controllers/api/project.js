@@ -170,10 +170,10 @@ function updateStatus(req, res, next) {
     // make update subdocument first
     if (mongoose.Types.ObjectId.isValid(req.body.id)) {
         project_id = mongoose.Types.ObjectId(req.body.id);
-        update_obj = {};
+        outcome_obj = {};
         ['title', 'description'].map((key) => {
             if (req.body.hasOwnProperty(key)) {
-                Object.assign(update_obj, { [key]: req.body[key] })
+                Object.assign(outcome_obj, { [key]: req.body[key] })
             }
         })
 
@@ -206,7 +206,7 @@ function updateStatus(req, res, next) {
                         _id: project_id
                     }, {
                         $addToSet: {
-                            status_updates: update_obj
+                            status_updates: outcome_obj
                         }
                     })
                     .then((updation_meta) => {
@@ -232,7 +232,79 @@ function updateStatus(req, res, next) {
     }
     else {
         res.status(404).send({
-            message: "Proposal not found"
+            message: "Project not found"
+        });
+    }
+}
+
+
+function updateOutcome(req, res, next) {
+    // make updation subdocument first
+    if (mongoose.Types.ObjectId.isValid(req.body.id)) {
+        project_id = mongoose.Types.ObjectId(req.body.id);
+        outcome_obj = {};
+        ['title', 'description', 'kind', 'reference'].map((key) => {
+            if (req.body.hasOwnProperty(key)) {
+                Object.assign(outcome_obj, { [key]: req.body[key] })
+            }
+        })
+
+        // check if last outcome update was at least 2 days ago
+        new Promise((resolve, reject) => {
+            ProjectModel.getById(project_id)
+                .then(([project]) => {
+                    let last_outcome = project.getMostRecentOutcome();
+                    if (Utils.timeDelta_days(
+                        Date.now(),
+                        last_outcome.createdAt
+                    ) < 2) {
+                        reject({
+                            name: "Outcome update too frequent",
+                            message: "Previous outcome update was made less than 2 days ago",
+                            meta_info: {
+                                previous_outcome: last_outcome.createdAt
+                            },
+                            code: 961
+                        });
+                    }
+                    resolve(project);
+                });
+        })
+            .then((project) => {
+                // make update
+                ProjectModel
+                    .onlyExisting()
+                    .updateOne({
+                        _id: project_id
+                    }, {
+                        $addToSet: {
+                            status_outcomes: outcome_obj
+                        }
+                    })
+                    .then((updation_meta) => {
+                        if (!updation_meta.acknowledged) {
+                            throw {
+                                name: "Project outcome update could not be written",
+                                message: "Error occurred when updating project. Try later",
+                                code: 952
+                            }
+                        }
+                        res.status(204).send({
+                            id: project_id,
+                            message: "Project outcomes updated",
+                            update_title: req.body.title
+                        })
+                    })
+            })
+            .catch((error) => {
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                );
+            })
+    }
+    else {
+        res.status(404).send({
+            message: "Project not found"
         });
     }
 }
