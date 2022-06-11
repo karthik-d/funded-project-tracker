@@ -43,7 +43,10 @@ export default function viewusers() {
     fetch("http://localhost:3000/api/user")
       .then(response => response.json())
       .then(jsondata => {
-        setUsers(JSON.parse(JSON.stringify(jsondata)));
+        console.log(JSON.parse(JSON.stringify(jsondata)));
+        let usrs=[];
+        usrs= JSON.parse(JSON.stringify(jsondata));
+        setUsers(usrs);
         const arr = []
         for (var key in jsondata[0]) {
           if (jsondata[0].hasOwnProperty(key)) {

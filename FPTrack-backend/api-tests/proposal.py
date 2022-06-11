@@ -38,12 +38,12 @@ def post(debug=True):
     #     budget = 10000
     # )
     req_body = dict(
-        title = "Number Plate Detection",
+        title = "Number Plate Detection, Again",
         decription = "Blah blah blah...blah..",
         domains = ['machine_learning'],
         supervisors = ['greg@gmail.com'],
-        leader = 'ben@gmail.com',
-        members = ['greg@gmail.com', 'claire@gmail.com'],
+        leader = 'claire@gmail.com',
+        members = ['ben@gmail.com', 'derek@gmail.com'],
         funding_type = 'external',
         funding_agency = 'DST-SERB',
         pdf_document = pdf_doc_b64_string,
@@ -85,7 +85,23 @@ def get(id=None, debug=True):
         save_pdf(json_response['pdf_document']['data'], destn_pdf_path)
 
 
+def patch(debug=False):
+    req_body = dict(
+        id = '62912ac4f4ebb586b9b82e02',
+        remarks = 'Needs more novelty'
+    )
+    resp = requests.patch(
+        'http://localhost:3000/api/proposal/reject',
+        json = req_body
+    )
+
+    print(resp.text)    
+    print(resp.status_code)
+    if not debug:
+        print(resp.json())
+
 # <<<<<<< HEAD
-post()
+# post()
 # get(debug=False)
 # get(id='628b5425099b1ba80b543da6', debug=False)
+patch()

@@ -16,8 +16,12 @@
     "multiselect-react-dropdown": "^2.0.22",
     "next": "^12.1.6",
     "react": "^17.0.2",
+    "react-collapsed": "^3.3.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "^6.3.0"
+    "react-pdf": "^5.7.2",
+    "react-router-dom": "^6.3.0",
+    "reactjs-popup": "^2.0.5",
+    "swr": "^1.3.0"
   },
   "devDependencies": {
     "eslint": "8.15.0",

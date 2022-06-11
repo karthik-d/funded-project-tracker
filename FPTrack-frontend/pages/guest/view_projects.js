@@ -7,6 +7,7 @@ import React, { useState, useEffect, Component } from 'react';
 import user from '../../../FPTrack-backend/models/user';
 import userStyles from './styles/view_user.module.css'
 import UserCard from '../../components/UserCard';
+import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
 import ProjectCard from '../../components/ProjectCard';
 
 // todo: represent multi-valued fields suitably
@@ -14,6 +15,8 @@ import ProjectCard from '../../components/ProjectCard';
 // todo: rename tabe headers to user readables
 
 const zip = ((arr1, arr2) => {
+	console.log("zip function==>");
+	console.log(arr1,"hh",arr2);
 	return arr1.map((elem, idx) => {
 		return [elem, arr2[idx]];
 	});
@@ -59,10 +62,14 @@ export default function viewprojects() {
 	const [values, setValues] = useState([]);
 	const [keys, setKeys] = useState([]);
 	const [uris, setUris] = useState([]);
+	// let Values,Keys,Uris;
+	// let payload;
+	const [payload, setPayload] = useState([]);
 	const fetchData = () => {
 		fetch("http://localhost:3000/api/project")
 			.then(response => response.json())
 			.then(jsondata => {
+				
 
 				var all_data = JSON.parse(
 					JSON.stringify(jsondata)
@@ -83,14 +90,15 @@ export default function viewprojects() {
 				];
 				// TODO: add member names
 				var proposal_fields = [
-					"domains", //6
-					"leader", //7
-					"funding_type", //8
-					"funding_agency", //9
+					"title" , //6
+					"domains", //7
+					"leader", //8
+					"funding_type", //9
+					"funding_agency", //10
 				];
 
 				var all_values = [];
-				var uris = [];
+				var uris_list = [];
 				all_data.forEach(
 					function (project) {
 						let local_values = [];
@@ -105,30 +113,47 @@ export default function viewprojects() {
 							}
 						);
 						all_values.push(local_values);
-						uris.push(project.url);
+						uris_list.push(project.url);
 					}
 				);
 				var all_fields = project_fields.concat(proposal_fields);
+				
+				//Karthik D : check the below code !
+				// console.log("before setting states:keys====uris===values")
+				// console.log(all_fields);
+				// console.log(uris_list);
+				// console.log(all_values);
 
-				setValues(all_values);
-				setKeys(all_fields);
-				setUris(uris);
-			})
+				// setValues(all_values);
+				// setKeys(all_fields);
+				// setUris(uris_list); // ?doubt how is it working 
+		
+				// console.log("after setting states:keys====uris===values")
+				// console.log(keys);
+				// console.log(uris);
+				// console.log(values);
+				let payload1 = { "values": zip(all_values, uris_list), "keys": all_fields, "link_objects": 1 };
+				// setPayload(zip(all_values, uris));
+				setPayload(payload1['values']);
+				console.log("after setting payload,");
+				console.log(payload);
+			}).catch(err=>{console.log(err);})
+		
+		
 	}
-
+	
 	useEffect(() => {
 		fetchData()
 	}, []);
-
 	// Todo: Make objects multiple array sets
-	let payload = { "values": zip(values, uris), "keys": keys, "link_objects": 1 };
+	
 	console.log("Payload",payload);
 	return (
 		<div id="vieusers">
 			<Header></Header>
 			<div className={userStyles.users_wrapper}>
         {
-          payload["values"].map((obj) => {
+          payload.map((obj) => {
             console.log(obj);
             return <ProjectCard {...obj} />;
           })
@@ -136,6 +161,8 @@ export default function viewprojects() {
       </div>
 			{/* <Tabulate props={payload} /> */}
 		</div>
+
+	
 
 	);
 
