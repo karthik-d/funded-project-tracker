@@ -1,0 +1,99 @@
+.header {
+    background:rgb(244, 245, 238);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .pageTitle{
+    background-color: inherit;
+    color: rgb(76, 81, 173);
+    font-size: 32px;
+    font-weight: bold;
+  }
+  .onProposal box{
+    float: left;
+    width: 50%;
+    display:block;
+    margin: 30px;
+  }
+  .onProposal label{
+      display: block;
+      
+  }
+  .proposalForm{
+    border:purple;
+     border-width:5px; 
+     border-style:solid;
+     margin: 40px;
+     padding: 20px;
+     background-color: aqua;
+  }
+
+  .titleh1 {
+    margin: 40px;
+    width: 50%;
+    font-weight: bold;
+    color: purple;
+  }
+
+  .outermargin {
+    margin: 30px;
+  }
+
+  .tags {
+    color: purple;
+    padding: 20px;
+  }
+
+  .formarea {
+    width: 60%;
+  }
+
+  .buttonsubmit {
+    background: purple;
+    border: 1px solid purple;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+  }
+  
+  .buttonsubmit:hover, .buttonsubmit:active {
+    background-color: initial;
+    background-position: 0 0;
+    color: purple;
+  }
+  
+  .buttonsubmit:active {
+    opacity: .5;
+  }
+
+  .titletag {
+    font-family: Helvetica, sans-serif;
+    padding: 5px;
+    font-weight: 700;
+    font-size: large;
+    color: purple;
+  }
+
+  .selectfundingtype {
+    width: 25%;
+    height: 30px;
+  } 
