@@ -187,21 +187,41 @@ function getByUser(user_id, req, res, next) {
 
 
 function getById(id, req, res, next) {
-    ProposalModel
-        .onlyExisting()
-        .getById(id)
-        .populate('leader')
-        .populate('members')
-        .populate('supervisors')
-        .then(([resource]) => {
-            resource.pdf_document = resource.document_base64;
-            res.status(200).send(resource);
-        })
-        .catch((error) => {
-            res.status(400).send(
-                ErrorHelper.construct_json_response(error)
-            );
-        });
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        ProposalModel
+            .onlyExisting()
+            .getById(id)
+            .populate('leader')
+            .populate('members')
+            .populate('supervisors')
+            .then((resource) => {
+                if (resource.length == 0) {
+                    throw {
+                        error: "Proposal not found",
+                        message: "Could not find a proposal for that ID",
+                        code: 801
+                    };
+                }
+                resource = resource[0];
+                resource.pdf_document = resource.document_base64;
+                res.status(200).send(resource);
+            })
+            .catch((error) => {
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                );
+            });
+    }
+    else {
+        res.status(404).send(
+            ErrorHelper.construct_json_response({
+                error: "Proposal not found",
+                message: "Could not find a proposal for that ID",
+                code: 801
+            })
+        );
+    }
+
 };
 
 
@@ -240,7 +260,7 @@ function rejectProposal(req, res, next) {
             .then((updation_data) => {
                 if (!updation_data.acknowledged) {
                     throw {
-                        name: "Proposal could not be updated",
+                        error: "Proposal could not be updated",
                         message: "Error occurred when updating proposal status. Try later",
                         code: 952
                     };
