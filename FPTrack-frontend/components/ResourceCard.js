@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 
 import useSWR from 'swr'
 
-export default function RecourseCard(props) {
+export default function ResourseCard(props) {
     let [count,setCount] = useState(0);
 
 
@@ -26,9 +26,9 @@ export default function RecourseCard(props) {
                 <p className={`${styles.email} ${styles.p}`}>{props.description}</p>
                 <p className={`${styles.email} ${styles.p}`}>Avilable quantity: {props.avl_qty}</p>
                 <div>Requesting Quantity :
-                <span onClick={()=>setCount_modified(count+1)}>+</span>
+                <button onClick={()=>setCount_modified(count+1)}>+</button>
                 <span>{count}</span>
-                <span onClick={()=>setCount_modified(count-1)}>-</span>
+                <button onClick={()=>setCount_modified(count-1)}>-</button>
                 <button onClick={handlesubmit}>Request</button>
                 </div>
             </div >

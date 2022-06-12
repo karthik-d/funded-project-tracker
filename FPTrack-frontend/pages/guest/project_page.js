@@ -24,11 +24,9 @@ export default function Project(props) {
   return (
     <div className={styles.container}>
     <Header></Header>
-<<<<<<< HEAD
-    <FullProposal props={data[0]}/>
-=======
+
     <FullProject props={data[0]}/>
->>>>>>> 2aa164e3c89e56b5e76ee9dbeba245768e89a2fa
+
     </div>
   );
 }
