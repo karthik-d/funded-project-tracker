@@ -71,12 +71,20 @@ function getByProject(id, req, res, next) {
                     }
                 }, {
                     $lookup: {
-                        "from": 'resources',
-                        "localField": 'resource',
-                        "foreignField": '_id',
-                        "as": 'resource_check'
+                        from: 'resources',
+                        localField: 'resource',
+                        foreignField: '_id',
+                        as: 'resource_ref'
+                    }
+                }, {
+                    $group: {
+                        _id: '$resource_ref.resource_group',
+                        assigned_qty: {
+                            $sum: 1
+                        }
                     }
                 }
+
             ])
             .then((grouped_assigns) => {
                 console.log(grouped_assigns);
