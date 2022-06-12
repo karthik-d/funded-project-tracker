@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 
 var ResourceAssignmentModel = require('../../models/resource_assignment');
 var ResourceModel = require('../../models/resource');
+
+var ResourceHelper = require('../../helpers/resource');
 var ErrorHelper = require('../../helpers/error');
 
 var ResourceFilters = require('../../helpers/filters/resource');
@@ -11,7 +13,7 @@ var Utils = require('../../helpers/utils');
 
 
 function create(req, res, next) {
-    const rsrc = new ResourceAssignmentModel(req.body.body);
+    const rsrc = new ResourceAssignmentModel(req.body);
     rsrc
         .save()
         .then((resource) => {
@@ -182,7 +184,12 @@ function assignResourcesToProject(req, res, next) {
             Utils
                 .applyAsyncFilters(resources, [ResourceFilters.not_assigned])
                 .then((resources) => {
-                    console.log(resources);
+                    // get current quantity
+                    ResourceHelper
+                        .get_resource_count_for_project(rsrc_grp_id, project_id)
+                        .then((count) => {
+                            console.log(count);
+                        })
                 })
         })
 

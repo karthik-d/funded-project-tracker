@@ -8,8 +8,8 @@ def post(debug=True):
     # )
 
     req_body = dict(
-        resource = "628abd6b4bc531d7264a0aae",
-      assigned_to = "62a1e2c06d8b165d85b877e6",
+        resource = "628abd6b4bc531d7264a0ab2",
+      assigned_to = "62a4e23619d791faaf76e19a",
       assigned_by = "628f1954f5b6a7772b9885b0"
     )
 
@@ -55,8 +55,8 @@ def put():
     print(resp.text)
 
 
-# post()
-put()
+post()
+# put()
 # get()
 # get(id='628abd6b4bc531d7264a0aaa')
 
