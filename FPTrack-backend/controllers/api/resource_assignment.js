@@ -85,9 +85,31 @@ function getByProject(id, req, res, next) {
                     }
                 }
 
-            ])
+            ],
+                (error, results) => {
+                    if (error) {
+                        throw error;
+                    }
+                    return results;
+                })
             .then((grouped_assigns) => {
-                console.log(grouped_assigns);
+                Promise.all(
+                    grouped_assigns
+                        .map((assign) => {
+
+                            console.log("here");
+                            console.log(assign);
+                        })
+                )
+                    .then((grouped_assigns_loaded) => {
+                        console.log(grouped_assigns_loaded);
+                        res.status(200).send(grouped_assigns_loaded);
+                    });
+            })
+            .catch((error) => {
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                );
             });
     }
     else {
