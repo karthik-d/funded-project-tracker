@@ -74,13 +74,25 @@ function getByProject(id, req, res, next) {
                         from: 'resources',
                         localField: 'resource',
                         foreignField: '_id',
-                        as: 'resource_ref'
+                        as: 'resource_data'
                     }
                 }, {
                     $group: {
-                        _id: '$resource_ref.resource_group',
-                        assigned_qty: {
+                        _id: '$resource_data.resource_group',
+                        data: {
+                            $first: '$$ROOT'
+                        },
+                        count: {
                             $sum: 1
+                        }
+                    }
+                }, {
+                    $replaceRoot: {
+                        newRoot: {
+                            $mergeObjects: [{
+                                assigned_qty: '$count'
+                            },
+                                '$data']
                         }
                     }
                 }
@@ -93,18 +105,8 @@ function getByProject(id, req, res, next) {
                     return results;
                 })
             .then((grouped_assigns) => {
-                Promise.all(
-                    grouped_assigns
-                        .map((assign) => {
-
-                            console.log("here");
-                            console.log(assign);
-                        })
-                )
-                    .then((grouped_assigns_loaded) => {
-                        console.log(grouped_assigns_loaded);
-                        res.status(200).send(grouped_assigns_loaded);
-                    });
+                console.log(grouped_assigns);
+                res.status(200).send(grouped_assigns);
             })
             .catch((error) => {
                 res.status(400).send(
