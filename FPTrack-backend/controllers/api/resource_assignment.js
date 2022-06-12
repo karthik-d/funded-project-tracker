@@ -174,40 +174,83 @@ function assignResourcesToProject(req, res, next) {
         )
     }
 
-    // get current quantity
-    ResourceHelper
-        .get_resource_count_for_project(rsrc_grp_id, project_id)
-        .then(([count_obj]) => {
-            var qty_delta = req.body.qty - count_obj.count;
-            var qty_to_assign = (
-                qty_delta > resources.length
-                    ? resources.length
-                    : qty_delta
-            );
-            if (qty_to_assign < 0) {
-                var qty_to_delete = -1 * qty_to_assign;
+    // get group's resources
+    ResourceModel
+        .onlyExisting()
+        .find({
+            resource_group: rsrc_grp_id
+        })
+        .then((group_resources) => {
 
-            }
-            else if (qty_to_assign == 0) {
-                res.status(200).send({
-                    total_qty: resource.length,
-                    assigned_qty: 0,
-                    message: "No resource assignments made"
-                })
-            }
-            else {
-                // get resource for the group
-                ResourceModel
-                    .onlyExisting()
-                    .find({
-                        resource_group: rsrc_grp_id
-                    })
-                    .then((resources) => {
+            // get current assigned quantity
+            ResourceHelper
+                .get_resource_count_for_project(rsrc_grp_id, project_id)
+                .then(([count_obj]) => {
+                    var qty_delta = req.body.qty - count_obj.count;
+
+                    if (qty_delta < 0) {
+                        // unallocate resources
+                        var qty_delta = -1 * qty_delta;
+                        var qty_to_modify = (
+                            qty_delta > count_obj.count
+                                ? count_obj.count
+                                : qty_delta
+                        );
+
                         Utils
-                            .applyAsyncFilters(resources, [ResourceFilters.not_assigned])
+                            .applyAsyncFilters(group_resources, [ResourceFilters.assigned])
+                            .then((resources) => {
+                                // delete that many assignments
+                                var to_unassign = resources.slice(0, qty_to_modify);
+                                Promise.all(
+                                    to_unassign.map((rsrc) => {
+                                        return ResourceAssignmentModel
+                                            .onlyExisting()
+                                            .updateOne({
+                                                resource: rsrc._id,
+                                                assigned_to: project_id
+                                            }, {
+                                                deleted_on: new Date()
+                                            });
+                                    })
+                                )
+                                    .then((_) => {
+                                        res.status(201).send({
+                                            total_qty: qty_to_assign + resources.length,
+                                            assigned_qty: qty_to_assign,
+                                            project_id: project_id,
+                                            resource_group_id: rsrc_grp_id,
+                                            message: "Resource assignments made"
+                                        })
+                                    })
+                                    .catch((error) => {
+                                        res.status(400).send(
+                                            ErrorHelper.construct_json_response(error)
+                                        );
+                                    });
+                            })
+                    }
+
+                    else if (qty_to_assign == 0) {
+                        res.status(200).send({
+                            total_qty: resource.length,
+                            assigned_qty: 0,
+                            message: "No resource assignments made"
+                        })
+                    }
+
+                    else {
+                        var qty_to_modify = (
+                            qty_delta > resources.length
+                                ? resources.length
+                                : qty_delta
+                        );
+                        // get resources that can be assigned
+                        Utils
+                            .applyAsyncFilters(group_resources, [ResourceFilters.not_assigned])
                             .then((resources) => {
                                 // make assignments
-                                var to_assign = resources.slice(0, qty_to_assign);
+                                var to_assign = resources.slice(0, qty_to_modify);
                                 Promise.all(
                                     to_assign.map((rsrc) => {
                                         return new ResourceAssignmentModel({
@@ -232,11 +275,9 @@ function assignResourcesToProject(req, res, next) {
                                         );
                                     });
                             })
-                    })
-            }
+                    }
+                })
         })
-
-
 }
 
 
