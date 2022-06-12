@@ -93,7 +93,7 @@ export default function FullUser(props){
             <div>Project Roles</div>
             <div>Supervisor</div>
             <div>Leader</div>
-            <div>Member<ib/div>
+            <div>Member</div>
         </div>
     );
 

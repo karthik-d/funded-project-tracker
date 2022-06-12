@@ -37,7 +37,7 @@ function Members(props) {
 
     return (<div className="collapsible">
         <div className="header" {...getToggleProps()}>
-            <h1>{isExpanded ? 'Collapse Members' : 'Expand Members'}</h1>
+            {isExpanded ? <div className={styles.collapse}> Collapse Members</div>: <div className={styles.expand}>Expand Members</div>}
         </div>
         <div {...getCollapseProps()}>
             <div style={{ display: "flex", "flex-direction": "row" }}>
@@ -55,7 +55,7 @@ function Leader(props) {
 
     return (<div className="collapsible">
         <div className="header" {...getToggleProps()}>
-            <h1>{isExpanded ? 'Collapse Leader' : 'Expand Leader'}</h1>
+            {isExpanded ? <div className={styles.collapse}> Collapse Leader</div> : <div className={styles.expand}>Expand Leader</div>}
         </div>
         <div {...getCollapseProps()}>
             <div style={{ display: "flex", "flex-direction": "row" }}>
@@ -75,7 +75,7 @@ function Supervisors(props) {
 
     return (<div className="collapsible">
         <div className="header" {...getToggleProps()}>
-            <h1>{isExpanded ? 'Collapse Supervisors' : 'Expand Supervisors'}</h1>
+            <h1>{isExpanded ? <div className={styles.collapse}>Collapse Supervisors</div> : <div className={styles.expand}>Expand Supervisors</div>}</h1>
         </div>
         <div {...getCollapseProps()}>
             <div style={{ display: "flex", "flex-direction": "row" }}>
@@ -104,15 +104,17 @@ export default function FullProject(props) {
     var res = arrayBufferToBase64(props.props.proposal.pdf_document.data);
 
     return (
-        <div>
-            <div><span>Title: </span>{props.props.proposal.title}</div>
-            <div>Domain: {props.props.proposal.domains.map(obj => { return obj + ","; })}</div>
-            <div><span>Budget requested: </span>{props.props.proposal.budget}</div>
-            <div><span>Budget approved: </span>{props.props.approved_budget}</div>
-            <div><span>Duration: </span>{props.props.approved_duration} months</div>
-            <div>Proposal.pdf:</div>
-            <div>
-                <embed src={`data:application/pdf;base64,${res}`} width="500" height="500" />
+        <div className={styles.main_container}>
+            <h1 className={styles.title}>{props.props.proposal.title}</h1>
+            <div className={styles.domain}><span className={styles.domain_tag}>Domain:</span>  {props.props.proposal.domains.map(obj => { return<span className={styles.domain_sub}>{obj}</span> ; })}</div>
+            <div className={styles.table_container}>
+            <div className={styles.sub_table}>Budget requested: Rs<span  className={styles.budget}>{props.props.proposal.budget}</span></div>
+            <div className={styles.sub_table}>Budget approved: Rs<span  className={styles.budget}>{props.props.approved_budget}</span></div>
+            <div className={styles.sub_table}>Duration: <span>{props.props.approved_duration} </span>months</div>
+            <div className={styles.sub_table}>Proposal.pdf:
+            
+                <a style={{color:"blue","text-decoration": "underline"}}href={`data:application/pdf;base64,${res}`} download> link</a>
+            </div>
             </div>
             <Leader props={props.props.proposal.leader} />
             <Members props={props.props.proposal.members} />
