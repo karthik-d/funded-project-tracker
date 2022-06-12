@@ -58,6 +58,75 @@ function getById(id, req, res, next) {
     }
 };
 
+
+function getByProject(id, req, res, next) {
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        project_id = mongoose.Types.ObjectId(id);
+        ResourceAssignmentModel
+            .aggregate([
+                {
+                    $match: {
+                        deleted_on: null,
+                        assigned_to: project_id
+                    }
+                }, {
+                    $lookup: {
+                        from: 'resources',
+                        localField: 'resource',
+                        foreignField: '_id',
+                        as: 'resource_data'
+                    }
+                }, {
+                    $group: {
+                        _id: '$resource_data.resource_group',
+                        data: {
+                            $first: '$$ROOT'
+                        },
+                        count: {
+                            $sum: 1
+                        }
+                    }
+                }, {
+                    $replaceRoot: {
+                        newRoot: {
+                            $mergeObjects: [{
+                                assigned_qty: '$count'
+                            },
+                                '$data']
+                        }
+                    }
+                }
+
+            ],
+                (error, results) => {
+                    if (error) {
+                        throw error;
+                    }
+                    return results;
+                })
+            .then((grouped_assigns) => {
+                console.log(grouped_assigns);
+                res.status(200).send(grouped_assigns);
+            })
+            .catch((error) => {
+                res.status(400).send(
+                    ErrorHelper.construct_json_response(error)
+                );
+            });
+    }
+    else {
+        res.staus(404).send(
+            ErrorHelper.construct_json_response({
+                error: "Project not found",
+                message: "Could not find a project for that ID",
+                code: 801
+            })
+        )
+    }
+}
+
+
 exports.create = create;
 exports.getById = getById;
 exports.getAll = getAll;
+exports.getByProject = getByProject;

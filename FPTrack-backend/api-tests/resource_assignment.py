@@ -8,7 +8,8 @@ def post(debug=True):
     # )
 
     req_body = dict(
-      assigned_to = "628f1c13f5b6a7772b9885ba",
+        resource = "628abd6b4bc531d7264a0aae",
+      assigned_to = "62a1e2c06d8b165d85b877e6",
       assigned_by = "628f1954f5b6a7772b9885b0"
     )
 
