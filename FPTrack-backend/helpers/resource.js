@@ -3,8 +3,6 @@ const ResourceAssignmentModel = require('../models/resource_assignment');
 
 // todo: add `deleted_on` as a equation param
 function get_resource_count_for_project(rsrc_grp_id, project_id) {
-    console.log(project_id);
-    console.log(rsrc_grp_id);
     return ResourceAssignmentModel
         .aggregate([
             {
@@ -31,11 +29,11 @@ function get_resource_count_for_project(rsrc_grp_id, project_id) {
                 }
             }
         ],
-            (error, [result]) => {
+            function (error, [result]) {
                 if (error) {
                     throw error;
                 }
-                return result.count;
+                return result;
             });
 }
 
