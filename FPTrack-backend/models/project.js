@@ -47,6 +47,12 @@ var OutcomesSchema = new Schema(
             type: String,
             required: true
         }
+    },
+    {
+        timestamps: {
+            created_at: 'created_at',
+            modified_at: 'modified_at'
+        }
     }
 )
 
@@ -126,6 +132,41 @@ ProjectSchema
             _id: id
         });
     };
+
+//--
+
+ProjectSchema
+    .methods
+    .getMostRecentUpdate = function () {
+        if (this.status_updates.length > 0) {
+            return this.status_updates.reduce((prev_update, current_update) => {
+                return (prev_update.created_at >= current_update.created_at)
+                    ? prev_update
+                    : current_update
+            });
+        }
+        else {
+            return null;
+        }
+    };
+
+//--
+
+ProjectSchema
+    .methods
+    .getMostRecentOutcome = function () {
+        if (this.outcomes.length > 0) {
+            return this.outcomes.reduce((prev_outcome, current_outcome) => {
+                return (prev_outcome.created_at >= current_outcome.created_at)
+                    ? prev_outcome
+                    : current_outcome
+            });
+        }
+        else {
+            return null;
+        }
+
+    }
 
 //--
 
