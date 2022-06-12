@@ -31,4 +31,11 @@ router.post(
     }
 );
 
+router.put(
+    '/',
+    function (req, res, next) {
+        ResourceAssignmentController.assignResourcesToProject(req, res, next);
+    }
+)
+
 module.exports = router;

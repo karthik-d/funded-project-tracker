@@ -3,11 +3,15 @@ var express = require('express');
 var mongoose = require('mongoose');
 
 var ResourceAssignmentModel = require('../../models/resource_assignment');
+var ResourceModel = require('../../models/resource');
 var ErrorHelper = require('../../helpers/error');
+
+var ResourceFilters = require('../../helpers/filters/resource');
+var Utils = require('../../helpers/utils');
 
 
 function create(req, res, next) {
-    const rsrc = new ResourceAssignmentModel(req.body);
+    const rsrc = new ResourceAssignmentModel(req.body.body);
     rsrc
         .save()
         .then((resource) => {
@@ -126,7 +130,68 @@ function getByProject(id, req, res, next) {
 }
 
 
+function assignResourcesToProject(req, res, next) {
+
+    // verify id values
+    if (mongoose.Types.ObjectId.isValid(req.body.rsrc_mgr_id)) {
+        rsrc_mgr_id = mongoose.Types.ObjectId(req.body.rsrc_mgr_id);
+    }
+    else {
+        return void res.staus(404).send(
+            ErrorHelper.construct_json_response({
+                error: "Resource Manager not found",
+                message: "Could not find a user for that ID",
+                code: 801
+            })
+        )
+    }
+
+    if (mongoose.Types.ObjectId.isValid(req.body.project_id)) {
+        project_id = mongoose.Types.ObjectId(req.body.project_id);
+    }
+    else {
+        return void res.staus(404).send(
+            ErrorHelper.construct_json_response({
+                error: "Project not found",
+                message: "Could not find a project for that ID",
+                code: 801
+            })
+        )
+    }
+
+    if (mongoose.Types.ObjectId.isValid(req.body.rsrc_grp_id)) {
+        rsrc_grp_id = mongoose.Types.ObjectId(req.body.rsrc_grp_id);
+    }
+    else {
+        return void res.staus(404).send(
+            ErrorHelper.construct_json_response({
+                error: "Resource group not found",
+                message: "Could not find a resource group for that ID",
+                code: 801
+            })
+        )
+    }
+
+    // get resource for the group
+    ResourceModel
+        .onlyExisting()
+        .find({
+            resource_group: rsrc_grp_id
+        })
+        .then((resources) => {
+            console.log("Filtering..");
+            resources = resources.filter(Utils.applyAsyncFilters([ResourceFilters.not_assigned]));
+            console.log(resources);
+            console.log("Done");
+        })
+
+
+}
+
+
+
 exports.create = create;
 exports.getById = getById;
 exports.getAll = getAll;
 exports.getByProject = getByProject;
+exports.assignResourcesToProject = assignResourcesToProject;

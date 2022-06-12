@@ -7,15 +7,37 @@ function getFunctionByName(functionName, context) {
     return context[function_];
 }
 
-function applyAsyncFilters(filters) {
-    return ((item) => {
-        return Promise.all(filters.map((fltr) => {
-            return fltr(item);
-        }))
-            .then((filter_truths) => {
-                return filter_truths
-                    .every(Boolean)
+
+function applyAsyncFilters(data, filters) {
+    return new Promise((resolve, reject) => {
+        Promise.all(
+            data.map(_applyAsyncFilters(filters))
+        )
+            .then((truths) => {
+                resolve(data.filter((_, idx) => truths[idx]));
             })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
+
+function _applyAsyncFilters(filters) {
+    return ((item) => {
+        return new Promise((resolve, reject) => {
+            Promise.all(filters.map((fltr) => {
+                return fltr(item);
+            }))
+                .then((filter_truths) => {
+                    resolve(filter_truths
+                        .every(Boolean)
+                    );
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        })
     });
 
 }
