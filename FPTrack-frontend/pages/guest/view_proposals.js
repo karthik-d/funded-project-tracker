@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Header from '../header';
 import React, { useState, useEffect, Component } from 'react';
 import user from '../../../FPTrack-backend/models/user';
-
+import ProposalCard from '../../components/ProposalCard';
 
 function Tabulate({props}){
     return (<div className = {styles.tabulate}>
@@ -52,7 +52,7 @@ export default function viewusers()  {
               "funding_type",
               "funding_agency",
               "budget",
-              "approved_on"
+              "approved_on",
             ];
             setKeys(main_fields);
         }
@@ -69,6 +69,7 @@ export default function viewusers()  {
 return (
     <div id="viewusers">
     <Header></Header>
+    <ProposalCard props={temp}/>;
     <Tabulate props={temp}/>;
     </div>
 

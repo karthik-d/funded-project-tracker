@@ -9,7 +9,7 @@ import FullProposal from '../../components/FullProposalCard'
 
 
 
-export default function User(props) {
+export default function Proposal(props) {
   const fetcher = (url) => fetch(url).then((res) => res.json());
     const router = useRouter();
     const { data, error } = useSWR(router.query.data, fetcher)

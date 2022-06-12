@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Header from '../header';
 import React, { useState, useEffect, Component } from 'react';
 import user from '../../../FPTrack-backend/models/user';
-
+import ResourceCard from '../../components/ResourceCard';
 
 function Tabulate({props}){
     return (<div className = {styles.tabulate}>
@@ -61,7 +61,9 @@ export default function viewusers()  {
 return (
     <div id="viewusers">
     <Header></Header>
-    <Tabulate props={temp}/>;
+    {temp["objects"].map(obj=>{
+        return <ResourceCard {...obj}/>
+    })}
     </div>
 
 );
