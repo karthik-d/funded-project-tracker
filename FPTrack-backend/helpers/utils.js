@@ -11,7 +11,7 @@ function getFunctionByName(functionName, context) {
 function applyAsyncFilters(data, filters) {
     return new Promise((resolve, reject) => {
         Promise.all(
-            data.map(_applyAsyncFilters(filters))
+            data.map(_mixin_applyAsyncFilters(filters))
         )
             .then((truths) => {
                 resolve(data.filter((_, idx) => truths[idx]));
@@ -23,7 +23,7 @@ function applyAsyncFilters(data, filters) {
 }
 
 
-function _applyAsyncFilters(filters) {
+function _mixin_applyAsyncFilters(filters) {
     return ((item) => {
         return new Promise((resolve, reject) => {
             Promise.all(filters.map((fltr) => {

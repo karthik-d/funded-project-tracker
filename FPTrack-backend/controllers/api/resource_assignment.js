@@ -179,10 +179,11 @@ function assignResourcesToProject(req, res, next) {
             resource_group: rsrc_grp_id
         })
         .then((resources) => {
-            console.log("Filtering..");
-            resources = resources.filter(Utils.applyAsyncFilters([ResourceFilters.not_assigned]));
-            console.log(resources);
-            console.log("Done");
+            Utils
+                .applyAsyncFilters(resources, [ResourceFilters.not_assigned])
+                .then((resources) => {
+                    console.log(resources);
+                })
         })
 
 

@@ -43,7 +43,7 @@ def put():
     req_body = dict(
         rsrc_mgr_id = '628abd684bc531d7264a0a9b',
         project_id = '62a1e2c06d8b165d85b877e6',
-        rsrc_grp_id = '628abd6b4bc531d7264a0aa8',
+        rsrc_grp_id = '628abd6b4bc531d7264a0aaa',
         assign_qty = 2
     )
 
