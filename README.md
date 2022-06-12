@@ -128,7 +128,27 @@ With request body like so,
 ```
 - `id` is the corresponding project's `_id` field
 - `title` is a short name for the update
-- `description` (optional) is a short description abo0ut the status update
+- `description` (optional) is a short description about the status update
+- Updates are `rejected` if they are made more frequently than 2 days i.e. the second update in a continual period of 2 days is rejected
+- Responds with the proposal's `_id`, a short message and the update title
+
+#### PATCH api/project/update-status : To add a status update for a project
+
+With request body like so,
+```
+{
+  id = <project_id>,
+  title = "Patent submitted",
+  description = "Fully approved design patent made",
+  kind = "patent",
+  reference = "www.patents.com/aaa123"
+}
+```
+- `id` is the corresponding project's `_id` field
+- `title` is a short name for the update
+- `description` (optional) is a short description about the status update
+- `kind` is one of the allowed outcomes. Look into the `project` schema definition.
+- `reference` is basically an external URL to prove the outcome
 - Updates are `rejected` if they are made more frequently than 2 days i.e. the second update in a continual period of 2 days is rejected
 - Responds with the proposal's `_id`, a short message and the update title
 
