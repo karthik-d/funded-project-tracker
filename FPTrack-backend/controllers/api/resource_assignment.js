@@ -86,7 +86,7 @@ function getByProject(id, req, res, next) {
                     $group: {
                         _id: '$resource_data.resource_group',
                         data: {
-                            $first: '$$ROOT'
+                            $addToSet: '$$ROOT'
                         },
                         count: {
                             $sum: 1
@@ -98,7 +98,7 @@ function getByProject(id, req, res, next) {
                             $mergeObjects: [{
                                 assigned_qty: '$count'
                             },
-                                '$data']
+                            { resource_records: '$data' }]
                         }
                     }
                 }
@@ -199,37 +199,44 @@ function assignResourcesToProject(req, res, next) {
                         );
 
                         // TODO: Filter resources for the target project!!
-                        Utils
-                            .applyAsyncFilters(group_resources, [ResourceFilters.assigned])
-                            .then((resources) => {
-                                // delete that many assignments
-                                var to_unassign = resources.slice(0, qty_to_modify);
-                                Promise.all(
-                                    to_unassign.map((rsrc) => {
-                                        return ResourceAssignmentModel
-                                            .onlyExisting()
-                                            .updateOne({
-                                                resource: rsrc._id,
-                                                assigned_to: project_id
-                                            }, {
-                                                deleted_on: new Date()
+                        ResourceAssignmentModel
+                            .onlyExisting()
+                            .find({
+                                assigned_to: project_id
+                            })
+                            .then((project_resources) => {
+                                Utils
+                                    .applyAsyncFilters(group_resources, [ResourceFilters.assigned])
+                                    .then((resources) => {
+                                        // delete that many assignments
+                                        var to_unassign = resources.slice(0, qty_to_modify);
+                                        Promise.all(
+                                            to_unassign.map((rsrc) => {
+                                                return ResourceAssignmentModel
+                                                    .onlyExisting()
+                                                    .updateOne({
+                                                        resource: rsrc._id,
+                                                        assigned_to: project_id
+                                                    }, {
+                                                        deleted_on: new Date()
+                                                    });
+                                            })
+                                        )
+                                            .then((_) => {
+                                                res.status(201).send({
+                                                    total_qty: qty_to_modify + resources.length,
+                                                    assigned_qty: qty_to_modify,
+                                                    project_id: project_id,
+                                                    resource_group_id: rsrc_grp_id,
+                                                    message: "Resource deallocations made"
+                                                })
+                                            })
+                                            .catch((error) => {
+                                                res.status(400).send(
+                                                    ErrorHelper.construct_json_response(error)
+                                                );
                                             });
                                     })
-                                )
-                                    .then((_) => {
-                                        res.status(201).send({
-                                            total_qty: qty_to_modify + resources.length,
-                                            assigned_qty: qty_to_modify,
-                                            project_id: project_id,
-                                            resource_group_id: rsrc_grp_id,
-                                            message: "Resource deallocations made"
-                                        })
-                                    })
-                                    .catch((error) => {
-                                        res.status(400).send(
-                                            ErrorHelper.construct_json_response(error)
-                                        );
-                                    });
                             })
                     }
 
