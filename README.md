@@ -74,7 +74,7 @@ It handles the following key aspects:
 
 - `[anything]` is an arbitrary value. This is parsed for GET syntactic convenience - value ignored
 - The key `available` is of importance
-- Responds with all resource groups having allocatable resources along with an additional field `avl_qty` to denote number of reource instances of the group that can be allotted, like so
+- Responds with all resource groups having allocatable resources along with an additional field `avl_qty` to denote number of resource instances of the group that can be allotted, like so
  ```
  [
   {
@@ -87,6 +87,29 @@ It handles the following key aspects:
   .
  ]
 ```
+
+#### GET api/resource-assignment/project/[projectId]
+
+- `[projectId]` is the project id of the project whose resource allocations are being requested
+- Responds with all resource allocation records for the project resources along, with three additional fields:
+  - `_id` denoting the ID of the resource group
+  - `assigned_qty` to denote number of resource instances of the group already allotted
+  - `resource_data` containing specific resource details, along with the ID of its resource group
+ ```
+ [
+  {
+    _id: <resource-group id>
+    <all-resource-allocation fields> : <field-values>,
+    .
+    .
+    resource_data : [ { <all resource fields> : <field-values> } ]
+    assigned_qty: 2
+  }
+  .
+  .
+ ]
+```
+
 #### PATCH api/proposal/reject : To REJECT a proposal
 
 With request body,
@@ -128,7 +151,27 @@ With request body like so,
 ```
 - `id` is the corresponding project's `_id` field
 - `title` is a short name for the update
-- `description` (optional) is a short description abo0ut the status update
+- `description` (optional) is a short description about the status update
+- Updates are `rejected` if they are made more frequently than 2 days i.e. the second update in a continual period of 2 days is rejected
+- Responds with the proposal's `_id`, a short message and the update title
+
+#### PATCH api/project/update-status : To add a status update for a project
+
+With request body like so,
+```
+{
+  id = <project_id>,
+  title = "Patent submitted",
+  description = "Fully approved design patent made",
+  kind = "patent",
+  reference = "www.patents.com/aaa123"
+}
+```
+- `id` is the corresponding project's `_id` field
+- `title` is a short name for the update
+- `description` (optional) is a short description about the status update
+- `kind` is one of the allowed outcomes. Look into the `project` schema definition.
+- `reference` is basically an external URL to prove the outcome
 - Updates are `rejected` if they are made more frequently than 2 days i.e. the second update in a continual period of 2 days is rejected
 - Responds with the proposal's `_id`, a short message and the update title
 

@@ -1,15 +1,16 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
+import styles1 from '../guest/styles/view_resources.module.css'
 import Link from 'next/link';
 import Header from '../header';
 import React, { useState, useEffect, Component } from 'react';
 import user from '../../../FPTrack-backend/models/user';
-
+import ResourceCard from '../../components/ResourceCard';
 
 function Tabulate({props}){
     return (<div className = {styles.tabulate}>
-    <table>
+    <table className={styles1.resourcetable}>
       <thead id ="">
         <tr id="header" key = "header">
         {props.keys.map(key=>{
@@ -61,7 +62,9 @@ export default function viewusers()  {
 return (
     <div id="viewusers">
     <Header></Header>
-    <Tabulate props={temp}/>;
+    {temp["objects"].map(obj=>{
+        return <ResourceCard {...obj}/>
+    })}
     </div>
 
 );
