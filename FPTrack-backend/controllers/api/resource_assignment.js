@@ -70,11 +70,11 @@ function getByProject(id, req, res, next) {
                         assigned_to: project_id
                     }
                 }, {
-                    $group: {
-                        _id: "$resource.resource_group",
-                        assigned_qty: {
-                            $sum: 1
-                        }
+                    $lookup: {
+                        "from": 'resources',
+                        "localField": 'resource',
+                        "foreignField": '_id',
+                        "as": 'resource_check'
                     }
                 }
             ])
