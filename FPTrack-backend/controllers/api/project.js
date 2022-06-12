@@ -100,12 +100,6 @@ function getByUser(user_id, req, res, next) {
     function getProjectsForRole(role_field, user_id) {
         return ProjectModel
             .onlyExisting()
-            .populate({
-                path: 'proposal',
-                match: {
-                    [role_field]: user_id
-                }
-            })
             .then((with_proposal) => {
                 return (with_proposal.filter(
                     function (project) {
