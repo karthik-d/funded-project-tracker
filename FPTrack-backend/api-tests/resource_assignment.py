@@ -40,9 +40,11 @@ def get(id=None, debug=True):
         print(resp.json())
 
 def put():
+    
+    #62a1e2c06d8b165d85b877e6
     req_body = dict(
         rsrc_mgr_id = '628abd684bc531d7264a0a9b',
-        project_id = '62a1e2c06d8b165d85b877e6',
+        project_id = '62a4e23619d791faaf76e19a',
         rsrc_grp_id = '628abd6b4bc531d7264a0aaa',
         assign_qty = 2
     )
@@ -55,8 +57,8 @@ def put():
     print(resp.text)
 
 
-post()
-# put()
+# post()
+put()
 # get()
 # get(id='628abd6b4bc531d7264a0aaa')
 
