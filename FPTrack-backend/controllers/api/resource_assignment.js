@@ -187,6 +187,7 @@ function assignResourcesToProject(req, res, next) {
                 .get_resource_count_for_project(rsrc_grp_id, project_id)
                 .then(([count_obj]) => {
                     var qty_delta = req.body.qty - count_obj.count;
+                    console.log("qty_delta", qty_delta);
 
                     if (qty_delta < 0) {
                         // unallocate resources
@@ -197,6 +198,7 @@ function assignResourcesToProject(req, res, next) {
                                 : qty_delta
                         );
 
+                        // TODO: Filter resources for the target project!!
                         Utils
                             .applyAsyncFilters(group_resources, [ResourceFilters.assigned])
                             .then((resources) => {
@@ -216,11 +218,11 @@ function assignResourcesToProject(req, res, next) {
                                 )
                                     .then((_) => {
                                         res.status(201).send({
-                                            total_qty: qty_to_assign + resources.length,
-                                            assigned_qty: qty_to_assign,
+                                            total_qty: qty_to_modify + resources.length,
+                                            assigned_qty: qty_to_modify,
                                             project_id: project_id,
                                             resource_group_id: rsrc_grp_id,
-                                            message: "Resource assignments made"
+                                            message: "Resource deallocations made"
                                         })
                                     })
                                     .catch((error) => {
@@ -231,26 +233,29 @@ function assignResourcesToProject(req, res, next) {
                             })
                     }
 
-                    else if (qty_to_assign == 0) {
+                    else if (qty_delta == 0) {
                         res.status(200).send({
-                            total_qty: resource.length,
+                            total_qty: count_obj.count,
                             assigned_qty: 0,
                             message: "No resource assignments made"
                         })
                     }
 
                     else {
-                        var qty_to_modify = (
-                            qty_delta > resources.length
-                                ? resources.length
-                                : qty_delta
-                        );
                         // get resources that can be assigned
                         Utils
                             .applyAsyncFilters(group_resources, [ResourceFilters.not_assigned])
                             .then((resources) => {
+
+                                var qty_to_modify = (
+                                    qty_delta > resources.length
+                                        ? resources.length
+                                        : qty_delta
+                                );
+
                                 // make assignments
                                 var to_assign = resources.slice(0, qty_to_modify);
+                                console.log("to_assign", qty_to_modify);
                                 Promise.all(
                                     to_assign.map((rsrc) => {
                                         return new ResourceAssignmentModel({
@@ -261,9 +266,10 @@ function assignResourcesToProject(req, res, next) {
                                     })
                                 )
                                     .then((_) => {
+                                        console.log(_);
                                         res.status(201).send({
-                                            total_qty: qty_to_assign + resources.length,
-                                            assigned_qty: qty_to_assign,
+                                            total_qty: qty_to_modify + count_obj.count,
+                                            assigned_qty: qty_to_modify,
                                             project_id: project_id,
                                             resource_group_id: rsrc_grp_id,
                                             message: "Resource assignments made"
