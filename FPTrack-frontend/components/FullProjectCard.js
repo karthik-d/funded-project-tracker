@@ -102,12 +102,7 @@ export default function FullProject(props) {
 
     }
     var res = arrayBufferToBase64(props.props.proposal.pdf_document.data);
-    // console.log(res);
 
-    function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
-    }
-    const Modal = () => (<Popup trigger={<button className="button"> Open Modal </button>} modal>    <span> Modal content </span>  </Popup>);
     return (
         <div>
             <div><span>Title: </span>{props.props.proposal.title}</div>
@@ -116,25 +111,12 @@ export default function FullProject(props) {
             <div><span>Budget approved: </span>{props.props.approved_budget}</div>
             <div><span>Duration: </span>{props.props.approved_duration} months</div>
             <div>Proposal.pdf:</div>
-            {/* <Document file={`data:application/pdf;base64,${res}`} onLoadSuccess={onDocumentLoadSuccess}>
-                <Page pageNumber={pageNumber} />
-            </Document> */}
             <div>
                 <embed src={`data:application/pdf;base64,${res}`} width="500" height="500" />
-                <p>
-                    {/* Page {pageNumber} of {numPages} */}
-                </p>
             </div>
             <Leader props={props.props.proposal.leader} />
             <Members props={props.props.proposal.members} />
             <Supervisors props={props.props.proposal.supervisors} />
-            <div>Resources
-                <Popup trigger={<button className="button"> Open Modal </button>} modal nested  >    {close => (<div className="modal">        <button className="close" onClick={close}>          &times;        </button>        <div className="header"> Modal Title </div>        <div className="content">          {' '}          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.          Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates          delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?          <br />          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit          commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae          explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?        </div>        <div className="actions">          <Popup trigger={<button className="button"> Trigger </button>} position="top center" nested          >            <span>              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae              magni omnis delectus nemo, maxime molestiae dolorem numquam              mollitia, voluptate ea, accusamus excepturi deleniti ratione              sapiente! Laudantium, aperiam doloribus. Odit, aut.            </span>          </Popup>          <button className="button" onClick={() => { console.log('modal closed '); close(); }}          >            close modal          </button>        </div>      </div>)}  </Popup>
-
-
-
-
-            </div>
         </div>
     );
 
