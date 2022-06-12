@@ -37,15 +37,19 @@ export default function onProposal(props) {
 				var i=1;
 				data.forEach((d) => {
 					// console.log(this.data.supervisor);
-					arr.push({'name' : d.email, 'id' : i})
+          d.email.replace("@","jj");
+					arr.push({'name' :"hi", 'id' : i})
 					// console.log(d.email);
 					i++;
 				})
-				// console.log(arr);
-				// this.data.add({supervisor : arr});
+        
+				console.log(arr);
+			   //data.add({supervisor : arr});
         setMail(arr);
 				// return arr;
 			})
+      console.log(data.domains);
+      console.log(emails);
       
 		
 		const fileChangedHandler = (event) => {
@@ -56,12 +60,12 @@ export default function onProposal(props) {
 				event.target.value = "";
 				alert("File size should be less than 8Mb");
 			}
-
+    
 			//do whatever operation you want to do here
 		};
 
 		return (
-
+     
 			<div className={styles.onProposal}>
 				<Header></Header>
 
@@ -92,12 +96,19 @@ export default function onProposal(props) {
 							{/* <textarea name ="supervisors"></textarea>  */}
 							<Multiselect //https://reactjsexample.com/react-multiselect-dropdown-with-search-and-various-options/
                 id ="supervisors"
-								style={{ // To change css for multiselect (Width,height,etc..)
-									multiselectContainer: {
-										width: 'fit-content'
-									}
-								}}
-								options={emails}
+								style={{
+                  searchBox: { // To change search box element look
+                      border: "none"
+                    },
+                  multiselectContainer: {
+                      width: 'fit-content',
+                      background: "white"
+                  },
+                  option: { // To change css for dropdown options
+                      color: "black",
+                    }
+              }}
+								options={emails==[]?None:emails}
 
 								displayValue="supervisor"
 							/>
