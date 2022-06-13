@@ -6,7 +6,7 @@ import Proposalcard from "../components/ProposalCard";
 import useSWR from "swr";
 import Popup from "reactjs-popup";
 import { Document, Page } from "react-pdf";
-import loadingGif from "../../src/assets/loading.gif";
+import loadingGif from "../src/assets/loading.gif";
 
 function Proposalcard_byid(props) {
   console.log("lion", props);
