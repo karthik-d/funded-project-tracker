@@ -164,7 +164,7 @@ export default function viewprojects() {
       <div className={userStyles.users_wrapper}>
         {payload.map((obj) => {
           let temp = obj[0][parseInt(type)];
-          console.log("amm", type, "jo", temp, query);
+
           if (String(temp).includes(query)) return <ProjectCard {...obj} />;
         })}
       </div>

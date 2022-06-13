@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var Promise = require('promise');
+var mongoose = require("mongoose");
+var Promise = require("promise");
 
 var Schema = mongoose.Schema;
 
@@ -12,211 +12,224 @@ var ProposalSchema = new Schema(
         title: {
             type: String,
             required: true,
-            maxLength: 100
+            maxLength: 100,
         },
         description: {
-            type: String
+            type: String,
         },
         domains: {
-            type: [{
-                type: String,
-                enum: ['machine_learning', 'web_development', 'iot', 'computer_vision', 'nlp', 'cybersecurity']
-            }],
-            required: true
+            type: [
+                {
+                    type: String,
+                    enum: [
+                        "machine_learning",
+                        "web_development",
+                        "iot",
+                        "computer_vision",
+                        "nlp",
+                        "cybersecurity",
+                    ],
+                },
+            ],
+            required: true,
         },
         supervisors: {
-            type: [{
-                type: Schema.Types.ObjectId,
-                ref: 'user'
-            }],
+            type: [
+                {
+                    type: Schema.Types.ObjectId,
+                    ref: "user",
+                },
+            ],
             validate: {
                 validator: function (given_proj) {
                     var current_proposal = this;
-                    return new Promise(
-                        function (resolve, reject) {
-                            current_proposal.populate('supervisors')
-                                .then((populated_data) => {
-                                    var allFaculties = true;
-                                    var supervisorsList = populated_data.supervisors;
-                                    supervisorsList.forEach((supervisor) => {
-                                        console.log(supervisor.role);
-                                        if (supervisor.role != "faculty") {
-                                            allFaculties = false;
-                                        }
-                                    })
-                                    return resolve(allFaculties)
-                                })
-                        }
-                    );
+                    return new Promise(function (resolve, reject) {
+                        current_proposal.populate("supervisors").then((populated_data) => {
+                            var allFaculties = true;
+                            var supervisorsList = populated_data.supervisors;
+                            supervisorsList.forEach((supervisor) => {
+                                console.log(supervisor.role);
+                                if (supervisor.role != "faculty") {
+                                    allFaculties = false;
+                                }
+                            });
+                            return resolve(allFaculties);
+                        });
+                    });
                 },
-                message: props => `All supervisors must be faculty`
+                message: (props) => `All supervisors must be faculty`,
             },
-            required: true
+            required: true,
         },
         // the user type of leader determines if project is Student project or Faculty project
         leader: {
             type: Schema.Types.ObjectId,
-            ref: 'user',
-            required: true
+            ref: "user",
+            required: true,
         },
         members: {
-            type: [{
-                type: Schema.Types.ObjectId,
-                ref: 'user'
-            }],
-            validate: {
-                validator: function (given_proj) {
-                    var current_proposal = this;
-                    return new Promise(
-                        function (resolve, reject) {
-                            var memberList = current_proposal.members;
-                            var leaderEmail = current_proposal.leader.email;
-                            var existed = false;
-                            console.log(leaderEmail);
-                            memberList.forEach(function (member) {
-                                if (member.email == leaderEmail) {
-                                    existed = true;
+            type: [
+                {
+                    type: Schema.Types.ObjectId,
+                    ref: "user",
+                },
+<<<<<<< HEAD
+                rejected_on: {
+                    type: Date,
+                    default: null,
+                    validate: {
+                        validator: function (given_proj) {
+                            var current_proposal = this;
+                            return new Promise(
+                                function (resolve, reject) {
+                                    var result = true;
+                                    if (current_proposal.rejected_on != null && current_proposal.approved_on != null) {
+                                        result = false;
+                                    }
+                                    // console.log(result)
+                                    return resolve(result);
                                 }
-                            })
+                            );
+                        },
+                        message: props => `Either rejected or approved date should be mentioned but not both!`
+                    },
+=======
+      ],
+      validate: {
+        validator: function (given_proj) {
+          var current_proposal = this;
+          return new Promise(function (resolve, reject) {
+            var memberList = current_proposal.members;
+            var leaderEmail = current_proposal.leader.email;
+            var existed = false;
+            console.log(leaderEmail);
+            memberList.forEach(function (member) {
+              if (member.email == leaderEmail) {
+                existed = true;
+              }
+            });
 
-                            if (existed) {
-                                return resolve(false);
-                            }
-                            else {
-                                return resolve(true);
-                            }
-                        }
-                    );
+            if (existed) {
+              return resolve(false);
+            } else {
+              return resolve(true);
+            }
+          });
+>>>>>>> b650554ef47375993691afe3be9daf8dbc73c8c3
                 },
-                message: props => `Duplicate entry for leader found in members list. Mention only once`
-            },
-            required: true
-        },
-        funding_type: {
-            type: String,
-            enum: ['internal', 'external'],
-            required: true
-        },
-        // TODO: Convert this to an enum type with possibility of adding new fuding agencies??
-        funding_agency: {
-            type: String,
-            required: true
-        },
-        // Accepts file sizes upto 16MB -- Indicate limit as 8MB on Frontend 
-        // Transit as Base64 string on JSON 
-        pdf_document: {
-            type: Buffer,
-            required: true
-        },
-        budget: {
-            type: Number,
-            required: true
-        },
-        approved_on: {
-            type: Date,
-            default: null
-        },
-        rejected_on: {
-            type: Date,
-            default: null,
-            validate: {
-                validator: function (given_proj) {
-                    var current_proposal = this;
-                    return new Promise(
-                        function (resolve, reject) {
-                            var result = true;
-                            if (current_proposal.rejected_on != null && current_proposal.approved_on != null) {
-                                result = false;
-                            }
-                            // console.log(result)
-                            return resolve(result);
-                        }
-                    );
-                },
-                message: props => `Either rejected or approved date should be mentioned but not both!`
-            },
-        },
-        rejection_remarks: {
-            type: String,
-            default: null
-        },
-        deleted_at: {
-            type: Date,
-            default: null
-        }
+                message: (props) =>
+                    `Duplicate entry for leader found in members list. Mention only once`,
+      },
+        required: true,
     },
-    {
-        timestamps: {
-            created_at: 'created_at',
-            modified_at: 'modified_at'
-        }
-    }
+    funding_type: {
+    type: String,
+    enum: ["internal", "external"],
+    required: true,
+},
+    // TODO: Convert this to an enum type with possibility of adding new fuding agencies??
+    funding_agency: {
+    type: String,
+    required: true,
+},
+    // Accepts file sizes upto 16MB -- Indicate limit as 8MB on Frontend
+    // Transit as Base64 string on JSON
+    pdf_document: {
+    type: Buffer,
+    required: false,
+},
+    budget: {
+    type: Number,
+    required: true,
+},
+    approved_on: {
+    type: Date,
+    default: null,
+},
+    rejected_on: {
+    type: Date,
+    default: null,
+    validate: {
+        validator: function (given_proj) {
+            var current_proposal = this;
+            return new Promise(function (resolve, reject) {
+                var result = true;
+                if (
+                    current_proposal.rejected_on != null &&
+                    current_proposal.approved_on != null
+                ) {
+                    result = false;
+                }
+                // console.log(result)
+                return resolve(result);
+            });
+        },
+        message: (props) =>
+            `Either rejected or approved date should be mentioned but not both!`,
+    },
+},
+    rejection_remarks: {
+    type: String,
+    default: null,
+},
+    deleted_at: {
+    type: Date,
+    default: null,
+},
+  },
+{
+    timestamps: {
+        created_at: "created_at",
+            modified_at: "modified_at",
+    },
+}
 );
 
-
 // Chain <ModelName>.onlyExisting before any query to list only "non-deleted" records
-ProposalSchema
-    .statics
-    .onlyExisting = function () {
-        return this.find().onlyExisting();
-    };
+ProposalSchema.statics.onlyExisting = function () {
+    return this.find().onlyExisting();
+};
 
-ProposalSchema
-    .query
-    .onlyExisting = function () {
-        return this.find({
-            deleted_at: null
-        });
-    };
-
+ProposalSchema.query.onlyExisting = function () {
+    return this.find({
+        deleted_at: null,
+    });
+};
 
 // --
 
-ProposalSchema
-    .statics
-    .getById = function (id) {
-        return this.find().getById();
-    }
+ProposalSchema.statics.getById = function (id) {
+    return this.find().getById();
+};
 
-ProposalSchema
-    .query
-    .getById = function (id) {
-        return this.find({
-            _id: id
-        });
-    }
+ProposalSchema.query.getById = function (id) {
+    return this.find({
+        _id: id,
+    });
+};
 
 // --
 
-ProposalSchema
-    .methods
-    .isApproved = function () {
-        return (this.rejected_on != null && this.approved_on == null);
-    }
+ProposalSchema.methods.isApproved = function () {
+    return this.rejected_on != null && this.approved_on == null;
+};
 
-ProposalSchema
-    .methods
-    .isRejected = function () {
-        return (this.rejected_on == null && this.approved_on != null);
-    }
+ProposalSchema.methods.isRejected = function () {
+    return this.rejected_on == null && this.approved_on != null;
+};
 
-ProposalSchema
-    .methods
-    .isAwaitingDecision = function () {
-        return (this.rejected_on == null && this.approved_on == null);
-    }
+ProposalSchema.methods.isAwaitingDecision = function () {
+    return this.rejected_on == null && this.approved_on == null;
+};
 
 // --
-
 
 // virtual for executive members
-ProposalSchema
-    .virtual('executive_members')
-    .get(function () {
-        var all_members = [];
-        all_members = all_members.concat([leader], members)
-        return all_members;
-    });
+ProposalSchema.virtual("executive_members").get(function () {
+    var all_members = [];
+    all_members = all_members.concat([leader], members);
+    return all_members;
+});
 
 // virtual for executive members
 ProposalSchema
@@ -240,11 +253,9 @@ ProposalSchema
     })
 
 // virtual for user URL
-ProposalSchema
-    .virtual('url')
-    .get(function () {
-        return '/api/proposal/' + this._id;
-    });
+ProposalSchema.virtual("url").get(function () {
+    return "/api/proposal/" + this._id;
+});
 
 //Export model
-module.exports = mongoose.model('proposal', ProposalSchema);
+module.exports = mongoose.model("proposal", ProposalSchema);

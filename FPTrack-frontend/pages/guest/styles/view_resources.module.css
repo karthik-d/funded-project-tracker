@@ -8,6 +8,11 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
+
+.tableHead, .tableBody{
+    text-transform: capitalize;
+}
+
 .resourcetable thead tr {
     background-color: purple;
     color: #ffffff;
