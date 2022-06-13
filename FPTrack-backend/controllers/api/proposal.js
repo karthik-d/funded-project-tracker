@@ -128,9 +128,12 @@ function getAll(req, res, next) {
       //     // rsrc.pdf_document = rsrc.document_base64;
       //   });
       //   console.log(resources);
-      resources.map((obj) => {
-        delete obj.pdf_document;
-      });
+      resources = resources.map((obj) => {
+        let temp = obj.toJSON();
+        delete temp["pdf_document"];
+        return temp;
+      }); // README
+      console.log(Object.keys(resources[0]));
       res.status(200).send(resources);
     })
     .catch((error) => {
