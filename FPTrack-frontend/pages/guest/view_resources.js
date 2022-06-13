@@ -28,6 +28,7 @@ function Tabulate({ props }) {
                 })}
               </tr>
             );
+
           })}
         </tbody>
       </table>

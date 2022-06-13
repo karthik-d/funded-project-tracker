@@ -214,12 +214,13 @@ function assignResourcesToProject(req, res, next) {
                                             to_unassign.map((rsrc) => {
                                                 return ResourceAssignmentModel
                                                     .onlyExisting()
+                                                    /*
                                                     .updateOne({
                                                         resource: rsrc._id,
                                                         assigned_to: project_id
                                                     }, {
                                                         deleted_on: new Date()
-                                                    });
+                                                    })*/;
                                             })
                                         )
                                             .then((_) => {
