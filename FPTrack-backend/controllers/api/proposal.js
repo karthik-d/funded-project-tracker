@@ -140,12 +140,11 @@ function getAll(req, res, next) {
             );
             res.status(200).send(resources);
         })
-    /*
-    .catch((error) => {
-        res.status(400).send(
-            ErrorHelper.construct_json_response(error)
-        );
-    });*/
+        .catch((error) => {
+            res.status(400).send(
+                ErrorHelper.construct_json_response(error)
+            );
+        });
 };
 
 
