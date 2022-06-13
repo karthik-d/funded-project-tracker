@@ -204,10 +204,12 @@ function assignResourcesToProject(req, res, next) {
                             .find({
                                 assigned_to: project_id
                             })
+                            .populate('resource')
                             .then((project_resources) => {
                                 Utils
                                     .applyAsyncFilters(group_resources, [ResourceFilters.assigned])
                                     .then((resources) => {
+                                        console.log(resources);
                                         // delete that many assignments
                                         var to_unassign = resources.slice(0, qty_to_modify);
                                         Promise.all(
