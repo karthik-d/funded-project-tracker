@@ -125,7 +125,7 @@ var ProposalSchema = new Schema(
                     return new Promise(
                         function (resolve, reject) {
                             var result = true;
-                            if (current_proposal.rejected_on != null  && current_proposal.approved_on != null){
+                            if (current_proposal.rejected_on != null && current_proposal.approved_on != null) {
                                 result = false;
                             }
                             // console.log(result)
@@ -230,7 +230,13 @@ ProposalSchema
 ProposalSchema
     .virtual('document_base64')
     .get(function () {
-        return Buffer.from(this.pdf_document).toString('base64');
+        console.log(this.pdf_document);
+        if (this.pdf_document) {
+            return Buffer.from(this.pdf_document).toString('base64');
+        }
+        else {
+            return null;
+        }
     })
 
 // virtual for user URL
