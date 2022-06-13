@@ -60,6 +60,11 @@ var ResourceAssignmentSchema = new Schema(
                 },
                 message: props => `${props.value} is not a resource manager`
             },
+        },
+        deleted_on: {
+            type: Date,
+            default: null,
+            required: false
         }
     },
     {

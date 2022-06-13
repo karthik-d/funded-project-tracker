@@ -47,6 +47,7 @@ export default function Options() {
       name: "View Proposals for approval",
       url: "/admin/view_unapproved",
       key: "view_proposals_unapproved",
+
     },
   ];
 
