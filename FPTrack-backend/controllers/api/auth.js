@@ -41,6 +41,7 @@ function getAuthUser(req, res, next) {
                         req.session.email = user.email;
                         req.session.role = user.role;
                         req.session.access = user.access.join("|");
+                        console.log(req.session);
                         res.status(200).send(user);
                     }
                 })

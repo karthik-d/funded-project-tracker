@@ -26,7 +26,20 @@ var playgroundRouter = require('./routes/playground');
 var app = express();
 
 // enable Cross-Site Requests
-app.use(cors());
+var whitelist = ['http://localhost:3000', 'http://localhost:3006']
+var corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'PATCH', 'DELETE'],
+  credentials: true
+}
+app.use(cors(corsOptions));
 
 // set request limit
 app.use(express.json({ limit: '20mb' }));
@@ -54,9 +67,10 @@ app.use(sessions({
 
 // Pre-functor for allow Cross Origin Requests
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  // res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  // res.header("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
+  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   return next();
 })
 

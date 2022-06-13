@@ -28,7 +28,19 @@ export function LoginOneTapCrux() {
                 })
             })
             .then((response) => {
-                console.log(response)
+                console.log(response);
+                console.log("Second request...");
+                var request = new Request('http://localhost:3000/api/playground/session-check', {
+                    method: 'GET',
+                    mode: 'cors',
+                    credentials: "include",
+                    redirect: 'follow',
+                    headers: new Headers({
+                        'Content-Type': 'text/plain'
+                    })
+                });
+                /* TESTING - fetch with cookie */
+                fetch(request).then((response) => { console.log(response); })
             })
             .catch((error) => {
                 console.log("Error" + error);
