@@ -47,6 +47,8 @@ def post(debug=True):
         funding_type = 'internal',
         funding_agency = 'SSN Trust',
         pdf_document = pdf_doc_b64_string,
+        approved_on = "2020-12-12",
+        rejected_on = "2020-12-14",
         budget = 50000
     )
     resp = requests.post(

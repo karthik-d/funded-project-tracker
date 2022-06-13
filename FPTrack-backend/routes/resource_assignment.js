@@ -17,11 +17,25 @@ router.get(
     }
 )
 
+router.get(
+    '/project/:projectId',
+    function (req, res, next) {
+        ResourceAssignmentController.getByProject(req.params.projectId, req, res, next);
+    }
+)
+
 router.post(
     '/',
     function (req, res, next) {
         ResourceAssignmentController.create(req, res, next);
     }
 );
+
+router.put(
+    '/',
+    function (req, res, next) {
+        ResourceAssignmentController.assignResourcesToProject(req, res, next);
+    }
+)
 
 module.exports = router;
