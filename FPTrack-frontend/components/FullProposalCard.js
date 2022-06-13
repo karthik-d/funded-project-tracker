@@ -6,7 +6,7 @@ import Usercard from "../components/UserCard";
 import useSWR from "swr";
 import Popup from "reactjs-popup";
 import { Document, Page } from "react-pdf";
-import loadingGif from "../../src/assets/loading.gif";
+import loadingGif from "../src/assets/loading.gif";
 
 function Usercard_byid(props) {
     const fetcher = (url) => fetch(url).then((res) => res.json());
