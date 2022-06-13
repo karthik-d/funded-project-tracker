@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv');
+var cors = require('cors');
 
 dotenv.config();
 
@@ -24,6 +25,9 @@ var resourceAssignmentRouter = require('./routes/resource_assignment');
 var authRouter = require('./routes/auth');
 
 var app = express();
+
+// enable Cross-Site Requests
+app.use(cors());
 
 // set request limit
 app.use(express.json({ limit: '20mb' }));
