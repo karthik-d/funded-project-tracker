@@ -27,6 +27,13 @@ export default function ResourseCard(props) {
         <p className={`${styles.email} ${styles.p}`}>
           Avilable quantity: {props.avl_qty}
         </p>
+        <div>
+          Requesting Quantity :
+          <button onClick={() => setCount_modified(count + 1)}>+</button>
+          <span>{count}</span>
+          <button onClick={() => setCount_modified(count - 1)}>-</button>
+          <button onClick={handlesubmit}>Request</button>
+        </div>
       </div>
     </div>
   );
