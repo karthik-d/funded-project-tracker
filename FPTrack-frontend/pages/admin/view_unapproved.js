@@ -11,6 +11,7 @@ import userStyles from "../guest/styles/view_user.module.css";
 import UserCard from "../../components/UserCard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProposalCard from "../../components/ProposalCard";
+import loadingGif from "../../src/assets/loading.gif";
 import useSWR from "swr";
 // todo: represent multi-valued fields suitably
 // todo: display member names suitably
@@ -100,27 +101,25 @@ export default function viewprojects() {
     e.preventDefault();
     setCounter(counter + 1); // just to trigger reload
     var HREF = e.target.getAttribute("href");
+    console.log("href", HREF);
+    console.log(HREF.split("/"));
     var x = parseInt(prompt("Enter approved budget", "0"));
     var y = parseInt(prompt("Enter approved duration", "0"));
-    var data = {
-      proposal: HREF.split("/")[4],
-      approved_budget: x, //handle error
-      approved_duration: y, // handle error
-    };
-    console.log("enteres dat", x, y);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    console.log(requestOptions);
-    fetch("http://localhost:3000/api/project", requestOptions).then(
-      (response) => {
-        console.log("stauts", response.json());
-      }
-    );
-    console.log("featch ended");
-    // .then((data) => console.log("hi", data));
+    if (data) {
+      var data = {
+        proposal: HREF.split("/")[4],
+        approved_budget: x, //handle error
+        approved_duration: y, // handle error
+      };
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      };
+      fetch("http://localhost:3000/api/project", requestOptions)
+        .then((response) => response.json())
+        .then((data) => console.log("hi", data));
+    }
   };
   // Todo: Make objects multiple array sets
   return (
@@ -146,8 +145,8 @@ export default function viewprojects() {
 
           if (
             String(temp).toLowerCase().includes(query.toLowerCase()) &&
-            obj.approved_on == null &&
-            obj.rejected_on == null
+            obj.reject_date == null &&
+            obj.accept_date == null
           )
             return (
               <div>

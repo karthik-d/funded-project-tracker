@@ -8,7 +8,7 @@ import Resourcecard from "../components/ResourceCard";
 import useSWR from "swr";
 import Popup from "reactjs-popup";
 import { Document, Page } from "react-pdf";
-import loadingGif from "../src/assets/loading.gif";
+import loadingGif from "../../src/assets/loading.gif";
 
 function Usercard_byid(props) {
   const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -120,66 +120,6 @@ function Supervisors(props) {
   );
 }
 
-function Resource(props) {
-  const types = [
-    { key: "name", name: "name" },
-    { key: "kind", name: "kind" },
-  ];
-  const [query, setQuery] = useState("");
-  const [type, setType] = useState(types[0]["key"]);
-  const [counter, setCounter] = useState(0);
-  const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR(
-    "http://localhost:3000/api/resource-assignment/project/" + props.props._id, // gives project id
-    fetcher
-  );
-  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse(config);
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-
-  const config = {
-    duration: 200,
-  };
-
-  return (
-    <div className="collapsible">
-      <div className="header" {...getToggleProps()}>
-        <h1>
-          {isExpanded ? (
-            <div className={styles.collapse}>Resource assigned</div>
-          ) : (
-            <div className={styles.expand}>Resource assigned(collaped)</div>
-          )}
-        </h1>
-      </div>
-      <div {...getCollapseProps()}>
-        <div style={{ display: "flex", "flex-direction": "row" }}>
-          <div style={{ margin: "auto" }}>
-            <input
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Enter Post Title"
-            />
-            <select
-              id="search_key"
-              onChange={(event) => setType(event.target.value)}
-            >
-              {types.map((obj) => {
-                return <option value={obj.key}> {obj.name}</option>;
-              })}
-            </select>
-          </div>
-          {data.map((obj) => {
-            let temp = obj[type];
-            obj.avl_qty = obj.qty;
-            if (String(temp).toLowerCase().includes(query.toLowerCase()))
-              return <Resourcecard {...obj} />;
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function ResourceAllocation(props) {
   const types = [
     { key: "name", name: "name" },
@@ -229,7 +169,6 @@ function ResourceAllocation(props) {
             </select>
           </div>
           {data.map((obj) => {
-            obj.project_id = props.props._id;
             let temp = obj[type];
             if (String(temp).toLowerCase().includes(query.toLowerCase()))
               return <ResourceAllocationcard {...obj} />;
@@ -326,11 +265,7 @@ export default function FullProject(props) {
     }
     return window.btoa(binary);
   }
-  var res = arrayBufferToBase64(
-    props.props.proposal.pdf_document != null
-      ? props.props.proposal.pdf_document.data
-      : "Nothing"
-  );
+  var res = arrayBufferToBase64(props.props.proposal.pdf_document.data);
 
   return (
     <div className={styles.main_container}>
@@ -370,8 +305,7 @@ export default function FullProject(props) {
       <Leader props={props.props.proposal.leader} />
       <Members props={props.props.proposal.members} />
       <Supervisors props={props.props.proposal.supervisors} />
-      <Resource props={props.props} />
-      <ResourceAllocation props={props.props} />
+      <ResourceAllocation />
     </div>
   );
 }

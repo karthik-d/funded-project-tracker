@@ -11,7 +11,7 @@ export default function Project(props) {
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const router = useRouter();
   const { data, error } = useSWR(router.query.data, fetcher);
-  console.log(data);
+
   if (error) return <div>failed to load</div>;
   if (!data)
     return (
@@ -33,7 +33,7 @@ export default function Project(props) {
         </div>
       </div>
     );
-  console.log("Daata", data);
+  console.log(data);
   return (
     <div className={styles.container}>
       <Header></Header>
