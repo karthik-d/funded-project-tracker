@@ -204,42 +204,55 @@ function assignResourcesToProject(req, res, next) {
                             .find({
                                 assigned_to: project_id
                             })
-                            .populate('resource')
-                            .then((project_resources) => {
-                                Utils
-                                    .applyAsyncFilters(group_resources, [ResourceFilters.assigned])
-                                    .then((resources) => {
-                                        console.log(resources);
-                                        // delete that many assignments
-                                        var to_unassign = resources.slice(0, qty_to_modify);
-                                        Promise.all(
-                                            to_unassign.map((rsrc) => {
-                                                return ResourceAssignmentModel
-                                                    .onlyExisting()
-                                                    /*
-                                                    .updateOne({
-                                                        resource: rsrc._id,
-                                                        assigned_to: project_id
-                                                    }, {
-                                                        deleted_on: new Date()
-                                                    })*/;
-                                            })
-                                        )
-                                            .then((_) => {
-                                                res.status(201).send({
-                                                    total_qty: qty_to_modify + resources.length,
-                                                    assigned_qty: qty_to_modify,
-                                                    project_id: project_id,
-                                                    resource_group_id: rsrc_grp_id,
-                                                    message: "Resource deallocations made"
-                                                })
-                                            })
-                                            .catch((error) => {
-                                                res.status(400).send(
-                                                    ErrorHelper.construct_json_response(error)
-                                                );
-                                            });
+                            .populate({
+                                path: 'resource',
+                                match: {
+                                    resource_group: rsrc_grp_id
+                                }
+                            })
+                            .then((project_assigns) => {
+
+                                // remove the `null` populations
+                                project_grp_assigns = project_assigns
+                                    .filter((rsrc) => {
+                                        return Boolean(rsrc.resource);
                                     })
+
+                                var to_unassign = project_grp_assigns.slice(0, qty_to_modify);
+                                Promise.all(
+                                    to_unassign.map((rsrc_assign) => {
+                                        console.log(rsrc_assign._id);
+                                        console.log("qtm", qty_to_modify);
+                                        return ResourceAssignmentModel
+                                            .deleteOne({
+                                                _id: rsrc_assign._id
+                                            })
+                                    })
+                                )
+                                    .then((deletion_status) => {
+                                        deletion_status
+                                            .map((status) => {
+                                                if (status.deletedCount != 1) {
+                                                    throw {
+                                                        name: "Assignment could not be deleted",
+                                                        message: "Error occurred when deleting resource assignment. Try later",
+                                                        code: 952
+                                                    };
+                                                }
+                                            })
+                                        res.status(201).send({
+                                            total_qty: project_grp_assigns.length - qty_to_modify,
+                                            assigned_qty: qty_to_modify,
+                                            project_id: project_id,
+                                            resource_group_id: rsrc_grp_id,
+                                            message: "Resource deallocations made"
+                                        })
+                                    })
+                                    .catch((error) => {
+                                        res.status(400).send(
+                                            ErrorHelper.construct_json_response(error)
+                                        );
+                                    });
                             })
                     }
 
