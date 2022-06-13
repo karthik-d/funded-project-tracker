@@ -11,7 +11,6 @@ import userStyles from "../guest/styles/view_user.module.css";
 import UserCard from "../../components/UserCard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProposalCard from "../../components/ProposalCard";
-import loadingGif from "../../src/assets/loading.gif";
 import useSWR from "swr";
 // todo: represent multi-valued fields suitably
 // todo: display member names suitably
