@@ -88,6 +88,38 @@ It handles the following key aspects:
  ]
 ```
 
+#### PUT api/resource-assignment
+
+With request body,
+```
+{
+  rsrc_mgr_id = '<manager_id>',
+  project_id = '<project_id>',
+  rsrc_grp_id = '<resource_group_id>',
+  qty = 1
+}
+```
+
+- The `id`s correspond the the `_id` fields of the respective resources
+- `qty` refers to the number of assignments of that `resource group` desired at the end of this transaction. This can be lower or higher than the current number of allocations
+
+- Responds with the type of changes made:
+  - If current assignments are same as `qty`, 
+  ```
+  {"total_qty":2,"assigned_qty":0,"message":"No resource assignments made"}
+  ```
+  - If new assignments were made:
+  ```
+  {"total_qty":4,"assigned_qty":1,"project_id":"62a4e23619d791faaf76e19a","resource_group_id":"628abd6b4bc531d7264a0aaa","message":"Resource deallocations made"}
+  ```
+  - If assignments were removed:
+  ```
+  {"total_qty":4,"assigned_qty":1,"project_id":"62a4e23619d791faaf76e19a","resource_group_id":"628abd6b4bc531d7264a0aaa","message":"Resource deallocations made"}
+  ```
+  *Numbers above are samples only*
+  
+ **NOTE**: If the available qty CANNOT satisfy the request, maximum possible qty is assigned. Eg: If only 3 resources can be allocated, and the request is made for 4, then 3 items are allocated and the response indicated the same through `assigned_qty` field
+
 #### GET api/resource-assignment/project/[projectId]
 
 - `[projectId]` is the project id of the project whose resource allocations are being requested

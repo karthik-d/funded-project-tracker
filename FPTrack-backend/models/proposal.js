@@ -178,7 +178,7 @@ ProposalSchema.query.onlyExisting = function () {
 
 // --
 
-ProposalSchema.statics. Id = function (id) {
+ProposalSchema.statics.Id = function (id) {
   return this.find().getById();
 };
 
