@@ -1,6 +1,8 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 
+const axios = require('axios').default;
+
 export default function GoogleSignin() {
     return (
         <GoogleOAuthProvider
@@ -40,7 +42,14 @@ export function LoginOneTapCrux() {
                     })
                 });
                 /* TESTING - fetch with cookie */
-                fetch(request).then((response) => { console.log(response); })
+                // fetch(request).then((response) => { console.log(response); })
+                console.log("axios request");
+                axios.get('http://localhost:3000/api/playground/session-check', {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                })
             })
             .catch((error) => {
                 console.log("Error" + error);
