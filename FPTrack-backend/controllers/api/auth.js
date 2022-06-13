@@ -36,7 +36,11 @@ function getAuthUser(req, res, next) {
                         })
                     }
                     else {
-                        user.auth_token = req.body.token;
+                        // log the user in
+                        req.session.id = user.id;
+                        req.session.email = user.email;
+                        req.session.role = user.role;
+                        req.session.access = user.access.join("|");
                         res.status(200).send(user);
                     }
                 })

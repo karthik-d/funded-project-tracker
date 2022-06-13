@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv');
 var cors = require('cors');
+const sessions = require('express-session');
 
 dotenv.config();
 
@@ -17,12 +18,10 @@ var userRouter = require('./routes/user');
 var proposalRouter = require('./routes/proposal');
 var resourceGroupRouter = require('./routes/resource_group');
 var resourceRouter = require('./routes/resource');
-var projectRouter = require('./routes/project')
-// <<<<<<< HEAD
+var projectRouter = require('./routes/project');
 var resourceAssignmentRouter = require('./routes/resource_assignment');
-// =======
-// >>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
 var authRouter = require('./routes/auth');
+var playgroundRouter = require('./routes/playground');
 
 var app = express();
 
@@ -42,6 +41,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// enable sessions
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(sessions({
+  secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+  saveUninitialized: true,
+  cookie: { maxAge: oneDay },
+  resave: false
+}));
 
 /* Routing */
 
@@ -59,12 +66,10 @@ app.use('/api/user', userRouter);
 app.use('/api/proposal', proposalRouter);
 app.use('/api/resource-group', resourceGroupRouter);
 app.use('/api/resource', resourceRouter);
-// <<<<<<< HEAD
 app.use('/api/resource-assignment', resourceAssignmentRouter);
-// =======
-// >>>>>>> 8ef04d9992f6a449617d22334dbf60719305c3a5
 app.use('/api/project', projectRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/playground', playgroundRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
