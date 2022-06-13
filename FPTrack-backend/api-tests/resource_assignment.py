@@ -46,7 +46,7 @@ def put():
         rsrc_mgr_id = '628f1954f5b6a7772b9885b0',
         project_id = '62a4e23619d791faaf76e19a',
         rsrc_grp_id = '628abd6b4bc531d7264a0aaa',
-        qty = 1
+        qty = 2
     )
 
     resp = requests.put(

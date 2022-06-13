@@ -187,7 +187,6 @@ function assignResourcesToProject(req, res, next) {
                 .get_resource_count_for_project(rsrc_grp_id, project_id)
                 .then(([count_obj]) => {
                     var qty_delta = req.body.qty - count_obj.count;
-                    console.log("qty_delta", qty_delta);
 
                     if (qty_delta < 0) {
                         // unallocate resources
@@ -240,7 +239,7 @@ function assignResourcesToProject(req, res, next) {
                                             })
                                         res.status(201).send({
                                             total_qty: project_grp_assigns.length - qty_to_modify,
-                                            assigned_qty: qty_to_modify,
+                                            deallocated_qty: qty_to_modify,
                                             project_id: project_id,
                                             resource_group_id: rsrc_grp_id,
                                             message: "Resource deallocations made"
