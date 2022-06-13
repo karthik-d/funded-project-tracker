@@ -73,116 +73,94 @@ var ProposalSchema = new Schema(
                     type: Schema.Types.ObjectId,
                     ref: "user",
                 },
-<<<<<<< HEAD
-                rejected_on: {
-                    type: Date,
-                    default: null,
-                    validate: {
-                        validator: function (given_proj) {
-                            var current_proposal = this;
-                            return new Promise(
-                                function (resolve, reject) {
-                                    var result = true;
-                                    if (current_proposal.rejected_on != null && current_proposal.approved_on != null) {
-                                        result = false;
-                                    }
-                                    // console.log(result)
-                                    return resolve(result);
-                                }
-                            );
-                        },
-                        message: props => `Either rejected or approved date should be mentioned but not both!`
-                    },
-=======
-      ],
-      validate: {
-        validator: function (given_proj) {
-          var current_proposal = this;
-          return new Promise(function (resolve, reject) {
-            var memberList = current_proposal.members;
-            var leaderEmail = current_proposal.leader.email;
-            var existed = false;
-            console.log(leaderEmail);
-            memberList.forEach(function (member) {
-              if (member.email == leaderEmail) {
-                existed = true;
-              }
-            });
+            ],
+            validate: {
+                validator: function (given_proj) {
+                    var current_proposal = this;
+                    return new Promise(function (resolve, reject) {
+                        var memberList = current_proposal.members;
+                        var leaderEmail = current_proposal.leader.email;
+                        var existed = false;
+                        console.log(leaderEmail);
+                        memberList.forEach(function (member) {
+                            if (member.email == leaderEmail) {
+                                existed = true;
+                            }
+                        });
 
-            if (existed) {
-              return resolve(false);
-            } else {
-              return resolve(true);
-            }
-          });
->>>>>>> b650554ef47375993691afe3be9daf8dbc73c8c3
+                        if (existed) {
+                            return resolve(false);
+                        } else {
+                            return resolve(true);
+                        }
+                    });
                 },
                 message: (props) =>
                     `Duplicate entry for leader found in members list. Mention only once`,
-      },
-        required: true,
-    },
-    funding_type: {
-    type: String,
-    enum: ["internal", "external"],
-    required: true,
-},
-    // TODO: Convert this to an enum type with possibility of adding new fuding agencies??
-    funding_agency: {
-    type: String,
-    required: true,
-},
-    // Accepts file sizes upto 16MB -- Indicate limit as 8MB on Frontend
-    // Transit as Base64 string on JSON
-    pdf_document: {
-    type: Buffer,
-    required: false,
-},
-    budget: {
-    type: Number,
-    required: true,
-},
-    approved_on: {
-    type: Date,
-    default: null,
-},
-    rejected_on: {
-    type: Date,
-    default: null,
-    validate: {
-        validator: function (given_proj) {
-            var current_proposal = this;
-            return new Promise(function (resolve, reject) {
-                var result = true;
-                if (
-                    current_proposal.rejected_on != null &&
-                    current_proposal.approved_on != null
-                ) {
-                    result = false;
-                }
-                // console.log(result)
-                return resolve(result);
-            });
+            },
+            required: true,
         },
-        message: (props) =>
-            `Either rejected or approved date should be mentioned but not both!`,
+        funding_type: {
+            type: String,
+            enum: ["internal", "external"],
+            required: true,
+        },
+        // TODO: Convert this to an enum type with possibility of adding new fuding agencies??
+        funding_agency: {
+            type: String,
+            required: true,
+        },
+        // Accepts file sizes upto 16MB -- Indicate limit as 8MB on Frontend
+        // Transit as Base64 string on JSON
+        pdf_document: {
+            type: Buffer,
+            required: false,
+        },
+        budget: {
+            type: Number,
+            required: true,
+        },
+        approved_on: {
+            type: Date,
+            default: null,
+        },
+        rejected_on: {
+            type: Date,
+            default: null,
+            validate: {
+                validator: function (given_proj) {
+                    var current_proposal = this;
+                    return new Promise(
+                        function (resolve, reject) {
+                            var result = true;
+                            if (current_proposal.rejected_on != null && current_proposal.approved_on != null) {
+                                result = false;
+                            }
+                            // console.log(result)
+                            return resolve(result);
+                        }
+                    );
+                },
+                message: props => `Either rejected or approved date should be mentioned but not both!`
+            },
+            message: (props) =>
+                `Either rejected or approved date should be mentioned but not both!`,
+        },
+        rejection_remarks: {
+            type: String,
+            default: null,
+        },
+        deleted_at: {
+            type: Date,
+            default: null,
+        },
     },
-},
-    rejection_remarks: {
-    type: String,
-    default: null,
-},
-    deleted_at: {
-    type: Date,
-    default: null,
-},
-  },
-{
-    timestamps: {
-        created_at: "created_at",
+    {
+        timestamps: {
+            created_at: "created_at",
             modified_at: "modified_at",
-    },
-}
+        },
+    }
 );
 
 // Chain <ModelName>.onlyExisting before any query to list only "non-deleted" records
