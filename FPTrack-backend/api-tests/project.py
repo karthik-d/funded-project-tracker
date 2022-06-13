@@ -9,7 +9,7 @@ def post(debug=True):
 
 
     req_body = dict(
-        proposal ="62a4e20b19d791faaf76e195",
+        proposal ="628b5425099b1ba80b543da6",
         approved_budget = 12000,
         approved_duration = 18,
     )
@@ -69,8 +69,8 @@ def patch(id=None, debug=True):
     print(resp.status_code)
 
 
-# post()
-patch()
+post()
+# patch()
 get(debug=False)
 
 # get(id='62869d17060d20b1dbcb56ee', debug=False)
