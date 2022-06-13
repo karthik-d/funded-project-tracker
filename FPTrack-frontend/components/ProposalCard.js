@@ -22,6 +22,7 @@ export default function PrposalCard(props) {
       "proposalpage"
     );
   };
+  console.log("tiger", props);
 
   return (
     <a

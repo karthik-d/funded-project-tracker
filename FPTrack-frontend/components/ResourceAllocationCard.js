@@ -15,27 +15,7 @@ export default function ResourseCard(props) {
   };
   const handlesubmit = (e) => {
     e.preventDefault();
-    if (count > 0) {
-      const requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: {
-          rsrc_mgr_id: "628f1954f5b6a7772b9885b0",
-          project_id: props.project_id,
-          rsrc_grp_id: props._id,
-          qty: count,
-        },
-      };
-      console.log(requestOptions);
-      console.log(props);
-      let fetcher = () =>
-        fetch(
-          "http://localhost:3000/api/resource-assignment",
-          requestOptions
-        ).then((response) => {
-          console.log("stauts", response.json());
-        });
-    }
+    if (count > 0) alert(count);
   };
   return (
     <div className={styles.wrapper}>
