@@ -5,6 +5,7 @@ import Header from "../header";
 import Link from "next/link";
 import { Multiselect } from "multiselect-react-dropdown";
 import { Component, useEffect, useState, useRef } from "react";
+import loadingGif from "../../src/assets/loading.gif";
 // title = "IoT Driven Smart Trains",
 //         decription = "blah blah blah...",
 //         domains = ['iot', 'machine_learning'],
@@ -113,7 +114,25 @@ export default function onProposal(props) {
   };
   if (isrendered == false) {
     setRendered(true);
-    return "loading...";
+    return (
+      <div
+        style={{
+          position: "relative",
+          width: "175px",
+          margin: "auto",
+          transform: "translateY(110%)" /* or try 50% */,
+        }}
+      >
+        <div>
+          <img
+            src={loadingGif.src}
+            alt="wait until the page loads"
+            height="100%"
+          />
+          <center>loading...</center>
+        </div>
+      </div>
+    );
   } else {
     return (
       <div className={styles.onProposal}>

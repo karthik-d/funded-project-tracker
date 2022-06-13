@@ -3,9 +3,12 @@ import styles from "../components/styles/FullProjectCard.module.css";
 import userStyles from "../components/styles/UserCard.module.css";
 import useCollapse from "react-collapsed";
 import Usercard from "../components/UserCard";
+import ResourceAllocationcard from "../components/ResourceAllocationCard";
+import Resourcecard from "../components/ResourceCard";
 import useSWR from "swr";
 import Popup from "reactjs-popup";
 import { Document, Page } from "react-pdf";
+import loadingGif from "../../src/assets/loading.gif";
 
 function Usercard_byid(props) {
   const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -15,7 +18,26 @@ function Usercard_byid(props) {
   );
 
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data)
+    return (
+      <div
+        style={{
+          position: "relative",
+          width: "175px",
+          margin: "auto",
+          transform: "translateY(110%)" /* or try 50% */,
+        }}
+      >
+        <div>
+          <img
+            src={loadingGif.src}
+            alt="wait until the page loads"
+            height="100%"
+          />
+          <center>loading...</center>
+        </div>
+      </div>
+    );
 
   return <Usercard {...data[0]} />;
 }
@@ -98,10 +120,140 @@ function Supervisors(props) {
   );
 }
 
+function ResourceAllocation(props) {
+  const types = [
+    { key: "name", name: "name" },
+    { key: "kind", name: "kind" },
+  ];
+  const [query, setQuery] = useState("");
+  const [type, setType] = useState(types[0]["key"]);
+  const [counter, setCounter] = useState(0);
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { data, error } = useSWR(
+    "http://localhost:3000/api/resource-group",
+    fetcher
+  );
+  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse(config);
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
+
+  const config = {
+    duration: 200,
+  };
+
+  return (
+    <div className="collapsible">
+      <div className="header" {...getToggleProps()}>
+        <h1>
+          {isExpanded ? (
+            <div className={styles.collapse}>Resource assignable</div>
+          ) : (
+            <div className={styles.expand}>Resource assignable(collaped)</div>
+          )}
+        </h1>
+      </div>
+      <div {...getCollapseProps()}>
+        <div style={{ display: "flex", "flex-direction": "row" }}>
+          <div style={{ margin: "auto" }}>
+            <input
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Enter Post Title"
+            />
+            <select
+              id="search_key"
+              onChange={(event) => setType(event.target.value)}
+            >
+              {types.map((obj) => {
+                return <option value={obj.key}> {obj.name}</option>;
+              })}
+            </select>
+          </div>
+          {data.map((obj) => {
+            let temp = obj[type];
+            if (String(temp).toLowerCase().includes(query.toLowerCase()))
+              return <ResourceAllocationcard {...obj} />;
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+function Outcomecard(props) {
+  console.log("outs", props);
+  return (
+    <h1>
+      {props.props.title} {props.props.description}
+    </h1>
+  );
+}
+function Statuscard(props) {
+  return (
+    <h1>
+      {props.props.title} {props.props.description}
+    </h1>
+  );
+}
+function UpdateStatus() {
+  return <h1>props.title props.description</h1>;
+}
+function ViewStatus(props) {
+  const config = {
+    duration: 200,
+  };
+  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse(config);
+
+  return (
+    <div className="collapsible">
+      <div className="header" {...getToggleProps()}>
+        <h1>
+          {isExpanded ? (
+            <div className={styles.collapse}>Status</div>
+          ) : (
+            <div className={styles.expand}>Status</div>
+          )}
+        </h1>
+      </div>
+      <div {...getCollapseProps()}>
+        <div style={{ display: "flex", "flex-direction": "row" }}>
+          {props.props.map((obj) => {
+            return <Statuscard props={obj} />;
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+function ViewOutcomes(props) {
+  const config = {
+    duration: 200,
+  };
+  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse(config);
+
+  return (
+    <div className="collapsible">
+      <div className="header" {...getToggleProps()}>
+        <h1>
+          {isExpanded ? (
+            <div className={styles.collapse}>Outcomes</div>
+          ) : (
+            <div className={styles.expand}>Outcomes</div>
+          )}
+        </h1>
+      </div>
+      <div {...getCollapseProps()}>
+        <div style={{ display: "flex", "flex-direction": "row" }}>
+          {props.props.map((obj) => {
+            return <Outcomecard props={obj} />;
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+function UpdateOutcomes() {}
+
 export default function FullProject(props) {
   console.log("porps", props);
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
 
   // convert array to base64 string (given pdf_document data)
   function arrayBufferToBase64(buffer) {
@@ -148,9 +300,12 @@ export default function FullProject(props) {
           </a>
         </div>
       </div>
+      <ViewOutcomes props={props.props.outcomes} />
+      <ViewStatus props={props.props.status_updates} />
       <Leader props={props.props.proposal.leader} />
       <Members props={props.props.proposal.members} />
       <Supervisors props={props.props.proposal.supervisors} />
+      <ResourceAllocation />
     </div>
   );
 }

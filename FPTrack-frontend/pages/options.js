@@ -43,6 +43,12 @@ export default function Options() {
       url: "/guest/view_projects",
       key: "view_projects",
     },
+    {
+      name: "View Proposals for approval",
+      url: "/admin/view_unapproved",
+      key: "view_proposals_unapproved",
+
+    },
   ];
 
   return (
