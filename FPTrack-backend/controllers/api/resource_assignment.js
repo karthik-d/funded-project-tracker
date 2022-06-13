@@ -221,8 +221,6 @@ function assignResourcesToProject(req, res, next) {
                                 var to_unassign = project_grp_assigns.slice(0, qty_to_modify);
                                 Promise.all(
                                     to_unassign.map((rsrc_assign) => {
-                                        console.log(rsrc_assign._id);
-                                        console.log("qtm", qty_to_modify);
                                         return ResourceAssignmentModel
                                             .deleteOne({
                                                 _id: rsrc_assign._id
