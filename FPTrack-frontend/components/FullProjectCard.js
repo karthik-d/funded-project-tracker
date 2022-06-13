@@ -8,6 +8,7 @@ import Resourcecard from "../components/ResourceCard";
 import useSWR from "swr";
 import Popup from "reactjs-popup";
 import { Document, Page } from "react-pdf";
+import loadingGif from "../../src/assets/loading.gif";
 
 function Usercard_byid(props) {
   const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -17,7 +18,26 @@ function Usercard_byid(props) {
   );
 
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data)
+    return (
+      <div
+        style={{
+          position: "relative",
+          width: "175px",
+          margin: "auto",
+          transform: "translateY(110%)" /* or try 50% */,
+        }}
+      >
+        <div>
+          <img
+            src={loadingGif.src}
+            alt="wait until the page loads"
+            height="100%"
+          />
+          <center>loading...</center>
+        </div>
+      </div>
+    );
 
   return <Usercard {...data[0]} />;
 }

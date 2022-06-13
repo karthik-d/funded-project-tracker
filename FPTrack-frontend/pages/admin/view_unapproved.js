@@ -3,12 +3,15 @@ import Image from "next/image";
 import styles from "../../styles/Home.module.css";
 import Link from "next/link";
 import Header from "../header";
+
+import loadingGif from "../../src/assets/loading.gif";
 import React, { useState, useEffect, Component } from "react";
 import user from "../../../FPTrack-backend/models/user";
 import userStyles from "../guest/styles/view_user.module.css";
 import UserCard from "../../components/UserCard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProposalCard from "../../components/ProposalCard";
+import loadingGif from "../../src/assets/loading.gif";
 import useSWR from "swr";
 // todo: represent multi-valued fields suitably
 // todo: display member names suitably
@@ -72,9 +75,28 @@ export default function viewprojects() {
     "http://localhost:3000/api/proposal/",
     fetcher
   );
-
+  console.log(loadingGif);
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data)
+    return (
+      <div
+        style={{
+          position: "relative",
+          width: "175px",
+          margin: "auto",
+          transform: "translateY(110%)" /* or try 50% */,
+        }}
+      >
+        <div>
+          <img
+            src={loadingGif.src}
+            alt="wait until the page loads"
+            height="100%"
+          />
+          <center>loading...</center>
+        </div>
+      </div>
+    );
   const handleSubmit = (e) => {
     e.preventDefault();
     setCounter(counter + 1); // just to trigger reload
