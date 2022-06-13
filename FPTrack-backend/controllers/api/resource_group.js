@@ -38,24 +38,30 @@ function getAll(req, res, next) {
         }
     )
 
+    console.log(custom_filters);
+
     ResourceGroupModel
         .onlyExisting()
         .then((resources) => {
-            resources = resources
-                .filter(Utils.applyAsyncFilters(custom_filters))
-            Promise.all(resources.map((rsrc) => {
-                return new Promise((resolve, reject) => {
-                    ResourceGroupHelpers.get_avl_resource_count(rsrc)
-                        .then((qty) => {
-                            resolve(Object.assign(
-                                rsrc.toObject(),
-                                { avl_qty: qty }
-                            ));
-                        })
-                });
-            }))
+            console.log("HERE!!!!");
+            console.log(resources.length);
+            Utils
+                .applyAsyncFilters(resources, custom_filters)
                 .then((resources) => {
-                    res.status(200).send(resources);
+                    Promise.all(resources.map((rsrc) => {
+                        return new Promise((resolve, reject) => {
+                            ResourceGroupHelpers.get_avl_resource_count(rsrc)
+                                .then((qty) => {
+                                    resolve(Object.assign(
+                                        rsrc.toObject(),
+                                        { avl_qty: qty }
+                                    ));
+                                })
+                        });
+                    }))
+                        .then((resources) => {
+                            res.status(200).send(resources);
+                        })
                 })
         })
         .catch((error) => {
