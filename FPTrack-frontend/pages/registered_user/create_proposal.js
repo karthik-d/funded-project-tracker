@@ -66,8 +66,26 @@ export default function onProposal(props) {
       body: JSON.stringify(data),
     };
     fetch("http://localhost:3000/api/proposal", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((response) => {
+        if (!response.ok) {
+          router.push(
+            {
+              pathname: "/GeneralCard",
+              query: { data: JSON.stringify(response.json()) },
+            },
+            "info"
+          );
+        }
+      })
+      .catch((error) => {
+        router.push(
+          {
+            pathname: "/GeneralCard",
+            query: { data: error },
+          },
+          "info"
+        );
+      });
   };
   useEffect(() => {
     new Promise((resolve, reject) => {
