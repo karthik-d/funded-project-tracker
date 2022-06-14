@@ -120,11 +120,28 @@ function Supervisors(props) {
   );
 }
 
+function Resource_temp(props) {
+  console.log(props);
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+  let temp = props.props.resource_records[0].resource_data[0].resource_group;
+  console.log("temp", temp);
+  console.log("http://localhost:3000/api/resource-group/" + temp);
+  const { data, error } = useSWR(
+    "http://localhost:3000/api/resource-group/" + temp, // gives project id
+    fetcher
+  );
+
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
+  console.log("jjjj", data);
+  let name = data.name;
+  data[0].avl_qty = props.props.assigned_qty;
+  console.log("data", data);
+  if (String(name).toLowerCase().includes(props.props.query.toLowerCase()))
+    return <Resourcecard {...data[0]} />;
+}
 function Resource(props) {
-  const types = [
-    { key: "name", name: "name" },
-    { key: "kind", name: "kind" },
-  ];
+  const types = [{ key: "name", name: "name" }];
   const [query, setQuery] = useState("");
   const [type, setType] = useState(types[0]["key"]);
   const [counter, setCounter] = useState(0);
@@ -169,10 +186,8 @@ function Resource(props) {
             </select>
           </div>
           {data.map((obj) => {
-            let temp = obj[type];
-            obj.avl_qty = obj.qty;
-            if (String(temp).toLowerCase().includes(query.toLowerCase()))
-              return <Resourcecard {...obj} />;
+            obj.query = query;
+            return <Resource_temp props={obj} />;
           })}
         </div>
       </div>

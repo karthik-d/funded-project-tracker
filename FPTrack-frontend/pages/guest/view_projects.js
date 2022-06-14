@@ -144,6 +144,9 @@ export default function viewprojects() {
   // Todo: Make objects multiple array sets
 
   console.log("Payload", payload);
+  if (payload.length == 0) {
+    return "laoding";
+  }
   return (
     <div id="vieusers">
       <Header></Header>
