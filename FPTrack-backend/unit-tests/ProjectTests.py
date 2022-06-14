@@ -45,7 +45,7 @@ class ProjectTests(unittest.TestCase):
 
 
     def test_update_a_project(self):
-        request_body = update_project_dict()
+        request_body = update_project_dict(id = "62a75c49f520a093bf1218a8")
 
         resp = requests.patch(
             'http://localhost:3000/api/project/update-status',
@@ -53,8 +53,8 @@ class ProjectTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            resp.json()['message'],
-            "Project status updated"
+            resp.status_code,
+            204
         )
 
     
