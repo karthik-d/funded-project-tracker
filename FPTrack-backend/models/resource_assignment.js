@@ -36,7 +36,7 @@ var ResourceAssignmentSchema = new Schema(
                         }
                     );
                 },
-                message: props => `${props.value} is not a internal`
+                message: props => `The given project is not a internal`
             },
         },
         assigned_by: {
@@ -58,7 +58,7 @@ var ResourceAssignmentSchema = new Schema(
                         }
                     );
                 },
-                message: props => `${props.value} is not a resource manager`
+                message: props => `The user is not a resource manager`
             },
         },
         deleted_on: {
