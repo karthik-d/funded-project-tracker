@@ -16,6 +16,9 @@ It handles the following key aspects:
 ### Notes
 - Send the PDF proposal as a single Base64 encoded string
 
+### UI/UX Design Plan
+- Find the specifications document [here](https://docs.google.com/document/d/1jRCV0GmPHsXNXjA9UHeSrwmuguNEEI4yCPcC1Dmvwz4/edit?usp=sharing): https://docs.google.com/document/d/1jRCV0GmPHsXNXjA9UHeSrwmuguNEEI4yCPcC1Dmvwz4/edit?usp=sharing
+
 ### Validations to handle
 - PDF Proposal Upload must be under 8MB (soft limit)
 
