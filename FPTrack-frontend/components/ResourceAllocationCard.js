@@ -16,7 +16,7 @@ export default function ResourseCard(props) {
   const router = useRouter();
   const handlesubmit = (e) => {
     e.preventDefault();
-    if (count > 0) {
+    if (count >= 0) {
       const requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ export default function ResourseCard(props) {
           qty: count,
         })
         .then(function (response) {
-          console.log(response);
+          console.log("allocated:", response);
         })
         .catch((error) => {
           console.log(error.response);

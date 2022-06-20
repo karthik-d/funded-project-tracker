@@ -156,7 +156,7 @@ function updateStatus(req, res, next) {
         let last_update = project.getMostRecentUpdate();
         if (
           last_update != null &&
-          Utils.timeDelta_days(Date.now(), last_update.createdAt) < 2
+          Utils.timeDelta_days(Date.now(), last_update.createdAt) < 0 
         ) {
           reject({
             name: "Status update too frequent",

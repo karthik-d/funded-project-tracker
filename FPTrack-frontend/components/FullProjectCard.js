@@ -264,17 +264,44 @@ function Outcomecard(props) {
 }
 function Statuscard(props) {
   return (
-    <h1>
-      {props.props.title} {props.props.description}
-    </h1>
+    <div>
+      <li>
+        <h2>{props.props.title}</h2>
+      </li>
+      {props.props.description}
+    </div>
   );
 }
-function UpdateStatus() {
-  return <h1>props.title props.description</h1>;
-}
+
 function ViewStatus(props) {
   const config = {
     duration: 200,
+  };
+  const [title, setTitle] = useState();
+  const [desc, setDesc] = useState();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let parent = e.target.parentElement;
+    console.log("ima parent", parent);
+    console.log(parent.children[1].value);
+    parent.children[1].value = "";
+    parent.children[2].innerHTML = "";
+    setTitle("");
+    setDesc("");
+    const axios = require("axios");
+
+    axios
+      .patch("http://localhost:3000/api/project/update-status ", {
+        id: props.props._id,
+        title: title,
+        description: desc,
+      })
+      .then(function (response) {
+        console.log("allocated:", response);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
   };
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse(config);
 
@@ -290,10 +317,26 @@ function ViewStatus(props) {
         </h1>
       </div>
       <div {...getCollapseProps()}>
+        <div>
+          <label>Title:</label>
+          <input
+            id="title"
+            onChange={(event) => setTitle(event.target.value)}
+            type="text"
+          ></input>
+          <label>Description:</label>
+          <textarea
+            onChange={(event) => setDesc(event.target.value)}
+            id="desc"
+          ></textarea>
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
         <div style={{ display: "flex", "flex-direction": "row" }}>
-          {props.props.map((obj) => {
-            return <Statuscard props={obj} />;
-          })}
+          <ul>
+            {props.props.status_updates.map((obj) => {
+              return <Statuscard props={obj} />;
+            })}
+          </ul>
         </div>
       </div>
     </div>
@@ -326,7 +369,6 @@ function ViewOutcomes(props) {
     </div>
   );
 }
-function UpdateOutcomes() {}
 
 export default function FullProject(props) {
   console.log("porps", props);
@@ -381,7 +423,7 @@ export default function FullProject(props) {
         </div>
       </div>
       <ViewOutcomes props={props.props.outcomes} />
-      <ViewStatus props={props.props.status_updates} />
+      <ViewStatus props={props.props} />
       <Leader props={props.props.proposal.leader} />
       <Members props={props.props.proposal.members} />
       <Supervisors props={props.props.proposal.supervisors} />

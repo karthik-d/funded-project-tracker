@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 
 import styles from "./styles/ProjectCard.module.css";
 import { useRouter } from "next/router";
@@ -7,22 +7,19 @@ import useSWR from "swr";
 
 export default function PrposalCard(props) {
   const router = useRouter();
+  const [href, setHref] = useState(
+    "//localhost:3000/api/proposal/" + props.props._id
+  );
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    let href = document.getElementById("link").href;
-    console.log("HREF", href);
-
     // let data=JSON.parse(JSON.stringify(jsondata));
-    router.push(
-      {
-        pathname: "/guest/proposal_page",
-        query: { data: href },
-      },
-      "proposalpage"
-    );
+    router.push({
+      pathname: "/guest/proposal_page",
+      query: { data: href },
+    });
   };
-
+ 
+  console.log("proposalcard", props);
   return (
     <a
       id="link"
