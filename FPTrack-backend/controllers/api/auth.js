@@ -6,7 +6,7 @@ var UserModel = require('../../models/user');
 var ErrorHelper = require('../../helpers/error');
 
 
-/*
+/*  
 ADV TODO: Update picture each time
 TODO: Create Client ID env variable
 */

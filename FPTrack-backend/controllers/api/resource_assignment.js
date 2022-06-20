@@ -249,7 +249,9 @@ function assignResourcesToProject(req, res, next) {
 
             // make assignments
             var to_assign = resources.slice(0, qty_to_modify);
+
             console.log("to_assign", qty_to_modify);
+
             Promise.all(
               to_assign.map((rsrc) => {
                 return new ResourceAssignmentModel({
