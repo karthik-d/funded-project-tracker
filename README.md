@@ -9,6 +9,37 @@ It handles the following key aspects:
 - Filterable and customized summary stats of faculty and student projects
 - Resource inventory and project deliverable/outcome report generation for all projects
 
+## Atomic UML Documents
+- [Team Google Drive Directory](https://drive.google.com/drive/folders/1q4Pmt54Smr6XTmxe8-WBDu5sHodzzcVc?usp=sharing)
+- [Problem Statement Specification](https://drive.google.com/file/d/12lmrwYze91KfEdE4WlvUXiz-RDvtJo6p/view?usp=sharing)
+- [Software Requirements Specification (SRS)](https://drive.google.com/file/d/17_LVAnczzPp9dCqcMjCTuRk5oyWuHSey/view?usp=sharing)
+- [Use Case Description](https://drive.google.com/file/d/1EWN7n4BdxVWAyzEIRaZPsam0lJF2VHPR/view?usp=sharing)
+- [Domain Model and Class Diagram](https://drive.google.com/file/d/1mdhwhTaIcUtHynZvmKQYCgOhw7ryTXJi/view?usp=sharing)
+- [Sequence Interaction Diagrams](https://drive.google.com/file/d/1sXMSgy5DzYcDDZwpKN5_dZdbmhOel501/view?usp=sharing)
+- [State Machine Diagrams](https://drive.google.com/file/d/1UlJB45QFjSIvGsh330DjKgyfvKjCrP0Z/view?usp=sharing)
+- [Acitivity Diagrams](https://drive.google.com/file/d/12TvG0STKMjBehhBIDZHklc6XvqFTVLRf/view?usp=sharing)
+
+## Compiled Document
+- [Project Report](https://drive.google.com/file/d/1-ugSlGmEHbMfo-DBxR1wm4ZShB_HDwF-/view?usp=sharing)
+
+## Procedure to Execute
+
+### Common Dependencies
+
+- nodejs 16.15.0 LTS (preferably, with nvm)
+
+### Frontend
+- Navigate to ./FPTrack-frontend
+- Install local dependencies using `npm install` from current context
+- Run `npm run dev` to get the frontend service going
+
+### Backend
+- Navigate to ./FPTrack-backend
+- Ensure that all `global installs` are done
+- Install local dependencies using `npm install` from current context
+- Run `npm run serverstart` to get the development server going
+
+
 # Development References
 
 ## Frontend
@@ -250,35 +281,3 @@ Do `npm install -g [package-name]`
 | `952`   | DB error when trying to update status of a collection | Attempt the same operation later | 
 | `961`   | Very frequent project update | Attempt to make a project update entry after at least 2 days from the previous | 
 | `801`   | Resource for ID not found    | ID is of valid format. Send it to the correct resource!  |
- 
-
-
-## Atomic UML Documents
-- [Team Google Drive Directory](https://drive.google.com/drive/folders/1q4Pmt54Smr6XTmxe8-WBDu5sHodzzcVc?usp=sharing)
-- [Problem Statement Specification](https://drive.google.com/file/d/12lmrwYze91KfEdE4WlvUXiz-RDvtJo6p/view?usp=sharing)
-- [Software Requirements Specification (SRS)](https://drive.google.com/file/d/17_LVAnczzPp9dCqcMjCTuRk5oyWuHSey/view?usp=sharing)
-- [Use Case Description](https://drive.google.com/file/d/1EWN7n4BdxVWAyzEIRaZPsam0lJF2VHPR/view?usp=sharing)
-- [Domain Model and Class Diagram](https://drive.google.com/file/d/1mdhwhTaIcUtHynZvmKQYCgOhw7ryTXJi/view?usp=sharing)
-- [Sequence Interaction Diagrams](https://drive.google.com/file/d/1sXMSgy5DzYcDDZwpKN5_dZdbmhOel501/view?usp=sharing)
-- [State Machine Diagrams](https://drive.google.com/file/d/1UlJB45QFjSIvGsh330DjKgyfvKjCrP0Z/view?usp=sharing)
-- [Acitivity Diagrams](https://drive.google.com/file/d/12TvG0STKMjBehhBIDZHklc6XvqFTVLRf/view?usp=sharing)
-
-## Compiled Document
-- [Aggregated Documentation - Upto Activity Diagrams](https://drive.google.com/file/d/1-ugSlGmEHbMfo-DBxR1wm4ZShB_HDwF-/view?usp=sharing)
-
-## Procedure to Execute
-
-### Common Dependencies
-
-- nodejs 16.15.0 LTS (preferably, with nvm)
-
-### Frontend
-- Navigate to ./FPTrack-frontend
-- Install local dependencies using `npm install` from current context
-- Run `npm run dev` to get the frontend service going
-
-### Backend
-- Navigate to ./FPTrack-backend
-- Ensure that all `global installs` are done
-- Install local dependencies using `npm install` from current context
-- Run `npm run serverstart` to get the development server going
