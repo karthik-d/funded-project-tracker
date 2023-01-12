@@ -2,15 +2,18 @@
 
 ![FP-Tracker-Logo](assets/logo.png?raw=true)
 
-A centralized online system, with a web-application interface, to manage internally and externally funded projects affiliated to the college.
+A centralized online platform, with a web-application interface, to manage internally and externally funded **research projects** affiliated to [https://www.ssn.edu.in/college-of-engineering/](SSN College of Engineering, Chennai, India).
+
+> Deployed as an internal web-application for management on the intra-network of the college.
+
 It handles the following key aspects:
-- Resource management and repurposing for internally funded projects
-- Project status, updates and outcomes repository for all projects
-- Filterable and customized summary stats of faculty and student projects
-- Resource inventory and project deliverable/outcome report generation for all projects
+- Resource management, tracking, and repurposing for internally funded projects.
+- Project status, updates, and outcomes repository for all projects in the past and present.
+- Filterable and customized summary statistics of faculty and student projects, organized by domain and tech stack.
+- Resource inventory and project deliverable/outcome report generation for all projects.
 
 
-## Compiled Document
+## Compiled Documentation
 - [Project Report](https://drive.google.com/file/d/1-ugSlGmEHbMfo-DBxR1wm4ZShB_HDwF-/view?usp=sharing)
 
 ## Atomic UML Documents
@@ -44,9 +47,6 @@ It handles the following key aspects:
 # Development References
 
 ## Frontend
-
-### Notes
-- Send the PDF proposal as a single Base64 encoded string
 
 ### UI/UX Design Plan
 - Find the specifications document [here](https://docs.google.com/document/d/1jRCV0GmPHsXNXjA9UHeSrwmuguNEEI4yCPcC1Dmvwz4/edit?usp=sharing): https://docs.google.com/document/d/1jRCV0GmPHsXNXjA9UHeSrwmuguNEEI4yCPcC1Dmvwz4/edit?usp=sharing
