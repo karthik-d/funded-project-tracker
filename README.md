@@ -123,7 +123,7 @@ It handles the following key aspects:
  ]
 ```
 
-#### GET api/resource-assignment/project/[projectId]
+#### PUT api/resource-assignment
 
 With request body,
 ```
@@ -155,7 +155,7 @@ With request body,
   
  **NOTE**: If the available qty CANNOT satisfy the request, maximum possible qty is assigned. Eg: If only 3 resources can be allocated, and the request is made for 4, then 3 items are allocated and the response indicated the same through `assigned_qty` field
 
-#### PUT api/resource-assignment
+#### GET api/resource-assignment/project/[projectId]
 
 - `[projectId]` is the project id of the project whose resource allocations are being requested
 - Responds with all resource allocation records for the project resources along, with three additional fields:

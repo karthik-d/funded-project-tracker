@@ -18,8 +18,8 @@ function create(req, res, next) {
       ProposalModel.onlyExisting()
         .getById(proposal_id)
         .then((proposal) => {
-          console.log(proposal);
-          if (!proposal.isAwaitingDecision()) {
+          console.log(proposal[0].isAwaitingDecision());
+          if (proposal.approved_on != null || proposal.rejected_on != null) {
             reject({
               name: "Proposal not awaiting decision",
               message:
@@ -27,6 +27,7 @@ function create(req, res, next) {
               code: 951,
             });
           } else {
+            console.log("huhu", proposal_id);
             // update status of the proposal
             ProposalModel.updateOne(
               {
@@ -155,7 +156,7 @@ function updateStatus(req, res, next) {
         let last_update = project.getMostRecentUpdate();
         if (
           last_update != null &&
-          Utils.timeDelta_days(Date.now(), last_update.createdAt) < 2
+          Utils.timeDelta_days(Date.now(), last_update.createdAt) < 0 
         ) {
           reject({
             name: "Status update too frequent",

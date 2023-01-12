@@ -10,7 +10,7 @@ export default function Proposal(props) {
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const router = useRouter();
   const { data, error } = useSWR(router.query.data, fetcher);
-
+  console.log("single page href", router.query.data);
   if (error) return <div>failed to load</div>;
   if (!data)
     return (
@@ -32,11 +32,11 @@ export default function Proposal(props) {
         </div>
       </div>
     );
-  console.log(data);
+  console.log("Data single page", data);
   return (
     <div className={styles.container}>
       <Header></Header>
-      <FullProposal props={data[0]} />
+      <FullProposal props={data} />
     </div>
   );
 }

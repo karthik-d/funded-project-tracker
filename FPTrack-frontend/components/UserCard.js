@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 
 import styles from "./styles/UserCard.module.css";
 
@@ -6,11 +6,12 @@ import { useRouter } from "next/router";
 
 import useSWR from "swr";
 export default function User(props) {
+  if (props.props != null) props = props.props;
   const router = useRouter();
+
+  const [href, setHref] = useState("//localhost:3000/api/user/" + props._id);
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    let href = document.getElementById("link").href;
     console.log("HREF", href);
 
     // let data=JSON.parse(JSON.stringify(jsondata));
@@ -22,6 +23,8 @@ export default function User(props) {
       "userpage"
     );
   };
+  console.log("access", props.access);
+  console.log("uservcard", props);
 
   return (
     <a
