@@ -2,9 +2,9 @@
 
 ![FP-Tracker-Logo](assets/logo.png?raw=true)
 
-A centralized online platform, with a web-application interface, to manage internally and externally funded **research projects** affiliated to [https://www.ssn.edu.in/college-of-engineering/](SSN College of Engineering, Chennai, India).
+A centralized online platform, with a web-application interface, to manage internally and externally funded **research projects** affiliated to [SSN College of Engineering, Chennai, India](https://www.ssn.edu.in/college-of-engineering/).
 
-> Deployed as an internal web-application for management on the intra-network of the college.
+> Deployed as an internal web-application on the intra-network of the college. Currently under use at the Department of Computer Science for managing research project proposals, status, and outcomes.
 
 It handles the following key aspects:
 - Resource management, tracking, and repurposing for internally funded projects.
