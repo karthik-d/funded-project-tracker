@@ -1,5 +1,17 @@
 # Development References
 
+## Quick Reference
+
+## Internal Error Codes      
+
+| Code    | Description | Suggested Action  |
+| :---:   | :---------- | :---------------- |
+| `901`   | Valid google user does not exist on FPTrack DB | Create user with same email, along with metadata by POSTing to /api/user first |
+| `951`   | Trying to modify approval/rejection status of already approved/rejected proposal| `N/A`: Verify proposal details with admin | 
+| `952`   | DB error when trying to update status of a collection | Attempt the same operation later | 
+| `961`   | Very frequent project update | Attempt to make a project update entry after at least 2 days from the previous | 
+| `801`   | Resource for ID not found    | ID is of valid format. Send it to the correct resource!  |
+
 ## Frontend
 
 ### UI/UX Design Plan
@@ -221,18 +233,3 @@ Do `npm install -g [package-name]`
 - [nodemon](https://www.npmjs.com/package/nodemon)
 - express (Obviously!)
 - express-generator
-
-# References
-
-
-## Internal Error Codes      
-
-
- 
-| Code    | Description | Suggested Action  |
-| :---:   | :---------- | :---------------- |
-| `901`   | Valid google user does not exist on FPTrack DB | Create user with same email, along with metadata by POSTing to /api/user first |
-| `951`   | Trying to modify approval/rejection status of already approved/rejected proposal| `N/A`: Verify proposal details with admin | 
-| `952`   | DB error when trying to update status of a collection | Attempt the same operation later | 
-| `961`   | Very frequent project update | Attempt to make a project update entry after at least 2 days from the previous | 
-| `801`   | Resource for ID not found    | ID is of valid format. Send it to the correct resource!  |

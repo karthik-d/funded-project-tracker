@@ -62,7 +62,7 @@ This can prove useful during research showcases and academic year progress prese
      
 - Regular updates and final outcomes are recorded along with the completed projects before archival. Outcomes will be represented as:
     - Publications 
-        - Link to publications project OR DBLP/GScholar page
+        - Link to publications project _or_ DBLP / Google Scholar page
     - Patents
     - Forwarded to External Funding
     

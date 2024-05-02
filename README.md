@@ -2,24 +2,24 @@
 
 ![FP-Tracker-Logo](assets/logo.png?raw=true)
 
-A centralized online platform, with a web-application interface, to manage internally and externally funded **research projects** affiliated to [SSN College of Engineering, Chennai, India](https://www.ssn.edu.in/college-of-engineering/).
+A centralized online platform, with a web-application interface, to manage grants and funded research projects affiliated to [SSN College of Engineering, Anna University, India](https://www.ssn.edu.in/college-of-engineering/).
 
-> Deployed as an internal web-application on the intra-network of the college. Currently under use at the Department of Computer Science for managing research project proposals, status, and outcomes.
+> Deployed as an internal web-application on the intra-network of the college. Currently under use at the Department of Computer Science at Anna University for managing research project and grant proposals, status, and outcomes.
 
-It handles the following aspects of research projects and grant applications:
+It handles the following aspects for research projects and grant applications:
 - Resource management, tracking, and repurposing for internally funded projects.
 - Project status, updates, and outcomes repository for all projects in the past and present.
-- Filterable and customized summary statistics of faculty and student projects, organized by domain and tech stack.
+- Filterable, customized summary statistics of faculty and student projects, organized by domain and tech stack.
 - Resource inventory and project deliverable/outcome report generation for all projects.
 
 ## Quick Links
-- [Problem Statement and User Stories [Markdown]](./docs/problem-statement.md).
-- [Development References [Markdown]](./docs/development-references.md).
-- [Team Google Drive Directory (_private access_)](https://drive.google.com/drive/folders/1q4Pmt54Smr6XTmxe8-WBDu5sHodzzcVc?usp=sharing).
+- [Problem Statement and User Stories [Markdown]](./docs/problem-statement.md)
+- [Development References [Markdown]](./docs/development-references.md)
+- [Team Google Drive Directory (_private access_)](https://drive.google.com/drive/folders/1q4Pmt54Smr6XTmxe8-WBDu5sHodzzcVc?usp=sharing)
 
 ## Compiled Documentation
 
-[**Link to Complete Project Report [PDF]**](https://drive.google.com/file/d/1-ugSlGmEHbMfo-DBxR1wm4ZShB_HDwF-/view?usp=sharing).
+[**Link to Complete Project Report [PDF]**](./docs/development-references.md)
 
 > [!NOTE]
 > Kindly direct requests for access to documentation to one of the repository collaborators by email; they can be made available upon reasonable request. Thanks!
