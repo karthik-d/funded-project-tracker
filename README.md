@@ -19,7 +19,7 @@ It handles the following aspects for research projects and grant applications:
 
 ## Compiled Documentation
 
-[**Link to Complete Project Report [PDF]**](./docs/development-references.md)
+[**Link to Complete Project Report [PDF]**](./docs/complete-report.pdf)
 
 > [!NOTE]
 > Kindly direct requests for access to documentation to one of the repository collaborators by email; they can be made available upon reasonable request. Thanks!
